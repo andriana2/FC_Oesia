@@ -17,21 +17,20 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
     vector <string> player = split(str, ' ');
     if (player.at(0) != "(init")
         throw runtime_error("Invalid initial message");
-    cout<< "Yuju" << endl;
     if (player.at(1) == "l")
     {
         switch(stoi(player[2]) - 1){
-            case 0: pos.x= 50; pos.y = 0; break;
-            case 1: pos.x= 35; pos.y = -20; break;
-            case 2: pos.x= 35; pos.y = 20; break;
-            case 3: pos.x= 20; pos.y = -25; break;
-            case 4: pos.x= 18; pos.y = -9; break;
-            case 5: pos.x= 18; pos.y = 5; break;
-            case 6: pos.x= 20; pos.y = 20; break;
-            case 7: pos.x= 2; pos.y = -18; break;
-            case 8: pos.x= 28; pos.y = -18; break;
-            case 9: pos.x= 35; pos.y = 11; break;
-            case 10: pos.x= 5; pos.y = 0; break;
+            case 0: pos.x= -51; pos.y = 0; break;
+            case 1: pos.x= -30; pos.y = -30; break;
+            case 2: pos.x= -35; pos.y = -10; break;
+            case 3: pos.x= -35; pos.y = 10; break;
+            case 4: pos.x= -30; pos.y = 30; break;
+            case 5: pos.x= -25; pos.y = -10; break;
+            case 6: pos.x= -25; pos.y = 10; break;
+            case 7: pos.x= -11; pos.y = 0; break;
+            case 8: pos.x= -5; pos.y = 27; break;
+            case 9: pos.x= -5; pos.y = -27; break;
+            case 10: pos.x= -5; pos.y = 10; break;
         }
     }
     auto moveCommand = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")";
