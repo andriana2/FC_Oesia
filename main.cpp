@@ -14,7 +14,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
     int y;
     };
     Posicion pos;
-    vector <string> player = split(str, ' ');
+    vector <string> player = split(str, ' ');//ejemplo de mensaje (init l 2 ...)
     if (player.at(0) != "(init")
         throw runtime_error("Invalid initial message");
     if (player.at(1) == "l")
@@ -33,7 +33,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
             case 10: pos.x= -5; pos.y = 10; break;
         }
     }
-    auto moveCommand = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")";
+    auto moveCommand = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")";// (move -51 0)
     cout << moveCommand<< endl;
     udp_socket.sendTo(moveCommand, recep);
 }
