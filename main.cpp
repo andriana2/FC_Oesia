@@ -2,7 +2,7 @@
 #include <MinimalSocket/udp/UdpSocket.h>
 #include <string>
 #include <vector>
-#include "Gestion_parentesis.h"
+#include "Funciones.h"
 
 using namespace std;
 
@@ -82,5 +82,7 @@ int main(int argc, char *argv[])
     while(true){
         received_message = udp_socket.receive(message_max_size);
         string received_message_content = received_message-> received_message;
+        cout << received_message_content << endl;
+        sleep(10);
     }
 }
