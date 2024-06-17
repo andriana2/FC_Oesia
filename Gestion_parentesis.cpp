@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Gestion_parentesis.h"
+#include "Funciones.h"
 
 using namespace std;
 
