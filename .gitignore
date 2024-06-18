@@ -11,7 +11,7 @@ build
 *.so.*
 *.dll
 *.dylib
-*.rgc
+*.rcg
 # Qt unit tests
 target_wrapper.*
 
