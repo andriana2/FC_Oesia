@@ -75,29 +75,29 @@ string funcionEnviar(Datos_Juego const & datos)
         // SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
     if(!datos.veo_balon)
     {
-        cout << "\n\n\n\n\n\n\n\n\n" << "no veo nada"<< "\n\n\n\n\n\n";
+        cout << datos.jugador_numero << "no veo nada"<< "\n";
         return resultado = "(turn 60)";
     }
     else // SI VEMOS EL BALON ---> NOS GIRAMOS CCW O CW PARA VERLO MUY BIEN
     {
         if(stod(datos.balon_direccion) > 40) // BALON A LA DERECHA, GIRA DERECHA
         {
-            cout << "\n\n\n\n\n\n\n\n\n" << "giro 30 grados"<< "\n\n\n\n\n\n";
+            cout << "giro 30 grados"<< "\n";
 
             return resultado = "(turn 30)";
         }
         else if(stod(datos.balon_direccion) < -40) // BALON A LA IZQA, GIRA IZQA
         {
-            cout << "\n\n\n\n\n\n\n\n\n" << "giro -30 grados"<< "\n\n\n\n\n\n";
+            cout <<datos.jugador_numero << " giro -30 grados"<< "\n\n\n\n\n\n";
 
             return resultado = "(turn -30)";
         }
         else    // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
-            // if(datos.balon_distancia <= 1)        // BALON MUY CERCA
-            // {
-            //     return resultado = "(kick 100 "+datos.porteria_direccion+")";
-            // }
+            if(stod(datos.balon_distancia) <= 1)        // BALON MUY CERCA
+            {
+                return resultado = "(kick 100 "+datos.balon_direccion+")";
+            }
             if(stod(datos.balon_distancia) <= 20)   // BALON DISTANCIA MEDIA 
             {
                 return resultado = "(dash 100 "+datos.balon_direccion+")";
