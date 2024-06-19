@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd build && make && cd ..
-rm -r 20*
+rm 20*
 sleep 3;
 
 gnome-terminal -- bash -c /home/andri/Descargas/rcssserver-19.0.0/src/rcsoccersim & sleep 1

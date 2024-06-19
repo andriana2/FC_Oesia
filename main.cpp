@@ -59,6 +59,5 @@ int main(int argc, char *argv[])
         } while (received_message_content.find("(see") == -1);
         //cout << received_message_content << endl <<endl <<endl;
         udp_socket.sendTo(funcionEnviar(datos),server_udp);
-        sleep(1);
     }
 }
