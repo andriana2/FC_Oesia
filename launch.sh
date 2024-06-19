@@ -1,11 +1,7 @@
 #!/bin/bash
 
 cd build && make && cd ..
-<<<<<<< HEAD
 
-=======
-rm 20*
->>>>>>> 68695890dc8949c3b7f70e34cb59b2da9bef25a2
 sleep 3;
 
 
