@@ -27,6 +27,7 @@ link_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/build)
 set(SOURCE_FILES
     main.cpp 
     split.cpp
+    Funciones.cpp
     Gestion_parentesis.cpp
 )
 
