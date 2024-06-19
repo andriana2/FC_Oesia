@@ -43,9 +43,22 @@ int main(int argc, char *argv[])
     initial_message(received_message_content, udp_socket, server_udp, datos);
     
     while(true){
-        received_message = udp_socket.receive(message_max_size);
         string received_message_content = received_message-> received_message;
-        cout << received_message_content << endl <<endl <<endl;
+        do{
+            received_message = udp_socket.receive(message_max_size);
+            received_message_content = received_message->received_message;
+            try
+            {
+                send_message_funtion(received_message_content, datos);
+
+            }
+            catch (const std::exception &e)
+            {
+                cout << e.what() << endl;
+            }
+        } while (received_message_content.find("(see") == -1);
+        //cout << received_message_content << endl <<endl <<endl;
+        udp_socket.sendTo(funcionEnviar(datos),server_udp);
         sleep(1);
     }
 }

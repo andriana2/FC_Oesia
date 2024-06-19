@@ -9,33 +9,19 @@ void get_error_parentesis(string const &str)
 {
     int num_abierto{0};
     int num_cerrado{0};
-    int flag_parentesis{0};
-    if (str.at(0) != '(')
-        throw invalid_argument("No inicia con parentesis");
     for (int i = 0; i < str.size(); i++)
     {
         if (str.at(i) == '(')
         {
-            flag_parentesis = 1;
             num_abierto++;
         }
         else if (str.at(i) == ')')
         {
-            if (flag_parentesis == 1)
-                throw invalid_argument("Parentesis cerado y abierto seguido");
             num_cerrado++;
-        }
-        else 
-        {
-            if ((num_abierto - num_cerrado) == 0)
-                throw invalid_argument("Hay una palabra sin parentesis");
-            flag_parentesis = 0;
         }
     }
     if ((num_abierto - num_cerrado) != 0)
         throw invalid_argument("No tiene suficientes parentesis");
-    if (str.at(str.size() - 1) != ')')
-        throw invalid_argument("No termina en parentesis cerrado");
 
 }
 
