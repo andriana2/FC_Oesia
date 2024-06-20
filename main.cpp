@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
             try
             {
                 send_message_funtion(received_message_content, datos);
-
             }
             catch (const std::exception &e)
             {

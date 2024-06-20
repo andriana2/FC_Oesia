@@ -49,17 +49,16 @@ void send_message_funtion(string const &mensage, Datos_Juego &datos)
     if (mensage.find("see") == -1)
         return ;
     check_see_ball(mensage, datos);
-    vector<string> vector_mensaje = GestionParentesis(mensage);
-    vector<string> vector_mensaje_2 = GestionParentesis(vector_mensaje.at(0));
+    vector<string> vector_mensaje = GestionParentesis(mensage);//see ((  f l c (2132)) )
+    vector<string> vector_mensaje_2 = GestionParentesis(vector_mensaje.at(0));// {1} see {2} (f c l)(12) (23) .... {23} ((b) 12 23.3)
     vector<string> vector_balon;
     for(auto const &v : vector_mensaje_2)
     {
         if (v.find("(b)") != -1)
         {
-            vector_balon = split(v, ' ');
-            datos.balon_distancia = vector_balon.at(1);
-            datos.balon_direccion = vector_balon.at(2);
-            cout << datos.balon_distancia << " " << datos.balon_direccion << endl;
+            vector_balon = split(v, ' '); // EJEMPLO ((b) 12 23.3)
+            datos.balon_distancia = vector_balon.at(1); //12
+            datos.balon_direccion = vector_balon.at(2);//23.3
         }
     }
 
@@ -71,7 +70,6 @@ string funcionEnviar(Datos_Juego const & datos)
     // devolviendo la accion del jugador (girar cabeza, correr etc, en funcion del balon)
     
     string resultado;
-
         // SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
     if(!datos.veo_balon)
     {

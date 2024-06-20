@@ -15,14 +15,13 @@ struct Datos_Juego{
     string balon_distancia;
     string balon_direccion;
     bool veo_balon;
-    
 };
 
 vector <string> GestionParentesis(string const &str);
 vector <string> split(string const &str, char separador);
 void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socket,
                                         MinimalSocket::Address const &recep,Datos_Juego &datos);
-//hola
+
 void check_see_ball(string const &message, Datos_Juego &datos);
 void send_message_funtion(string const &received_message_content, Datos_Juego &datos);
 string funcionEnviar(Datos_Juego const & datos);
