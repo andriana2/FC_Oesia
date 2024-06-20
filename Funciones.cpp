@@ -92,6 +92,10 @@ string funcionEnviar(Datos_Juego const & datos)
 
             return resultado = "(turn -30)";
         }
+        else if (datos.jugador_numero == "1")
+        {
+            return ("");
+        }
         else    // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
             if(stod(datos.balon_distancia) <= 1)        // BALON MUY CERCA
