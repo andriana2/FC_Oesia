@@ -94,10 +94,10 @@ string funcionEnviar(Datos_Juego const & datos)
         }
         else    // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
-            // if(datos.balon_distancia <= 1)        // BALON MUY CERCA
-            // {
-            //     return resultado = "(kick 100 "+datos.porteria_direccion+")";
-            // }
+            if(stod(datos.balon_distancia) <= 1)        // BALON MUY CERCA
+            {
+                return resultado = "(kick 100 "+datos.balon_direccion+")";
+            }
             if(stod(datos.balon_distancia) <= 20)   // BALON DISTANCIA MEDIA 
             {
                 return resultado = "(dash 100 "+datos.balon_direccion+")";
