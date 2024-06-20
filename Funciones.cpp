@@ -31,7 +31,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         }
     }
     auto moveCommand = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")";// (move -51 0)
-    cout << moveCommand<< endl;
+    cout << moveCommand << endl;
     udp_socket.sendTo(moveCommand, recep);
 }
 
