@@ -44,24 +44,73 @@ void check_see_ball(string const &message, Datos_Juego &datos)
     else
         datos.veo_balon = false;
 }
+void check_see_porteria_contraria(string const &message, Datos_Juego &datos)
+{
+    if (message.find("(g r)") != -1 && datos.jugador_lado_campo == "l"){ 
+        datos.veo_porteria_contraria = true; 
+    }
+    else if (message.find("(g l)") != -1 && datos.jugador_lado_campo == "r"){ 
+        datos.veo_porteria_contraria = true; 
+    }
+    else
+        datos.veo_porteria_contraria = false;
+}
 void send_message_funtion(string const &mensage, Datos_Juego &datos)
 {
     if (mensage.find("see") == -1)
         return ;
     check_see_ball(mensage, datos);
+    check_see_porteria_contraria(mensage, datos);
     vector<string> vector_mensaje = GestionParentesis(mensage);//see ((  f l c (2132)) )
     vector<string> vector_mensaje_2 = GestionParentesis(vector_mensaje.at(0));// {1} see {2} (f c l)(12) (23) .... {23} ((b) 12 23.3)
-    vector<string> vector_balon;
     for(auto const &v : vector_mensaje_2)
     {
         if (v.find("(b)") != -1)
         {
+            vector<string> vector_balon;
             vector_balon = split(v, ' '); // EJEMPLO ((b) 12 23.3)
             datos.balon_distancia = vector_balon.at(1); //12
             datos.balon_direccion = vector_balon.at(2);//23.3
         }
-    }
+        if ((v.find("(f g r b)") != -1) && datos.jugador_lado_campo == "l")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria_palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria_palo_abajo_direccion= vector_palo_bajo.at(5);
+        }
+        if ((v.find("(g r)") != -1) && datos.jugador_lado_campo == "l")
+        {
+            vector<string> vector_porteria = split(v, ' ');
+            datos.porteria_centro_distancia = vector_porteria.at(2);
+            datos.porteria_centro_direccion= vector_porteria.at(3);
+        }
+        if ((v.find("(f g r t)") != -1) && datos.jugador_lado_campo == "l")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria_palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria_palo_abajo_direccion= vector_palo_bajo.at(5);
+        }
 
+        //si erres el otro campo
+        if ((v.find("(f g l b)") != -1) && datos.jugador_lado_campo == "r")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria_palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria_palo_abajo_direccion= vector_palo_bajo.at(5);
+        }
+        if ((v.find("(g l)") != -1) && datos.jugador_lado_campo == "r")
+        {
+            vector<string> vector_porteria = split(v, ' ');
+            datos.porteria_centro_distancia = vector_porteria.at(2);
+            datos.porteria_centro_direccion= vector_porteria.at(3);
+        }
+        if ((v.find("(f g l t)") != -1) && datos.jugador_lado_campo == "r")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria_palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria_palo_abajo_direccion= vector_palo_bajo.at(5);
+        }
+    }
 }
 
 string funcionEnviar(Datos_Juego const & datos)
@@ -98,7 +147,10 @@ string funcionEnviar(Datos_Juego const & datos)
         {
             if(stod(datos.balon_distancia) <= 1)        // BALON MUY CERCA
             {
-                return resultado = "(kick 100 "+datos.balon_direccion+")";
+                if (datos.veo_porteria_contraria)
+                    return resultado = "(kick 100 " + datos.porteria_centro_direccion+")";
+                //else
+                    //return resultado ="(turn 60)";// se ralla
             }
             if(stod(datos.balon_distancia) <= 20)   // BALON DISTANCIA MEDIA 
             {
