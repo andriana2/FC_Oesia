@@ -30,3 +30,11 @@ vector <string> split(string const &str, char separador)
         resultado.push_back(temp);
     return (resultado);
 }
+
+struct flagKnowns
+{
+    string name;
+    int x;
+    int y;
+    
+}
