@@ -23,8 +23,8 @@ enable_testing()
 add_executable(
   runTests
   test_main.cpp
-  Test.cpp
-  ../main.cpp
+  CalculadoraTest.cpp
+  ../Posicion_abs.cpp
 )
 target_link_libraries(
   runTests

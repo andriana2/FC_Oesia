@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
             received_message_content = received_message->received_message;
             try
             {
-                crear_matriz_valores_absolutos(received_message_content, flags);
+                //crear_matriz_valores_absolutos(received_message_content, flags);
                 send_message_funtion(received_message_content, datos);
             }
             catch (const std::exception &e)
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
                 cout << e.what() << endl;
             }
         } while (received_message_content.find("(see") == -1);
-        //cout << received_message_content << endl <<endl <<endl;
+        cout << received_message_content << endl <<endl <<endl;
         udp_socket.sendTo(funcionEnviar(datos),server_udp);
     }
 }
