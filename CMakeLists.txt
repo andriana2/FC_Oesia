@@ -28,6 +28,7 @@ set(SOURCE_FILES
     main.cpp 
     split.cpp
     Funciones.cpp
+    Posicion_abs.cpp
     Gestion_parentesis.cpp
 )
 
