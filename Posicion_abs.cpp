@@ -86,3 +86,99 @@ void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags)
     flags.push_back(make_shared<flagKnowns>("(f c r)", 120, 40, -999.0, -999.0)); // centro linea de fondo fuera izq ??
     flags.push_back(make_shared<flagKnowns>("(f c l)", 0, 40, -999.0, -999.0));   // centro linea de fondo fuera der ??
 }
+
+void relative2Abssolute(double direccion, double d, double xf, double yf)
+{
+
+    double beta = -direccion;   // Need positive rotation ccw, direccion is negative ccw
+    double cosBeta = cos((M_PI/180)*beta);
+    double sinBeta = sin((M_PI/180)*beta);
+
+    if(abs(cosBeta) < 0.01)
+    {
+        cosBeta = 0;
+    }
+    else if(abs(sinBeta) < 0.01)
+    {
+        sinBeta = 0;
+    }
+
+    double x = xf -d*cosBeta;
+    double y = yf -d*sinBeta;
+
+    if(abs(x) < 0.001)
+    {
+        x = 0;
+    }
+    if(abs(y) < 0.001)
+    {
+        y = 0;
+    }
+
+    std::cout << "x: " << x << endl;
+    std::cout << "y: " << y << endl;
+    std::cout << endl;
+}
+
+void absolute2relative(double x, double y, double xf, double yf)
+{
+
+    double direccion;
+    double d = sqrt(pow((xf - x),2) + pow((yf - y),2));
+    double cosBeta = (xf - x)/d;
+    double sinBeta = (yf - y)/d;
+
+    if(abs(cosBeta) < 0.01)
+    {
+        cosBeta = 0;
+    }
+    else if(abs(sinBeta) < 0.01)
+    {
+        sinBeta = 0;
+    }
+
+    if((cosBeta == 0)||(sinBeta == 0))
+    {
+        if((cosBeta == 0)&&(sinBeta == 0))
+        {
+            direccion = 0;
+        }
+        else if(sinBeta == 0)
+        {
+            if(xf > x)
+            {
+                direccion = 0;
+            }
+            else
+            {
+                direccion = 180;
+            }
+        }
+        else if(cosBeta == 0)
+        {
+            if(yf > y)
+            {
+                direccion = -90;
+            }
+            else
+            {
+                direccion = 90;
+            }
+        }
+    }
+    else
+    {
+        double beta = atan2(sinBeta,cosBeta);
+        direccion = -((180/M_PI)*beta);
+    }
+
+    std::cout << "angle: " << direccion << endl;
+    std::cout << "d: " << d << endl;
+    std::cout << endl;
+}
+
+bool compareDistance(const flagKnowns & f1, const flagKnowns & f2)
+{
+    return (f1.distancia < f2.distancia);
+}
+
