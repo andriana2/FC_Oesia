@@ -17,7 +17,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         datos.jugador_lado_campo = "l";
         datos.jugador_numero = player_[2];
         switch(stoi(player_[2]) - 1){
-            case 0: pos.x= -51; pos.y = 0; break;
+            case 0: pos.x= -52; pos.y = 0; break;
             case 1: pos.x= -30; pos.y = -30; break;
             case 2: pos.x= -35; pos.y = -10; break;
             case 3: pos.x= -35; pos.y = 10; break;
