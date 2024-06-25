@@ -1,10 +1,17 @@
 #ifndef POSICION_ABS_H
 #define POSICION_ABS_H
 
-#include "Funciones.h"
+//#include "Funciones.h"
 #include <memory>
+#include <string>
+#include <vector>
+using namespace std;
+#include <iostream>
+#include <unistd.h>
 
 using namespace std;
+vector <string> GestionParentesis(string const &str);//Borrar
+vector <string> split(string const &str, char separador);//Borrar
 
 struct flagKnowns {
     string name;
