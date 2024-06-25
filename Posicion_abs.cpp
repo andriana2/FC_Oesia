@@ -46,8 +46,8 @@ void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags)
     flags.push_back(make_shared<flagKnowns>("(f p r b)", 96, 20, -999.0, -999.0));  // esquina area abajo der
     flags.push_back(make_shared<flagKnowns>("(f g l t)", 8, 47, -999.0, -999.0));   // palo arriba izq
     flags.push_back(make_shared<flagKnowns>("(f g l b)", 8, 33, -999.0, -999.0));   // palo abajo izq
-    flags.push_back(make_shared<flagKnowns>("(f g r t)", 52, 7, -999.0, -999.0));   // palo arriba der
-    flags.push_back(make_shared<flagKnowns>("(f g r b)", 52, 7, -999.0, -999.0));   // palo abajo der
+    flags.push_back(make_shared<flagKnowns>("(f g r t)", 112, 47, -999.0, -999.0));   // palo arriba der
+    flags.push_back(make_shared<flagKnowns>("(f g r b)", 112, 33, -999.0, -999.0));   // palo abajo der
     flags.push_back(make_shared<flagKnowns>("(f t l 10)", 50, 80, -999.0, -999.0)); // banda fuera arriba hacia izq
     flags.push_back(make_shared<flagKnowns>("(f t l 20)", 40, 80, -999.0, -999.0)); //
     flags.push_back(make_shared<flagKnowns>("(f t l 30)", 30, 80, -999.0, -999.0)); //
