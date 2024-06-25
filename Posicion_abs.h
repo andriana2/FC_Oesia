@@ -2,13 +2,18 @@
 #define POSICION_ABS_H
 
 #include "Funciones.h"
+#include <memory>
 
-struct Absolutos{
-    string flag_nombre;
+using namespace std;
+
+struct flagKnowns {
+    string name;
+    int x;
+    int y;
     float distancia;
     float direccion;
 };
-
-void crear_matriz_valores_absolutos(string const &received_message_content, vector<shared_ptr<Absolutos>> &vectores_absolutos);
+void inicializacion_flags(vector <shared_ptr<flagKnowns>> &flags);
+void crear_matriz_valores_absolutos(string const &mensaje, vector<shared_ptr<flagKnowns>> &flags);
 
 #endif // GESTION_PARENTESIS_H
