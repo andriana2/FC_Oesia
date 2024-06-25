@@ -100,7 +100,6 @@ TEST(CalculadoraTest, separacion)
     EXPECT_EQ(flags.at(3)->distancia, 11.1);
     EXPECT_EQ(flags.at(3)->direccion, 2);
 }
-
 // TEST(CalculadoraTest, SumaValida) {
 //     const int input1 = 2;
 //     const int input2 = 3;
