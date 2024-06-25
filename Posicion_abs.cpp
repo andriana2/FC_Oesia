@@ -63,7 +63,7 @@ void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags)
     flags.push_back(make_shared<flagKnowns>("(f b l 30)", 30, 0, -999.0, -999.0));
     flags.push_back(make_shared<flagKnowns>("(f b l 40)", 20, 0, -999.0, -999.0));
     flags.push_back(make_shared<flagKnowns>("(f b l 50)", 10, 0, -999.0, -999.0));
-    flags.push_back(make_shared<flagKnowns>("(f b 0)", 69, 0, -999.0, -999.0));    // centro banda fuera abajo
+    flags.push_back(make_shared<flagKnowns>("(f b 0)", 60, 0, -999.0, -999.0));    // centro banda fuera abajo
     flags.push_back(make_shared<flagKnowns>("(f b r 10)", 70, 0, -999.0, -999.0)); // fuera banda abajo hacia der
     flags.push_back(make_shared<flagKnowns>("(f b r 20)", 80, 0, -999.0, -999.0));
     flags.push_back(make_shared<flagKnowns>("(f b r 30)", 90, 0, -999.0, -999.0));
