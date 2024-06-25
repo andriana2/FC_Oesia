@@ -3,6 +3,13 @@
 int main(int argc, char *argv[])
 {
     Datos_Juego datos;
+
+    //PUEDE QUE QUITAR
+    vector<shared_ptr<flagKnowns>> flags;
+    inicializacion_flags(flags);
+    //FIN PUEDE QUE QUITAR
+
+    
     //revisar si el numero de argumentos es correcto
     //argv[0] nombre del programa ejecutado en este caso player(revisar build y cmake)
     //argv[1] nombre del equipo
@@ -49,8 +56,8 @@ int main(int argc, char *argv[])
             received_message_content = received_message->received_message;
             try
             {
+                crear_matriz_valores_absolutos(received_message_content, flags);
                 send_message_funtion(received_message_content, datos);
-
             }
             catch (const std::exception &e)
             {
