@@ -20,16 +20,45 @@ void crear_matriz_valores_absolutos(string const &mensaje, vector<shared_ptr<fla
                 if (v.find(f->name) != -1)
                 {
                     vector<string> vector_balon;
-                    vector_balon = split(v, ' ');            // EJEMPLO ((b) 12 23.3)
-                    f->distancia = stod(vector_balon.at(1)); // 12
-                    f->direccion = stod(vector_balon.at(2)); // 23.3
+                    string nueva_linea = vector_separar_string(v);
+                    vector_balon = split(nueva_linea, ' ');
+                    
+                    // EJEMPLO ((b) 12 23.3)
+                    f->distancia = stod(vector_balon.at(0)); // 12
+                    f->direccion = stod(vector_balon.at(1)); // 23.3
                 }
             }
-            cout << "Algo ha fallado" << endl;
+            //cout << "Algo ha fallado" << endl;
         }
     }
 }
 
+string vector_separar_string(string const &linea)
+{
+    int i{0};
+    int valor{0};
+    while(i < linea.size())
+    {
+        if (linea.at(i) == ')')
+            valor = i;
+        i++;
+    }
+    string nueva_linea = linea.substr(valor + 1, linea.size() - valor);
+    return (nueva_linea);
+}
+
+void imprimir_matriz(vector <shared_ptr<flagKnowns>> &flag)
+{
+    for(auto const &f : flag)
+    {
+        cout << "Nombre: " << f->name;
+        cout << " Distancia: " << f->distancia;
+        cout << " Direccion: " << f->direccion;
+        cout << " X_absoluta: " << f->x;
+        cout << " Y_absoluta: " << f->y;
+        cout << endl;
+    }
+}
 void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags)
 {
 
