@@ -1,4 +1,5 @@
 #include "Funciones.h"
+#include "Posicion_abs.h"
 
 int main(int argc, char *argv[])
 {
@@ -56,8 +57,9 @@ int main(int argc, char *argv[])
             received_message_content = received_message->received_message;
             try
             {
-                //crear_matriz_valores_absolutos(received_message_content, flags);
                 send_message_funtion(received_message_content, datos);
+                //crear_matriz_valores_absolutos(received_message_content, flags);//ABSOLUTOS
+                //relative2Abssolute(flags);//ABSOLUTOS
             }
             catch (const std::exception &e)
             {
