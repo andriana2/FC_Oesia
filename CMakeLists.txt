@@ -26,11 +26,10 @@ link_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/build)
 # Set source files
 set(SOURCE_FILES
     main.cpp 
-    split.cpp
     Funciones.cpp
     Posicion_abs.cpp
-    Gestion_parentesis.cpp
     area.cpp
+    utils.cpp
 )
 
 add_executable(player ${SOURCE_FILES})
