@@ -9,25 +9,33 @@ using namespace std;
 #include <unistd.h>
 #include <memory>
 #include "Posicion_abs.h"
+#include "utils.h"
 
-struct Datos_Juego{
-    //juegador
+struct Jugador{
     string jugador_numero;
-    string jugador_lado_campo;
-    
-    //Balon
+    string lado_campo;
+    float x_absoluta;
+    float y_absoluta;
+};
+struct Ball{
     string balon_distancia;
     string balon_direccion;
     bool veo_balon;
-    //Porteria
-    string porteria_palo_abajo_distancia;
-    string porteria_palo_abajo_direccion;
-    string porteria_palo_arriba_distancia;
-    string porteria_palo_arriba_direccion;
-    string porteria_centro_distancia;
-    string porteria_centro_direccion;
+};
+struct Porteria{
+    string palo_abajo_distancia;
+    string palo_abajo_direccion;
+    string palo_arriba_distancia;
+    string palo_arriba_direccion;
+    string centro_distancia;
+    string centro_direccion;
     bool veo_porteria_contraria;
+};
 
+struct Datos_Juego{
+    Jugador jugador;
+    Ball ball;
+    Porteria porteria;
 
 };
 

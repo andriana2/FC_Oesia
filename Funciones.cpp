@@ -14,8 +14,8 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         throw runtime_error("Invalid initial message");
     if (player_.at(1) == "l")
     {
-        datos.jugador_lado_campo = "l";
-        datos.jugador_numero = player_[2];
+        datos.jugador.lado_campo = "l";
+        datos.jugador.jugador_numero = player_[2];
         switch(stoi(player_[2]) - 1){
             case 0: pos.x= -52; pos.y = 0; break;
             case 1: pos.x= -30; pos.y = -30; break;
@@ -39,26 +39,26 @@ void check_see_ball(string const &message, Datos_Juego &datos) // comprobamos si
 {
     if(message.find("(b)") != -1)
     {
-        datos.veo_balon = true;
+        datos.ball.veo_balon = true;
     }
     else
-        datos.veo_balon = false;
+        datos.ball.veo_balon = false;
 }
-void send_message_funtion(string const &mensage, Datos_Juego &datos) // envío mensaje si veo/no veo el balon
- {
+void send_message_funtion(string const &mensage, Datos_Juego &datos) 
+{
     if (mensage.find("see") == -1)
         return ;
     check_see_ball(mensage, datos);
     vector<string> vector_mensaje = GestionParentesis(mensage);
-    vector<string> vector_mensaje_2 = GestionParentesis(vector_mensaje.at(0));
+    vector_mensaje = GestionParentesis(vector_mensaje.at(0));
     vector<string> vector_balon;
-    for(auto const &v : vector_mensaje_2)
+    for(auto const &v : vector_mensaje)
     {
         if (v.find("(b)") != -1)
         {
             vector_balon = split(v, ' ');
-            datos.balon_distancia = vector_balon.at(1);
-            datos.balon_direccion = vector_balon.at(2);
+            datos.ball.balon_distancia = vector_balon.at(1);
+            datos.ball.balon_direccion = vector_balon.at(2);
             //cout << datos.balon_distancia << " " << datos.balon_direccion << endl;
         }
     }
@@ -73,38 +73,38 @@ string funcionEnviar(Datos_Juego const & datos)
     string resultado;
 
         // SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
-    if(!datos.veo_balon)
+    if(!datos.ball.veo_balon)
     {
-        cout << datos.jugador_numero << "no veo nada"<< "\n";
+        cout << datos.jugador.jugador_numero << "no veo nada"<< "\n";
         return resultado = "(turn 60)";
     }
     else // SI VEMOS EL BALON ---> NOS GIRAMOS CCW O CW PARA VERLO MUY BIEN
     {
-        if(stod(datos.balon_direccion) > 40) // BALON A LA DERECHA, GIRA DERECHA
+        if(stod(datos.ball.balon_direccion) > 40) // BALON A LA DERECHA, GIRA DERECHA
         {
             cout << "giro 30 grados"<< "\n";
 
             return resultado = "(turn 30)";
         }
-        else if(stod(datos.balon_direccion) < -40) // BALON A LA IZQA, GIRA IZQA
+        else if(stod(datos.ball.balon_direccion) < -40) // BALON A LA IZQA, GIRA IZQA
         {
-            cout <<datos.jugador_numero << " giro -30 grados"<< "\n\n\n\n\n\n";
+            cout <<datos.jugador.jugador_numero << " giro -30 grados"<< "\n\n\n\n\n\n";
 
             return resultado = "(turn -30)";
         }
         else    // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
-            if(stod(datos.balon_distancia) <= 1)        // BALON MUY CERCA
+            if(stod(datos.ball.balon_distancia) <= 1)        // BALON MUY CERCA
             {
-                return resultado = "(kick 100 "+datos.balon_direccion+")";
+                return resultado = "(kick 100 "+datos.ball.balon_direccion+")";
             }
-            if(stod(datos.balon_distancia) <= 20)   // BALON DISTANCIA MEDIA 
+            if(stod(datos.ball.balon_distancia) <= 20)   // BALON DISTANCIA MEDIA 
             {
-                return resultado = "(dash 100 "+datos.balon_direccion+")";
+                return resultado = "(dash 100 "+datos.ball.balon_direccion+")";
             }
-            else                                   // BALON MUY LEJOS
+            else                                   // ball.BALON MUY LEJOS
             {
-                return resultado = "(dash 70 "+datos.balon_direccion+")";
+                return resultado = "(dash 70 "+datos.ball.balon_direccion+")";
             }
         }
     }

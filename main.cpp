@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
             try
             {
                 send_message_funtion(received_message_content, datos);
-                //crear_matriz_valores_absolutos(received_message_content, flags);//ABSOLUTOS
-                //relative2Abssolute(flags);//ABSOLUTOS
+                crear_matriz_valores_absolutos(received_message_content, flags);//ABSOLUTOS
+                relative2Abssolute(flags);//ABSOLUTOS
             }
             catch (const std::exception &e)
             {
