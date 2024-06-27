@@ -30,6 +30,7 @@ set(SOURCE_FILES
     Funciones.cpp
     Posicion_abs.cpp
     Gestion_parentesis.cpp
+    area.cpp
 )
 
 add_executable(player ${SOURCE_FILES})

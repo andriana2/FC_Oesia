@@ -35,20 +35,6 @@ void crear_matriz_valores_absolutos(string const &mensaje, vector<shared_ptr<fla
          { return f1->distancia < f2->distancia; });
 }
 
-string vector_separar_string(string const &linea)
-{
-    int i{0};
-    int valor{0};
-    while (i < linea.size())
-    {
-        if (linea.at(i) == ')')
-            valor = i;
-        i++;
-    }
-    string nueva_linea = linea.substr(valor + 1, linea.size() - valor);
-    return (nueva_linea);
-}
-
 void imprimir_matriz(vector<shared_ptr<flagKnowns>> &flag)
 {
     for (auto const &f : flag)
@@ -61,6 +47,7 @@ void imprimir_matriz(vector<shared_ptr<flagKnowns>> &flag)
         cout << endl;
     }
 }
+
 void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags)
 {
 
@@ -246,18 +233,16 @@ void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags, Datos_Juego &dato
     }
 
     // cout << "xPlayer: " << x_player << "\t" << "yPlayer: " << y_player << endl;
-    datos.x_absoluta = x_player;
-    datos.y_absoluta = y_player;
+    datos.jugador.x_absoluta = x_player;
+    datos.jugador.y_absoluta = y_player;
 }
 
 // void absolute2relative(double x, double y, double xf, double yf)
 // {
-
 //     double direccion;
 //     double d = sqrt(pow((xf - x),2) + pow((yf - y),2));
 //     double cosBeta = (xf - x)/d;
 //     double sinBeta = (yf - y)/d;
-
 //     if(abs(cosBeta) < 0.01)
 //     {
 //         cosBeta = 0;
@@ -266,7 +251,6 @@ void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags, Datos_Juego &dato
 //     {
 //         sinBeta = 0;
 //     }
-
 //     if((cosBeta == 0)||(sinBeta == 0))
 //     {
 //         if((cosBeta == 0)&&(sinBeta == 0))
@@ -301,7 +285,6 @@ void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags, Datos_Juego &dato
 //         double beta = atan2(sinBeta,cosBeta);
 //         direccion = -((180/M_PI)*beta);
 //     }
-
 //     std::cout << "angle: " << direccion << endl;
 //     std::cout << "d: " << d << endl;
 //     std::cout << endl;

@@ -2,18 +2,17 @@
 #define POSICION_ABS_H
 
 #include "Funciones.h"
+#include "utils.h"
+
 #include <memory>
 #include <string>
 #include <vector>
-using namespace std;
 #include <iostream>
 #include <unistd.h>
 #include <cmath>
 #include <algorithm>
 
 using namespace std;
-vector <string> GestionParentesis(string const &str);//Borrar
-vector <string> split(string const &str, char separador);//Borrar
 
 struct flagKnowns {
     string name;
@@ -22,6 +21,7 @@ struct flagKnowns {
     float distancia;
     float direccion;
 };
+
 void inicializacion_flags(vector <shared_ptr<flagKnowns>> &flags);
 void crear_matriz_valores_absolutos(string const &mensaje, vector<shared_ptr<flagKnowns>> &flags);
 string vector_separar_string(string const &linea);

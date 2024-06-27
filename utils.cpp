@@ -1,7 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include "Funciones.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -90,11 +87,43 @@ vector <string> GestionParentesis(string const &str)
     
 }
 
-/*int main()
-{
-    //_________ej2__________
-    vector <string> cadena soccer("((hola)(que))(tal)(estas)");
-        
 
-    return (0);
-}*/
+vector <string> split(string const &str, char separador)
+{
+    vector <string> resultado;
+    string temp{""};
+    bool flag_palabra{0};
+    for (int i{0}; i < str.size(); i++)
+    {
+        if (str.at(i) == separador)
+        {
+            if (flag_palabra == 1)
+            {
+                resultado.push_back(temp);
+                temp = "";
+            }
+            flag_palabra = 1;
+        }
+        else if (flag_palabra = 1)
+        {
+            temp = temp + str.at(i);
+        }
+    }
+    if (temp != "")
+        resultado.push_back(temp);
+    return (resultado);
+}
+
+string vector_separar_string(string const &linea)
+{
+    int i{0};
+    int valor{0};
+    while (i < linea.size())
+    {
+        if (linea.at(i) == ')')
+            valor = i;
+        i++;
+    }
+    string nueva_linea = linea.substr(valor + 1, linea.size() - valor);
+    return (nueva_linea);
+}
