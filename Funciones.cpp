@@ -44,15 +44,15 @@ void check_see_ball(string const &message, Datos_Juego &datos) // comprobamos si
     else
         datos.ball.veo_balon = false;
 }
-void send_message_funtion(string const &mensage, Datos_Juego &datos) // envío mensaje si veo/no veo el balon
- {
+void send_message_funtion(string const &mensage, Datos_Juego &datos) 
+{
     if (mensage.find("see") == -1)
         return ;
     check_see_ball(mensage, datos);
     vector<string> vector_mensaje = GestionParentesis(mensage);
-    vector<string> vector_mensaje_2 = GestionParentesis(vector_mensaje.at(0));
+    vector_mensaje = GestionParentesis(vector_mensaje.at(0));
     vector<string> vector_balon;
-    for(auto const &v : vector_mensaje_2)
+    for(auto const &v : vector_mensaje)
     {
         if (v.find("(b)") != -1)
         {

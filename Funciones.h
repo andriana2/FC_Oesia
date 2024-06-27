@@ -32,7 +32,6 @@ struct Porteria{
     bool veo_porteria_contraria;
 };
 
-
 struct Datos_Juego{
     Jugador jugador;
     Ball ball;
