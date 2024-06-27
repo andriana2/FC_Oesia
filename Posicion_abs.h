@@ -29,7 +29,7 @@ void imprimir_matriz(vector <shared_ptr<flagKnowns>> &flag);
 
 
 void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags);
-void absolute2relative(double x, double y, double xf, double yf);
+//void absolute2relative(double x, double y, double xf, double yf);
 bool compareDistance(const shared_ptr<flagKnowns> &f1, const shared_ptr<flagKnowns> &f2);
 
 

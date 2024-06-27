@@ -14,6 +14,8 @@ struct Datos_Juego{
     //juegador
     string jugador_numero;
     string jugador_lado_campo;
+    float x_absoluta;
+    float y_absoluta;
     
     //Balon
     string balon_distancia;
