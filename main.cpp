@@ -1,5 +1,7 @@
 #include "Funciones.h"
 #include "Posicion_abs.h"
+#include "utils.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
             {
                 send_message_funtion(received_message_content, datos);
                 crear_matriz_valores_absolutos(received_message_content, flags);//ABSOLUTOS
-                relative2Abssolute(flags);//ABSOLUTOS
+                relative2Abssolute(flags, datos);//ABSOLUTOS
             }
             catch (const std::exception &e)
             {

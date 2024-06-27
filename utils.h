@@ -7,8 +7,8 @@
 
 using namespace std;
 
-vector <string> split(string const &str, char separador);
-vector <string> GestionParentesis(string const &str);
+vector<string> split(string const &str, char separador);
+vector<string> GestionParentesis(string const &str);
 string vector_separar_string(string const &linea);
 
 #endif
