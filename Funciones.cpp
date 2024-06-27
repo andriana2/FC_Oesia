@@ -31,7 +31,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         }
     }
     auto moveCommand = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")";// (move -51 0)
-    cout << moveCommand<< endl;
+    //cout << moveCommand<< endl;
     udp_socket.sendTo(moveCommand, recep);
 }
 
@@ -59,7 +59,7 @@ void send_message_funtion(string const &mensage, Datos_Juego &datos) // envío m
             vector_balon = split(v, ' ');
             datos.balon_distancia = vector_balon.at(1);
             datos.balon_direccion = vector_balon.at(2);
-            cout << datos.balon_distancia << " " << datos.balon_direccion << endl;
+            //cout << datos.balon_distancia << " " << datos.balon_direccion << endl;
         }
     }
 

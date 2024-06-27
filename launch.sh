@@ -9,7 +9,11 @@ gnome-terminal -- bash -c "/home/andri/Descargas/rcssserver-19.0.0/src/rcsoccers
 
 sleep 2;
 
+<<<<<<< HEAD
 for i in {0..2}
+=======
+for i in {0..1}
+>>>>>>> 0238c7137d9bd0b583cd516155fd1b9bca41b011
 do
   gnome-terminal -- bash -c "/home/andri/Escritorio/FC_Oesia/build/player FC_Oesia 555$i" & sleep 1
 done

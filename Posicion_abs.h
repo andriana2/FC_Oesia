@@ -1,7 +1,7 @@
 #ifndef POSICION_ABS_H
 #define POSICION_ABS_H
 
-//#include "Funciones.h"
+#include "Funciones.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -28,9 +28,9 @@ string vector_separar_string(string const &linea);
 void imprimir_matriz(vector <shared_ptr<flagKnowns>> &flag);
 
 
-void relative2Abssolute(double direccion, double d, double xf, double yf);
+void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags);
 void absolute2relative(double x, double y, double xf, double yf);
-bool compareDistance(const flagKnowns & f1, const flagKnowns & f2);
+bool compareDistance(const shared_ptr<flagKnowns> &f1, const shared_ptr<flagKnowns> &f2);
 
 
 
