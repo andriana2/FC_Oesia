@@ -11,18 +11,21 @@ using namespace std;
 #include "Posicion_abs.h"
 #include "utils.h"
 
-struct Jugador{
+struct Jugador
+{
     string jugador_numero;
     string lado_campo;
     float x_absoluta;
     float y_absoluta;
 };
-struct Ball{
+struct Ball
+{
     string balon_distancia;
     string balon_direccion;
     bool veo_balon;
 };
-struct Porteria{
+struct Porteria
+{
     string palo_abajo_distancia;
     string palo_abajo_direccion;
     string palo_arriba_distancia;
@@ -32,20 +35,20 @@ struct Porteria{
     bool veo_porteria_contraria;
 };
 
-struct Datos_Juego{
+struct Datos_Juego
+{
     Jugador jugador;
     Ball ball;
     Porteria porteria;
-
 };
 
-vector <string> GestionParentesis(string const &str);
-vector <string> split(string const &str, char separador);
+vector<string> GestionParentesis(string const &str);
+vector<string> split(string const &str, char separador);
 void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socket,
-                                        MinimalSocket::Address const &recep,Datos_Juego &datos);
+                     MinimalSocket::Address const &recep, Datos_Juego &datos);
 
 void check_see_ball(string const &message, Datos_Juego &datos);
 void send_message_funtion(string const &received_message_content, Datos_Juego &datos);
-string funcionEnviar(Datos_Juego const & datos);
+string funcionEnviar(Datos_Juego const &datos);
 
-#endif // GESTION_PARENTESIS_H
+#endif
