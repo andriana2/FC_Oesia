@@ -8,8 +8,9 @@ using namespace std;
 #include <MinimalSocket/udp/UdpSocket.h>
 #include <unistd.h>
 #include <memory>
-#include "Posicion_abs.h"
 #include "utils.h"
+
+//struct Datos_Juego;
 
 struct Jugador
 {
