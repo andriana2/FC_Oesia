@@ -79,11 +79,50 @@ void check_see_ball(string const &message, Datos_Juego &datos) // comprobamos si
     else
         datos.ball.veo_balon = false;
 }
+
+void check_see_porteria_contraria(string const &message, Datos_Juego &datos)
+{
+    if (message.find("(g r)") != -1 && datos.jugador.lado_campo == "l")
+    {
+        datos.porteria.veo_porteria_contraria = true;
+    }
+    else if (message.find("(g l)") != -1 && datos.jugador.lado_campo == "r")
+    {
+        datos.porteria.veo_porteria_contraria = true;
+    }
+    else
+        datos.porteria.veo_porteria_contraria = false;
+}
+
+void check_tengo_balon(Datos_Juego &datos)
+{
+    if (stod(datos.ball.balon_distancia) <= 1.0)
+        datos.jugador.tengo_balon = true;
+    else
+        datos.jugador.tengo_balon = false;
+}
+
+// esta mal check_equipo_balon
+void check_equipo_balon(Datos_Juego &datos)
+{
+    if (datos.jugador.tengo_balon)
+    {
+        datos.jugador.equipo_tiene_balon = true;
+    }
+    else if ((datos.jugador_cercano.distancia == datos.ball.balon_distancia) &&
+             (datos.jugador_cercano.direccion == datos.ball.balon_direccion))
+        datos.jugador.equipo_tiene_balon = true;
+    else
+        datos.jugador.equipo_tiene_balon = false;
+}
+
 void send_message_funtion(string const &mensage, Datos_Juego &datos)
 {
     if (mensage.find("see") == -1)
         return;
     check_see_ball(mensage, datos);
+    check_see_porteria_contraria(mensage, datos);
+    check_tengo_balon(datos);
     vector<string> vector_mensaje = GestionParentesis(mensage);
     vector_mensaje = GestionParentesis(vector_mensaje.at(0));
     vector<string> vector_balon;
@@ -95,6 +134,44 @@ void send_message_funtion(string const &mensage, Datos_Juego &datos)
             datos.ball.balon_distancia = vector_balon.at(1);
             datos.ball.balon_direccion = vector_balon.at(2);
             // cout << datos.balon_distancia << " " << datos.balon_direccion << endl;
+        }
+        if ((v.find("(f g r b)") != -1) && datos.jugador.lado_campo == "l")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
+        }
+        if ((v.find("(g r)") != -1) && datos.jugador.lado_campo == "l")
+        {
+            vector<string> vector_porteria = split(v, ' ');
+            datos.porteria.centro_distancia = vector_porteria.at(2);
+            datos.porteria.centro_direccion = vector_porteria.at(3);
+        }
+        if ((v.find("(f g r t)") != -1) && datos.jugador.lado_campo == "l")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
+        }
+
+        // si erres el otro campo
+        if ((v.find("(f g l b)") != -1) && datos.jugador.lado_campo == "r")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
+        }
+        if ((v.find("(g l)") != -1) && datos.jugador.lado_campo == "r")
+        {
+            vector<string> vector_porteria = split(v, ' ');
+            datos.porteria.centro_distancia = vector_porteria.at(2);
+            datos.porteria.centro_direccion = vector_porteria.at(3);
+        }
+        if ((v.find("(f g l t)") != -1) && datos.jugador.lado_campo == "r")
+        {
+            vector<string> vector_palo_bajo = split(v, ' ');
+            datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
+            datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
         }
     }
 }
@@ -128,17 +205,14 @@ string funcionEnviar(Datos_Juego const &datos)
         }
         else // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
-            if (stod(datos.ball.balon_distancia) <= 1) // BALON MUY CERCA
+            string movimiento_hacer = movimiento_jugador(datos);
+            string mensaje_devolver = "";
+            if (stod(movimiento_hacer) == 0 || stod(movimiento_hacer) == -1)
+                return "";
+            else
             {
-                return resultado = "(kick 100 " + datos.ball.balon_direccion + ")";
-            }
-            if (stod(datos.ball.balon_distancia) <= 20) // BALON DISTANCIA MEDIA
-            {
-                return resultado = "(dash 100 " + datos.ball.balon_direccion + ")";
-            }
-            else // ball.BALON MUY LEJOS
-            {
-                return resultado = "(dash 70 " + datos.ball.balon_direccion + ")";
+                mensaje_devolver = "(dash " + movimiento_hacer + " " + datos.ball.balon_direccion + ")";
+                return (mensaje_devolver);
             }
         }
     }
