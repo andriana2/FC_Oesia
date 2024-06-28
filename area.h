@@ -4,6 +4,6 @@
 
 
 struct Datos_Juego;
-bool check_area(Datos_Juego &datos);
+bool check_area(Datos_Juego const &datos);
 string movimientos_jugador(Datos_Juego const &datos);
 #endif

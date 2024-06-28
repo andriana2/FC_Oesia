@@ -1,6 +1,6 @@
 #include "area.h"
 
-bool check_area(Datos_Juego &datos)
+bool check_area(Datos_Juego const &datos)
 {
     bool portero = (datos.jugador.jugador_numero == "1");
     bool defensa = (datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5");
@@ -86,8 +86,9 @@ string movimientos_jugador(Datos_Juego const &datos)
             else
                 return "-1";
         }
-
         else
             return "0";
     }
+    else 
+        return "0";
 }
