@@ -9,6 +9,7 @@ using namespace std;
 #include <unistd.h>
 #include <memory>
 #include "utils.h"
+#include "area.h"
 
 // struct Datos_Juego;
 

@@ -17,20 +17,6 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
     {
         datos.jugador.lado_campo = "l";
         datos.jugador.jugador_numero = player_[2];
-<<<<<<< HEAD
-        switch(stoi(player_[2]) - 1){
-            case 0: pos.x= -52; pos.y = 0; break;
-            case 1: pos.x= -30; pos.y = -30; break;
-            case 2: pos.x= -35; pos.y = -10; break;
-            case 3: pos.x= -35; pos.y = 10; break;
-            case 4: pos.x= -30; pos.y = 30; break;
-            case 5: pos.x= -25; pos.y = -10; break;
-            case 6: pos.x= -25; pos.y = 10; break;
-            case 7: pos.x= -11; pos.y = 0; break;
-            case 8: pos.x= -5; pos.y = 27; break;
-            case 9: pos.x= -5; pos.y = -27; break;
-            case 10: pos.x= -5; pos.y = 10; break;
-=======
         switch (stoi(player_[2]) - 1)
         {
         case 0:
@@ -77,7 +63,6 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
             pos.x = -5;
             pos.y = 10;
             break;
->>>>>>> c74f051ad4591798c21a648f30eb9c463c1d7121
         }
     }
     auto moveCommand = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")"; // (move -51 0)
@@ -220,7 +205,7 @@ string funcionEnviar(Datos_Juego const &datos)
         }
         else // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
-            string movimiento_hacer = movimiento_jugador(datos);
+            string movimiento_hacer = movimientos_jugador(datos);
             string mensaje_devolver = "";
             if (stod(movimiento_hacer) == 0 || stod(movimiento_hacer) == -1)
                 return "";
