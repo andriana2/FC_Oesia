@@ -96,7 +96,7 @@ void check_see_porteria_contraria(string const &message, Datos_Juego &datos)
 
 void check_tengo_balon(Datos_Juego &datos)
 {
-    if (stod(datos.ball.balon_distancia) <= 1.0)
+    if (stod(datos.ball.balon_distancia) <= 1)
         datos.jugador.tengo_balon = true;
     else
         datos.jugador.tengo_balon = false;
@@ -122,7 +122,7 @@ void send_message_funtion(string const &mensage, Datos_Juego &datos)
         return;
     check_see_ball(mensage, datos);
     check_see_porteria_contraria(mensage, datos);
-    check_tengo_balon(datos);
+    //check_tengo_balon(datos);
     vector<string> vector_mensaje = GestionParentesis(mensage);
     vector_mensaje = GestionParentesis(vector_mensaje.at(0));
     vector<string> vector_balon;
@@ -186,7 +186,6 @@ string funcionEnviar(Datos_Juego const &datos)
     // SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
     if (!datos.ball.veo_balon)
     {
-        cout << datos.jugador.jugador_numero << "no veo nada" << "\n";
         return resultado = "(turn 60)";
     }
     else // SI VEMOS EL BALON ---> NOS GIRAMOS CCW O CW PARA VERLO MUY BIEN
@@ -199,19 +198,22 @@ string funcionEnviar(Datos_Juego const &datos)
         }
         else if (stod(datos.ball.balon_direccion) < -40) // BALON A LA IZQA, GIRA IZQA
         {
-            cout << datos.jugador.jugador_numero << " giro -30 grados" << "\n\n\n\n\n\n";
-
             return resultado = "(turn -30)";
         }
         else // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
             string movimiento_hacer = movimientos_jugador(datos);
+            //cout << "Movimiento hacer "<< movimiento_hacer << endl; 
             string mensaje_devolver = "";
             if (stod(movimiento_hacer) == 0 || stod(movimiento_hacer) == -1)
+            {
+                //cout << "No envio nada " << endl; 
                 return "";
+            }
             else
             {
                 mensaje_devolver = "(dash " + movimiento_hacer + " " + datos.ball.balon_direccion + ")";
+                //cout <<mensaje_devolver<< endl; 
                 return (mensaje_devolver);
             }
         }

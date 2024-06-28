@@ -45,15 +45,16 @@ string movimientos_jugador(Datos_Juego const &datos)
 
     if (check_area(datos))
     {
+        //cout <<"distancia balon "<< datos.ball.balon_distancia<<endl;
         if (defensa)
         {
-            if (stod(datos.ball.balon_distancia) >= 40)
+            if (stof(datos.ball.balon_distancia) >= 40)
                 return "15";
-            else if (stod(datos.ball.balon_distancia) < 40)
+            else if (stof(datos.ball.balon_distancia) < 40)
                 return "0";
-            else if (stod(datos.ball.balon_distancia) < 10)
+            else if (stof(datos.ball.balon_distancia) < 10)
                 return "80";
-            else if (stod(datos.ball.balon_distancia) < 1)
+            else if (stof(datos.ball.balon_distancia) < 1)
                 return "-1";
             else
                 return "-1";
@@ -61,13 +62,13 @@ string movimientos_jugador(Datos_Juego const &datos)
 
         else if (mc)
         {
-            if (stod(datos.ball.balon_distancia) >= 30)
+            if (stof(datos.ball.balon_distancia) >= 30)
                 return "15";
-            else if (stod(datos.ball.balon_distancia) < 30)
+            else if (stof(datos.ball.balon_distancia) < 30)
                 return "0";
-            else if (stod(datos.ball.balon_distancia) < 10)
+            else if (stof(datos.ball.balon_distancia) < 10)
                 return "80";
-            else if (stod(datos.ball.balon_distancia) < 1)
+            else if (stof(datos.ball.balon_distancia) < 1)
                 return "-1";
             else
                 return "-1";
@@ -75,13 +76,13 @@ string movimientos_jugador(Datos_Juego const &datos)
 
         else if (delantero)
         {
-            if (stod(datos.ball.balon_distancia) >= 25)
+            if (stof(datos.ball.balon_distancia) >= 25)
                 return "15";
-            else if (stod(datos.ball.balon_distancia) < 25)
+            else if (stof(datos.ball.balon_distancia) < 25)
                 return "0";
-            else if (stod(datos.ball.balon_distancia) < 15)
+            else if (stof(datos.ball.balon_distancia) < 15)
                 return "80";
-            else if (stod(datos.ball.balon_distancia) < 1)
+            else if (stof(datos.ball.balon_distancia) < 1)
                 return "-1";
             else
                 return "-1";
