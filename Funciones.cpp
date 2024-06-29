@@ -96,24 +96,62 @@ void check_see_porteria_contraria(string const &message, Datos_Juego &datos)
 
 void check_tengo_balon(Datos_Juego &datos)
 {
-    if (stod(datos.ball.balon_distancia) <= 1)
-        datos.jugador.tengo_balon = true;
-    else
+    try
+    {
+        if (stod(datos.ball.balon_distancia) < 0.9)
+        {
+            datos.jugador.tengo_balon = true;
+            cout << "tengo el balon " << endl;
+        }
+        else
+        {
+            datos.jugador.tengo_balon = false;
+        }
+    }
+    catch (const std::invalid_argument &e)
+    {
+        // std::cerr << "Error: balon_distancia no es un número válido." << std::endl;
         datos.jugador.tengo_balon = false;
+    }
+    catch (const std::out_of_range &e)
+    {
+        // std::cerr << "Error: balon_distancia está fuera del rango permitido." << std::endl;
+        datos.jugador.tengo_balon = false;
+    }
 }
 
 // esta mal check_equipo_balon
-void check_equipo_balon(Datos_Juego &datos)
+void check_jugador_cercano_cerca_balon(Datos_Juego &datos)
 {
-    if (datos.jugador.tengo_balon)
+    try
     {
-        datos.jugador.equipo_tiene_balon = true;
+        float resto = abs(stod(datos.jugador_cercano.distancia) - stod(datos.ball.balon_distancia));
+        if (stod(datos.jugador_cercano.distancia) < stod(datos.ball.balon_distancia) && resto < 25)
+            datos.jugador_cercano.cerca_balon = true;
+        else
+            datos.jugador_cercano.cerca_balon = false;
     }
-    else if ((datos.jugador_cercano.distancia == datos.ball.balon_distancia) &&
-             (datos.jugador_cercano.direccion == datos.ball.balon_direccion))
-        datos.jugador.equipo_tiene_balon = true;
-    else
-        datos.jugador.equipo_tiene_balon = false;
+    catch (const std::invalid_argument &e)
+    {
+        // std::cerr << "Error: balon_distancia no es un número válido." << std::endl;
+       datos.jugador_cercano.cerca_balon = false;
+    }
+    catch (const std::out_of_range &e)
+    {
+        // std::cerr << "Error: balon_distancia está fuera del rango permitido." << std::endl;
+       datos.jugador_cercano.cerca_balon = false;
+    }
+    if (datos.jugador_cercano.cerca_balon == true)
+        cout << "jugador mas cerca del balon que yo" << datos.jugador_cercano.jugador_numero <<endl;
+    // if (datos.jugador.tengo_balon)
+    // {
+    //     datos.jugador.equipo_tiene_balon = true;
+    // }
+    // else if ((datos.jugador_cercano.distancia == datos.ball.balon_distancia) &&
+    //          (datos.jugador_cercano.direccion == datos.ball.balon_direccion))
+    //     datos.jugador.equipo_tiene_balon = true;
+    // else
+    //     datos.jugador.equipo_tiene_balon = false;
 }
 
 void send_message_funtion(string const &mensage, Datos_Juego &datos)
@@ -122,7 +160,9 @@ void send_message_funtion(string const &mensage, Datos_Juego &datos)
         return;
     check_see_ball(mensage, datos);
     check_see_porteria_contraria(mensage, datos);
-    //check_tengo_balon(datos);
+    check_tengo_balon(datos);
+    check_jugador_cercano_cerca_balon(datos);
+
     vector<string> vector_mensaje = GestionParentesis(mensage);
     vector_mensaje = GestionParentesis(vector_mensaje.at(0));
     vector<string> vector_balon;
@@ -173,6 +213,18 @@ void send_message_funtion(string const &mensage, Datos_Juego &datos)
             datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
             datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
         }
+        string encontrar_jugador_nuestro_equipo = "(p \"" + datos.nombre_equipo + "\" ";
+        if (v.find(encontrar_jugador_nuestro_equipo) != -1)
+        {
+            vector<string> vector_jugador_cercano = split(v, ' ');
+            datos.jugador_cercano.jugador_numero = vector_jugador_cercano.at(2);
+            datos.jugador_cercano.distancia = vector_jugador_cercano.at(3);
+            datos.jugador_cercano.direccion = vector_jugador_cercano.at(4);
+            // cout << v << "        vector anterior"<< endl;
+            // cout << vector_jugador_cercano.at(2)<< "        numero"<< endl;
+            // cout << vector_jugador_cercano.at(3)<< "        distacia"<< endl;
+            // cout << vector_jugador_cercano.at(4)<< "        dirreccion"<< endl;
+        }
     }
 }
 
@@ -203,17 +255,37 @@ string funcionEnviar(Datos_Juego const &datos)
         else // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
             string movimiento_hacer = movimientos_jugador(datos);
-            //cout << "Movimiento hacer "<< movimiento_hacer << endl; 
             string mensaje_devolver = "";
-            if (stod(movimiento_hacer) == 0 || stod(movimiento_hacer) == -1)
+
+            if (datos.jugador.tengo_balon == true)
             {
-                //cout << "No envio nada " << endl; 
+                if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) < 50)
+                {
+                    mensaje_devolver = "(kick 100 " + datos.porteria.centro_direccion + ")";
+                    return mensaje_devolver;
+                }
+                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 30 && (datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero))
+                {
+                    mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
+                    return mensaje_devolver;
+                }
+                else if (datos.porteria.veo_porteria_contraria == false && datos.jugador_cercano.jugador_numero < datos.jugador.jugador_numero)
+                {
+                    mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
+                    return mensaje_devolver;
+                }
+                else{
+                    return ("(turn 30)");
+                }
+            }
+            if (datos.jugador_cercano.cerca_balon == true || (stod(movimiento_hacer) == 0 || stod(movimiento_hacer) == -1))
+            {
                 return "";
             }
             else
             {
                 mensaje_devolver = "(dash " + movimiento_hacer + " " + datos.ball.balon_direccion + ")";
-                //cout <<mensaje_devolver<< endl; 
+                // cout <<mensaje_devolver<< endl;
                 return (mensaje_devolver);
             }
         }

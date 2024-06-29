@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         cout << "No hay puesto todos los argumentos" << argv[0] << endl;
         return (1);
     }
-    string name_team = argv[1];
+    datos.nombre_equipo = argv[1];
     
     //numero del puerto stoi pasa de letra a numero
     MinimalSocket::Port this_socket_port = stoi(argv[2]);
@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
     }
 
     MinimalSocket::Address other_recipient_udp = MinimalSocket::Address{"127.0.0.1", 6000};
-    cout << "(init " + name_team + "(version 19))" << endl;
+    cout << "(init " + datos.nombre_equipo + "(version 19))" << endl;
 
-    udp_socket.sendTo("(init " + name_team + "(version 19))", other_recipient_udp);
+    udp_socket.sendTo("(init " + datos.nombre_equipo + "(version 19))", other_recipient_udp);
     cout << "Init Message sent" << endl;
 
     size_t message_max_size = 1000;
@@ -69,6 +69,10 @@ int main(int argc, char *argv[])
             }
         } while (received_message_content.find("(see") == -1);
         //cout << received_message_content << endl <<endl <<endl;
-        udp_socket.sendTo(funcionEnviar(datos),server_udp);
+        string envio = funcionEnviar(datos);
+        if (envio != ""){
+            cout << datos.jugador.jugador_numero << "<- numero jugador "<< envio <<endl;
+            udp_socket.sendTo(envio,server_udp);
+        }
     }
 }

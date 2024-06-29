@@ -9,31 +9,32 @@ bool check_area(Datos_Juego const &datos)
 
     if (portero)
     {
-        if ((datos.jugador.x_absoluta < 13 && datos.jugador.y_absoluta > 8) || (datos.jugador.y_absoluta < 47 && datos.jugador.y_absoluta > 33))
+        if ((datos.jugador.x_absoluta < 13 && datos.jugador.x_absoluta > 8) || (datos.jugador.y_absoluta < 47 && datos.jugador.y_absoluta > 33))
         {
             return true;
         }
     }
-
     else if (defensa)
-        if ((datos.jugador.x_absoluta < 60 && datos.jugador.x_absoluta > 24) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+    {
+        if ((datos.jugador.x_absoluta < 60 && datos.jugador.x_absoluta > 20) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
         {
             return true;
         }
-
-        else if (mc)
-            if ((datos.jugador.x_absoluta < 90 && datos.jugador.x_absoluta > 34) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
-            {
-                return true;
-            }
-
-            else if (delantero)
-            {
-                if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 50) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
-                {
-                    return true;
-                }
-            }
+    }
+    else if (mc)
+    {
+        if ((datos.jugador.x_absoluta < 90 && datos.jugador.x_absoluta > 30) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        {
+            return true;
+        }
+    }
+    else if (delantero)
+    {
+        if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 40) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -45,7 +46,7 @@ string movimientos_jugador(Datos_Juego const &datos)
 
     if (check_area(datos))
     {
-        //cout <<"distancia balon "<< datos.ball.balon_distancia<<endl;
+        // cout <<"distancia balon "<< datos.ball.balon_distancia<<endl;
         if (defensa)
         {
             if (stof(datos.ball.balon_distancia) >= 40)
@@ -65,7 +66,7 @@ string movimientos_jugador(Datos_Juego const &datos)
             if (stof(datos.ball.balon_distancia) >= 30)
                 return "15";
             else if (stof(datos.ball.balon_distancia) < 30)
-                return "0";
+                return "10";
             else if (stof(datos.ball.balon_distancia) < 10)
                 return "80";
             else if (stof(datos.ball.balon_distancia) < 1)
@@ -77,11 +78,11 @@ string movimientos_jugador(Datos_Juego const &datos)
         else if (delantero)
         {
             if (stof(datos.ball.balon_distancia) >= 25)
-                return "15";
+                return "30";
             else if (stof(datos.ball.balon_distancia) < 25)
-                return "0";
+                return "50";
             else if (stof(datos.ball.balon_distancia) < 15)
-                return "80";
+                return "100";
             else if (stof(datos.ball.balon_distancia) < 1)
                 return "-1";
             else
@@ -90,6 +91,9 @@ string movimientos_jugador(Datos_Juego const &datos)
         else
             return "0";
     }
-    else 
+    else
+    {
+        cout << "fuera de area" << endl;
         return "0";
+    }
 }

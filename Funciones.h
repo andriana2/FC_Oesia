@@ -28,6 +28,7 @@ struct Jugador_cercano
     string jugador_numero;
     string distancia;
     string direccion;
+    bool cerca_balon;
 };
 
 struct Ball
@@ -49,6 +50,7 @@ struct Porteria
 
 struct Datos_Juego
 {
+    string nombre_equipo;
     Jugador jugador;
     Ball ball;
     Porteria porteria;
@@ -63,7 +65,8 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
 
 void check_see_ball(string const &message, Datos_Juego &datos);
 void check_tengo_balon(Datos_Juego &datos);
-void check_equipo_balon(Datos_Juego &datos);
+void check_jugador_cercano_cerca_balon(Datos_Juego &datos);
+//void check_equipo_balon(Datos_Juego &datos);
 
 void send_message_funtion(string const &received_message_content, Datos_Juego &datos);
 string funcionEnviar(Datos_Juego const &datos);
