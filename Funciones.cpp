@@ -257,31 +257,44 @@ string funcionEnviar(Datos_Juego const &datos)
             string movimiento_hacer = movimientos_jugador(datos);
             string mensaje_devolver = "";
 
+            //si yo tengo el balon
             if (datos.jugador.tengo_balon == true)
             {
+                //si veo la porteria contraria y estoy a menos de 50 metros tiro 
                 if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) < 50)
                 {
                     mensaje_devolver = "(kick 100 " + datos.porteria.centro_direccion + ")";
                     return mensaje_devolver;
                 }
-                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 30 && (datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero))
+                //si veo la porteria y hay un jugador con mayor numero mas cerca se lo paso
+                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 50 && (datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero))
                 {
                     mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
                     return mensaje_devolver;
                 }
+                // si veo la porteri y hay un jugador cerca con mayor numero se lo paso
+                else if (datos.porteria.veo_porteria_contraria == false && datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero)
+                {
+                    mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
+                    return mensaje_devolver;
+                }
+                // si veo la porteri y hay un jugador cerca con menor numero se lo paso
                 else if (datos.porteria.veo_porteria_contraria == false && datos.jugador_cercano.jugador_numero < datos.jugador.jugador_numero)
                 {
                     mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
                     return mensaje_devolver;
                 }
+                // los demas casos
                 else{
                     return ("(turn 30)");
                 }
             }
+            //si creo que hay un jugador mas cerca que yo no hago nada y los demas casos de no movimiento
             if (datos.jugador_cercano.cerca_balon == true || (stod(movimiento_hacer) == 0 || stod(movimiento_hacer) == -1))
             {
                 return "";
             }
+            // si me dice la funcion de area.cpp que me mueva me muevo
             else
             {
                 mensaje_devolver = "(dash " + movimiento_hacer + " " + datos.ball.balon_direccion + ")";
