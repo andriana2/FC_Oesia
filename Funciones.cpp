@@ -48,7 +48,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
             pos.y = 10;
             break;
         case 7:
-            pos.x = -11;
+            pos.x = -18;
             pos.y = 0;
             break;
         case 8:
@@ -69,6 +69,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
     // cout << moveCommand<< endl;
     udp_socket.sendTo(moveCommand, recep);
 }
+
 
 void check_see_ball(string const &message, Datos_Juego &datos) // comprobamos si veo el balon (b)
 {
@@ -98,7 +99,7 @@ void check_tengo_balon(Datos_Juego &datos)
 {
     try
     {
-        if (stod(datos.ball.balon_distancia) < 0.9)
+        if (stod(datos.ball.balon_distancia) <= 1)
         {
             datos.jugador.tengo_balon = true;
             cout << "tengo el balon " << endl;
@@ -120,13 +121,28 @@ void check_tengo_balon(Datos_Juego &datos)
     }
 }
 
-// esta mal check_equipo_balon
+bool check_jugador_cerca(Datos_Juego &datos)
+{
+    auto db = stod(datos.ball.balon_distancia);
+    auto dp = stod(datos.jugador_cercano.distancia);
+    auto thetab = -(M_PI/180)*stod(datos.ball.balon_direccion);
+    auto thetap = -(M_PI/180)*stod(datos.jugador_cercano.direccion);
+
+    // Law of cosines to determine the distance of 2nd player to ball, seen from main player
+    auto d = sqrt(db*db + dp*dp -2*db*dp*cos(thetab - thetap));
+    if(d < dp){
+        return true;
+    } else{
+        return false;
+    }
+}
+// esta mal check_equipo_balon ????
+// Cambiar esta funcion, condiciones mal
 void check_jugador_cercano_cerca_balon(Datos_Juego &datos)
 {
     try
     {
-        float resto = abs(stod(datos.jugador_cercano.distancia) - stod(datos.ball.balon_distancia));
-        if (stod(datos.jugador_cercano.distancia) < stod(datos.ball.balon_distancia) && resto < 25)
+        if (check_jugador_cerca(datos))
             datos.jugador_cercano.cerca_balon = true;
         else
             datos.jugador_cercano.cerca_balon = false;
@@ -238,19 +254,19 @@ string funcionEnviar(Datos_Juego const &datos)
     // SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
     if (!datos.ball.veo_balon)
     {
-        return resultado = "(turn 60)";
+        return resultado = "(turn 70)";
     }
     else // SI VEMOS EL BALON ---> NOS GIRAMOS CCW O CW PARA VERLO MUY BIEN
     {
-        if (stod(datos.ball.balon_direccion) > 40) // BALON A LA DERECHA, GIRA DERECHA
+        if (stod(datos.ball.balon_direccion) > 30) // BALON A LA DERECHA, GIRA DERECHA
         {
             cout << "giro 30 grados" << "\n";
 
-            return resultado = "(turn 30)";
+            return resultado = "(turn 20)";
         }
-        else if (stod(datos.ball.balon_direccion) < -40) // BALON A LA IZQA, GIRA IZQA
+        else if (stod(datos.ball.balon_direccion) < -30) // BALON A LA IZQA, GIRA IZQA
         {
-            return resultado = "(turn -30)";
+            return resultado = "(turn -20)";
         }
         else // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
         {
@@ -261,13 +277,13 @@ string funcionEnviar(Datos_Juego const &datos)
             if (datos.jugador.tengo_balon == true)
             {
                 //si veo la porteria contraria y estoy a menos de 50 metros tiro 
-                if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) < 50)
+                if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) < 25)
                 {
                     mensaje_devolver = "(kick 100 " + datos.porteria.centro_direccion + ")";
                     return mensaje_devolver;
                 }
                 //si veo la porteria y hay un jugador con mayor numero mas cerca se lo paso
-                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 50 && (datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero))
+                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 25 && (datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero))
                 {
                     mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
                     return mensaje_devolver;

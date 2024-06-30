@@ -9,28 +9,28 @@ bool check_area(Datos_Juego const &datos)
 
     if (portero)
     {
-        if ((datos.jugador.x_absoluta < 13 && datos.jugador.x_absoluta > 8) || (datos.jugador.y_absoluta < 47 && datos.jugador.y_absoluta > 33))
+        if ((datos.jugador.x_absoluta < 13 && datos.jugador.x_absoluta > 8) && (datos.jugador.y_absoluta < 47 && datos.jugador.y_absoluta > 33))
         {
             return true;
         }
     }
     else if (defensa)
     {
-        if ((datos.jugador.x_absoluta < 60 && datos.jugador.x_absoluta > 20) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        if ((datos.jugador.x_absoluta < 60 && datos.jugador.x_absoluta > 20) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
         {
             return true;
         }
     }
     else if (mc)
     {
-        if ((datos.jugador.x_absoluta < 90 && datos.jugador.x_absoluta > 30) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        if ((datos.jugador.x_absoluta < 90 && datos.jugador.x_absoluta > 30) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
         {
             return true;
         }
     }
     else if (delantero)
     {
-        if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 40) || (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 40) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
         {
             return true;
         }
