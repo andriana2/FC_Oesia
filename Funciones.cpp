@@ -158,14 +158,29 @@ bool check_jugador_cerca(Datos_Juego &datos)
     }
 }
 
-void check_jugador_cercano_cerca_balon(Datos_Juego &datos)
+void check_jugador_cercano(string const &mensaje, Datos_Juego &datos)
 {
     try
     {
-        if (check_jugador_cerca(datos))
-            datos.jugador_cercano.cerca_balon = true;
-        else
-            datos.jugador_cercano.cerca_balon = false;
+        vector<vector<string>> vector_jugadores_cerca;
+        vector<string> vector_mensaje = GestionParentesis(mensaje);
+        vector_mensaje = GestionParentesis(vector_mensaje.at(0));
+        vector<string> vector_balon;
+        for (auto const &v : vector_mensaje)
+        {
+            string encontrar_jugador_nuestro_equipo = "(p \"" + datos.nombre_equipo + "\" ";
+            if (v.find(encontrar_jugador_nuestro_equipo) != -1)
+            {
+                vector<string> vector_jugador_cercano = split(v, ' ');
+                vector_jugador_cercano.at(2).pop_back();
+                cout <<vector_jugador_cercano.at(2)<< endl;
+                vector_jugadores_cerca.push_back({vector_jugador_cercano.at(2),vector_jugador_cercano.at(3),vector_jugador_cercano.at(4)});
+                // datos.jugador_cercano.jugador_numero = vector_jugador_cercano.at(2);
+                // datos.jugador_cercano.distancia = vector_jugador_cercano.at(3);
+                // datos.jugador_cercano.direccion = vector_jugador_cercano.at(4);
+            }
+        }
+        
     }
     catch (const std::invalid_argument &e)
     {
@@ -190,16 +205,16 @@ void check_jugador_cercano_cerca_balon(Datos_Juego &datos)
     //      datos.jugador.equipo_tiene_balon = false;
 }
 
-void send_message_funtion(string const &mensage, Datos_Juego &datos)
+void send_message_funtion(string const &mensaje, Datos_Juego &datos)
 {
-    if (mensage.find("see") == -1)
+    if (mensaje.find("see") == -1)
         return;
-    check_see_ball(mensage, datos);
-    check_see_porteria_contraria(mensage, datos);
+    check_see_ball(mensaje, datos);
+    check_see_porteria_contraria(mensaje, datos);
     check_tengo_balon(datos);
-    check_jugador_cercano_cerca_balon(datos);
+    check_jugador_cercano(mensaje, datos);
 
-    vector<string> vector_mensaje = GestionParentesis(mensage);
+    vector<string> vector_mensaje = GestionParentesis(mensaje);
     vector_mensaje = GestionParentesis(vector_mensaje.at(0));
     vector<string> vector_balon;
     for (auto const &v : vector_mensaje)
@@ -333,7 +348,7 @@ string funcionEnviar(Datos_Juego const &datos)
             else if (datos.jugador_cercano.cerca_balon)
             {
                 return ("");
-                //return ("(dash 50 " + datos.ball.balon_direccion + ")");
+                // return ("(dash 50 " + datos.ball.balon_direccion + ")");
             }
             else
             {
