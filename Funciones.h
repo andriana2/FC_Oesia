@@ -31,6 +31,11 @@ struct Jugador_cercano
     bool cerca_balon;
 };
 
+// struct Jugadores_Vistos
+// {
+//     vector<vector<string>> jugadores;
+// };
+
 struct Ball
 {
     string balon_distancia;

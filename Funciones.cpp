@@ -142,19 +142,22 @@ bool check_jugador_cerca(Datos_Juego &datos)
 
     if (rel <= 0.3)
     {
+        datos.jugador_cercano.cerca_balon = false;
         return false;
     }
     else if ((rel > 0.3) && (db < d))
     {
+        datos.jugador_cercano.cerca_balon = true;
         return true;
     }
     else
     {
+        datos.jugador_cercano.cerca_balon = true;
+
         return true;
     }
 }
-// esta mal check_equipo_balon ????
-// Cambiar esta funcion, condiciones mal
+
 void check_jugador_cercano_cerca_balon(Datos_Juego &datos)
 {
     try
@@ -253,10 +256,6 @@ void send_message_funtion(string const &mensage, Datos_Juego &datos)
             datos.jugador_cercano.jugador_numero = vector_jugador_cercano.at(2);
             datos.jugador_cercano.distancia = vector_jugador_cercano.at(3);
             datos.jugador_cercano.direccion = vector_jugador_cercano.at(4);
-            // cout << v << "        vector anterior"<< endl;
-            // cout << vector_jugador_cercano.at(2)<< "        numero"<< endl;
-            // cout << vector_jugador_cercano.at(3)<< "        distacia"<< endl;
-            // cout << vector_jugador_cercano.at(4)<< "        dirreccion"<< endl;
         }
     }
 }
@@ -307,11 +306,9 @@ string funcionEnviar(Datos_Juego const &datos)
                 }
                 else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 35)
                 {
-                    mensaje_devolver = "(kick 10 " + datos.porteria.centro_direccion + ")";
+                    mensaje_devolver = "(kick 20 " + datos.porteria.centro_direccion + ")";
                     return mensaje_devolver;
                 }
-                // si veo la porteri y hay un jugador cferca con mayor numero se lo paso
-                // else if (datos.porteria.veo_porteria_contraria == false)
                 else
                 {
                     mensaje_devolver = "(kick 20 120)";

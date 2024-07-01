@@ -56,7 +56,7 @@ string movimientos_jugador(Datos_Juego const &datos)
                 return "10";
             else if (stof(datos.ball.balon_distancia) < 40)
                 return "0";
-            else if (stof(datos.ball.balon_distancia) < 10)
+            else if (stof(datos.ball.balon_distancia) < 20)
                 return "80";
             else if (stof(datos.ball.balon_distancia) < 1)
                 return "-1";
@@ -69,7 +69,7 @@ string movimientos_jugador(Datos_Juego const &datos)
                 return "10";
             else if (stof(datos.ball.balon_distancia) < 40)
                 return "5";
-            else if (stof(datos.ball.balon_distancia) < 10)
+            else if (stof(datos.ball.balon_distancia) < 20)
                 return "80";
             else if (stof(datos.ball.balon_distancia) < 1)
                 return "-1";
