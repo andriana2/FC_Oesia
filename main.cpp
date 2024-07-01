@@ -7,10 +7,9 @@ int main(int argc, char *argv[])
 {
     Datos_Juego datos;
 
-    //PUEDE QUE QUITAR
     vector<shared_ptr<flagKnowns>> flags;
     inicializacion_flags(flags);
-    //FIN PUEDE QUE QUITAR
+
 
     
     //revisar si el numero de argumentos es correcto

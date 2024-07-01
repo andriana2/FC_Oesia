@@ -1,56 +1,7 @@
 #include "Posicion_abs.h"
 
-void crear_matriz_valores_absolutos(string const &mensaje, vector<shared_ptr<flagKnowns>> &flags)
-{
-    if (mensaje.find("see") == -1)
-        return;
-    vector<string> vector_mensaje = GestionParentesis(mensaje);                // see ((  f l c (2132)) )
-    vector<string> vector_mensaje_2 = GestionParentesis(vector_mensaje.at(0)); // {1} see {2} (f c l)(12) (23) .... {23} ((b) 12 23.3)
-    for (auto const &f : flags)
-    {
-        if (mensaje.find(f->name) == -1)
-        {
-            f->direccion = 999.0;
-            f->distancia = 999.0;
-        }
-        else
-        {
-            for (auto const &v : vector_mensaje_2)
-            {
-                if (v.find(f->name) != -1)
-                {
-                    vector<string> vector_balon;
-                    string nueva_linea = vector_separar_string(v);
-                    vector_balon = split(nueva_linea, ' ');
-
-                    // EJEMPLO ((b) 12 23.3)
-                    f->distancia = stod(vector_balon.at(0)); // 12
-                    f->direccion = stod(vector_balon.at(1)); // 23.3
-                }
-            }
-            // inicializacion_flags << "Algo ha fallado" << endl;
-        }
-    }
-    sort(flags.begin(), flags.end(), [](const shared_ptr<flagKnowns> &f1, const shared_ptr<flagKnowns> &f2)
-         { return f1->distancia < f2->distancia; });
-}
-
-void imprimir_matriz(vector<shared_ptr<flagKnowns>> &flag)
-{
-    for (auto const &f : flag)
-    {
-        cout << "Nombre: " << f->name;
-        cout << " Distancia: " << f->distancia;
-        cout << " Direccion: " << f->direccion;
-        cout << " X_absoluta: " << f->x;
-        cout << " Y_absoluta: " << f->y;
-        cout << endl;
-    }
-}
-
 void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags)
 {
-
     flags.push_back(make_shared<flagKnowns>("(f c)", 60, 40, 999.0, 999.0));      // centro campo
     flags.push_back(make_shared<flagKnowns>("(f l t)", 8, 74, 999.0, 999.0));     // corner arriba izq
     flags.push_back(make_shared<flagKnowns>("(f l b)", 8, 6, 999.0, 999.0));      // corner abajo izq
@@ -103,6 +54,54 @@ void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags)
     flags.push_back(make_shared<flagKnowns>("(f c b)", 60, 6, 999.0, 999.0));   // banda centro abajo
     flags.push_back(make_shared<flagKnowns>("(f c r)", 120, 40, 999.0, 999.0)); // centro linea de fondo fuera izq ??
     flags.push_back(make_shared<flagKnowns>("(f c l)", 0, 40, 999.0, 999.0));   // centro linea de fondo fuera der ??
+}
+
+void imprimir_matriz(vector<shared_ptr<flagKnowns>> &flag)
+{
+    for (auto const &f : flag)
+    {
+        cout << "Nombre: " << f->name;
+        cout << " Distancia: " << f->distancia;
+        cout << " Direccion: " << f->direccion;
+        cout << " X_absoluta: " << f->x;
+        cout << " Y_absoluta: " << f->y;
+        cout << endl;
+    }
+}
+
+void crear_matriz_valores_absolutos(string const &mensaje, vector<shared_ptr<flagKnowns>> &flags)
+{
+    if (mensaje.find("see") == -1)
+        return;
+    vector<string> vector_mensaje = GestionParentesis(mensaje);                // see ((  f l c (2132)) )
+    vector<string> vector_mensaje_2 = GestionParentesis(vector_mensaje.at(0)); // {1} see {2} (f c l)(12) (23) .... {23} ((b) 12 23.3)
+    for (auto const &f : flags)
+    {
+        if (mensaje.find(f->name) == -1)
+        {
+            f->direccion = 999.0;
+            f->distancia = 999.0;
+        }
+        else
+        {
+            for (auto const &v : vector_mensaje_2)
+            {
+                if (v.find(f->name) != -1)
+                {
+                    vector<string> vector_balon;
+                    string nueva_linea = vector_separar_string(v);
+                    vector_balon = split(nueva_linea, ' ');
+
+                    // EJEMPLO ((b) 12 23.3)
+                    f->distancia = stod(vector_balon.at(0)); // 12
+                    f->direccion = stod(vector_balon.at(1)); // 23.3
+                }
+            }
+            // inicializacion_flags << "Algo ha fallado" << endl;
+        }
+    }
+    sort(flags.begin(), flags.end(), [](const shared_ptr<flagKnowns> &f1, const shared_ptr<flagKnowns> &f2)
+         { return f1->distancia < f2->distancia; });
 }
 
 void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags, Datos_Juego &datos)

@@ -212,7 +212,11 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
     check_see_ball(mensaje, datos);
     check_see_porteria_contraria(mensaje, datos);
     check_tengo_balon(datos);
+<<<<<<< HEAD
     check_jugador_cercano(mensaje, datos);
+=======
+    //check_jugador_cercano_cerca_balon(datos);
+>>>>>>> main
 
     vector<string> vector_mensaje = GestionParentesis(mensaje);
     vector_mensaje = GestionParentesis(vector_mensaje.at(0));
