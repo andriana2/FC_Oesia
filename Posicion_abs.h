@@ -32,4 +32,4 @@ void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags, Datos_Juego &dato
 // void absolute2relative(double x, double y, double xf, double yf);
 bool compareDistance(const shared_ptr<flagKnowns> &f1, const shared_ptr<flagKnowns> &f2);
 
-#endif // GESTION_PARENTESIS_H
+#endif
