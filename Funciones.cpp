@@ -20,7 +20,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         switch (stoi(player_[2]) - 1)
         {
         case 0:
-            pos.x = -51;
+            pos.x = -50;
             pos.y = 0;
             break;
         case 1:
@@ -69,7 +69,6 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
     // cout << moveCommand<< endl;
     udp_socket.sendTo(moveCommand, recep);
 }
-
 
 void check_see_ball(string const &message, Datos_Juego &datos) // comprobamos si veo el balon (b)
 {
@@ -125,15 +124,33 @@ bool check_jugador_cerca(Datos_Juego &datos)
 {
     auto db = stod(datos.ball.balon_distancia);
     auto dp = stod(datos.jugador_cercano.distancia);
-    auto thetab = -(M_PI/180)*stod(datos.ball.balon_direccion);
-    auto thetap = -(M_PI/180)*stod(datos.jugador_cercano.direccion);
+    auto thetab = -(M_PI / 180) * stod(datos.ball.balon_direccion);
+    auto thetap = -(M_PI / 180) * stod(datos.jugador_cercano.direccion);
 
     // Law of cosines to determine the distance of 2nd player to ball, seen from main player
-    auto d = sqrt(db*db + dp*dp -2*db*dp*cos(thetab - thetap));
-    if(d < dp){
-        return true;
-    } else{
+    auto d = sqrt(db * db + dp * dp - 2 * db * dp * cos(thetab - thetap));
+    // cout << "distacia segundo jugador"<< d << endl;
+    float rel;
+    if (db > d)
+    {
+        float rel = abs((db - d) / db);
+    }
+    else
+    {
+        float rel = abs((d - db) / d);
+    }
+
+    if (rel <= 0.3)
+    {
         return false;
+    }
+    else if ((rel > 0.3) && (db < d))
+    {
+        return true;
+    }
+    else
+    {
+        return true;
     }
 }
 // esta mal check_equipo_balon ????
@@ -150,24 +167,24 @@ void check_jugador_cercano_cerca_balon(Datos_Juego &datos)
     catch (const std::invalid_argument &e)
     {
         // std::cerr << "Error: balon_distancia no es un número válido." << std::endl;
-       datos.jugador_cercano.cerca_balon = false;
+        datos.jugador_cercano.cerca_balon = false;
     }
     catch (const std::out_of_range &e)
     {
         // std::cerr << "Error: balon_distancia está fuera del rango permitido." << std::endl;
-       datos.jugador_cercano.cerca_balon = false;
+        datos.jugador_cercano.cerca_balon = false;
     }
-    if (datos.jugador_cercano.cerca_balon == true)
-        cout << "jugador mas cerca del balon que yo" << datos.jugador_cercano.jugador_numero <<endl;
-    // if (datos.jugador.tengo_balon)
-    // {
-    //     datos.jugador.equipo_tiene_balon = true;
-    // }
-    // else if ((datos.jugador_cercano.distancia == datos.ball.balon_distancia) &&
-    //          (datos.jugador_cercano.direccion == datos.ball.balon_direccion))
-    //     datos.jugador.equipo_tiene_balon = true;
-    // else
-    //     datos.jugador.equipo_tiene_balon = false;
+    // if (datos.jugador_cercano.cerca_balon == true)
+    //     cout << "jugador mas cerca del balon que yo" << datos.jugador_cercano.jugador_numero <<endl;
+    //  if (datos.jugador.tengo_balon)
+    //  {
+    //      datos.jugador.equipo_tiene_balon = true;
+    //  }
+    //  else if ((datos.jugador_cercano.distancia == datos.ball.balon_distancia) &&
+    //           (datos.jugador_cercano.direccion == datos.ball.balon_direccion))
+    //      datos.jugador.equipo_tiene_balon = true;
+    //  else
+    //      datos.jugador.equipo_tiene_balon = false;
 }
 
 void send_message_funtion(string const &mensage, Datos_Juego &datos)
@@ -250,8 +267,8 @@ string funcionEnviar(Datos_Juego const &datos)
     // devolviendo la accion del jugador (girar cabeza, correr etc, en funcion del balon)
 
     string resultado;
-
-    // SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
+    // cout << "x->" << datos.jugador.x_absoluta << "    y->" << datos.jugador.y_absoluta << endl;
+    //  SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
     if (!datos.ball.veo_balon)
     {
         return resultado = "(turn 70)";
@@ -273,44 +290,54 @@ string funcionEnviar(Datos_Juego const &datos)
             string movimiento_hacer = movimientos_jugador(datos);
             string mensaje_devolver = "";
 
-            //si yo tengo el balon
+            // si yo tengo el balon
             if (datos.jugador.tengo_balon == true)
             {
-                //si veo la porteria contraria y estoy a menos de 50 metros tiro 
-                if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) < 25)
+                // si veo la porteria contraria y estoy a menos de 50 metros tiro
+                if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) < 35)
                 {
                     mensaje_devolver = "(kick 100 " + datos.porteria.centro_direccion + ")";
                     return mensaje_devolver;
                 }
-                //si veo la porteria y hay un jugador con mayor numero mas cerca se lo paso
-                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 25 && (datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero))
+                // si veo la porteria y hay un jugador con mayor numero mas cerca se lo paso
+                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 35 && (datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero))
                 {
-                    mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
+                    mensaje_devolver = "(kick 50 " + datos.jugador_cercano.direccion + ")";
                     return mensaje_devolver;
                 }
-                // si veo la porteri y hay un jugador cerca con mayor numero se lo paso
-                else if (datos.porteria.veo_porteria_contraria == false && datos.jugador_cercano.jugador_numero > datos.jugador.jugador_numero)
+                else if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) >= 35)
                 {
-                    mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
+                    mensaje_devolver = "(kick 10 " + datos.porteria.centro_direccion + ")";
                     return mensaje_devolver;
                 }
-                // si veo la porteri y hay un jugador cerca con menor numero se lo paso
-                else if (datos.porteria.veo_porteria_contraria == false && datos.jugador_cercano.jugador_numero < datos.jugador.jugador_numero)
+                // si veo la porteri y hay un jugador cferca con mayor numero se lo paso
+                // else if (datos.porteria.veo_porteria_contraria == false)
+                else
                 {
-                    mensaje_devolver = "(kick 30 " + datos.jugador_cercano.direccion + ")";
+                    mensaje_devolver = "(kick 20 120)";
                     return mensaje_devolver;
-                }
-                // los demas casos
-                else{
-                    return ("(turn 30)");
                 }
             }
-            //si creo que hay un jugador mas cerca que yo no hago nada y los demas casos de no movimiento
-            if (datos.jugador_cercano.cerca_balon == true || (stod(movimiento_hacer) == 0 || stod(movimiento_hacer) == -1))
+            // si creo que hay un jugador mas cerca que yo no hago nada y los demas casos de no movimiento
+            //  if(datos.jugador_cercano.cerca_balon == false)
+            //  {
+            //      return ("(dash 60" + datos.ball.balon_direccion + ")");
+            //  }
+            if (stod(movimiento_hacer) == 0)
             {
+                cout << "Soy movimiento_hacer 0";
                 return "";
             }
+            else if (stod(movimiento_hacer) == -2 && stof(datos.ball.balon_distancia) > 10 && datos.jugador.jugador_numero != "1")
+            {
+                return "(dash 100 180)";
+            }
             // si me dice la funcion de area.cpp que me mueva me muevo
+            else if (datos.jugador_cercano.cerca_balon)
+            {
+                return ("");
+                //return ("(dash 50 " + datos.ball.balon_direccion + ")");
+            }
             else
             {
                 mensaje_devolver = "(dash " + movimiento_hacer + " " + datos.ball.balon_direccion + ")";
