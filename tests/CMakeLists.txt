@@ -19,11 +19,31 @@ include_directories(../)
 
 enable_testing()
 
+
+# ADD MinimalSocket LIBRARY
+
+include(FetchContent)
+set(BUILD_MinimalCppSocket_SAMPLES OFF CACHE BOOL "" FORCE) # you don't want the samples in this case
+FetchContent_Declare(
+min_sock
+GIT_REPOSITORY https://github.com/andreacasalino/Minimal-Socket
+GIT_TAG        master
+)
+FetchContent_MakeAvailable(min_sock)
+
+# ADD PATH FOR FINDING HEADERS
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/src/header)
+
+# ADD PATH FOR FINDING LIBRARIES
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/build)
+
 # el main, el test, el archivo que quiero probar
 add_executable(
   runTests
   test_main.cpp
-  CalculadoraTest.cpp
+  Test_funciones_cpp.cpp
+  Test_Poscion_test.cpp
+  Test_area.cpp
   ../Posicion_abs.cpp
 )
 target_link_libraries(
