@@ -204,6 +204,28 @@ void check_jugador_cercano(string const &mensaje, Datos_Juego &datos)
     //      datos.jugador.equipo_tiene_balon = false;
 }
 
+string jugador_pase_cerca(Datos_Juego &datos)
+{
+    string distancia {"0"};
+    string direccion {"0"};
+    int numero_mayor {0};
+    if(datos.jugadores_vistos.jugadores.size() == 0)
+        return("(kick 100 180)"); //paso hacia atras si no veo a nadie
+    for(auto it: datos.jugadores_vistos.jugadores)
+    {
+        if(stoi(it.at(0)) > numero_mayor)
+        {
+            numero_mayor = stoi(it.at(0));
+            distancia = it.at(1);
+            direccion = it.at(2);
+        }
+    }
+    int potencia = static_cast<int>(stof(distancia)*2.54);
+    if (potencia > 100){ 
+        potencia = 100;
+    }
+    return ("(kick " + to_string(potencia) + " " + direccion+ ")"); // Creamos el mensaje con la potencia calculada y la direccion
+}
 // string pase_cercano (const Datos_Partido &datos){
 //     string distancia_cercano = "0"; // Distancia al jugador cercano de mayor dorsal
 //     string direccion_cercano = "0"; // Direccion al jugador cercano de mayor dorsal
@@ -226,7 +248,7 @@ void check_jugador_cercano(string const &mensaje, Datos_Juego &datos)
 //     if (potencia > 100){ // Si la potencia nos sale mayor que 100, le daremos con 100 que es la potencia maxima
 //         potencia = 100;
 //     }
-//     return ("(kick "+to_string(potencia)+" " + direccion_cercano + ")"); // Creamos el mensaje con la potencia calculada y la direccion
+//     return ("(kick " + to_string(potencia) + " " + direccion_cercano + ")"); // Creamos el mensaje con la potencia calculada y la direccion
 // }
 
 
@@ -289,15 +311,7 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
             datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
             datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
         }
-        string encontrar_jugador_nuestro_equipo = "(p \"" + datos.nombre_equipo + "\" ";
-        if (v.find(encontrar_jugador_nuestro_equipo) != -1)
-        {
-            vector<string> vector_jugador_cercano = split(v, ' ');
-            vector_jugador_cercano.at(2).pop_back();
-            datos.jugador_cercano.jugador_numero = vector_jugador_cercano.at(2);
-            datos.jugador_cercano.distancia = vector_jugador_cercano.at(3);
-            datos.jugador_cercano.direccion = vector_jugador_cercano.at(4);
-        }
+        //string encontrar_jugador_nuestro_equipo = "(p \"" + datos.nombre_equipo + "\" ";
     }
 }
 
