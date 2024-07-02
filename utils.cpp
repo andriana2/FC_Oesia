@@ -2,45 +2,45 @@
 
 using namespace std;
 
-// void get_error_parentesis(string const &str)
-// {
-//     int num_abierto{0};
-//     int num_cerrado{0};
-//     for (int i = 0; i < str.size(); i++)
-//     {
-//         if (str.at(i) == '(')
-//         {
-//             num_abierto++;
-//         }
-//         else if (str.at(i) == ')')
-//         {
-//             num_cerrado++;
-//         }
-//     }
-//     // if ((num_abierto - num_cerrado) != 0)
-//     //     throw invalid_argument("No tiene suficientes parentesis");
+void get_error_parentesis(string const &str)
+{
+    int num_abierto{0};
+    int num_cerrado{0};
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str.at(i) == '(')
+        {
+            num_abierto++;
+        }
+        else if (str.at(i) == ')')
+        {
+            num_cerrado++;
+        }
+    }
+    // if ((num_abierto - num_cerrado) != 0)
+    //     throw invalid_argument("No tiene suficientes parentesis");
 
-// }
+}
 
-// void get_error_letras(string const &str)
-// {
-//     int flag_parentesis{0};
-//     for (int i = 0; i < str.size(); i++)
-//     {
-//         if (str.at(i) == '(')
-//         {
-//             flag_parentesis = 1;
-//         }
-//         else if (str.at(i) == ')')
-//         {
-//             if (flag_parentesis == 1)
-//                 throw invalid_argument("Parentesis cerado y abierto seguido");
-//         }
-//         else 
-//             flag_parentesis = 0;
+void get_error_letras(string const &str)
+{
+    int flag_parentesis{0};
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str.at(i) == '(')
+        {
+            flag_parentesis = 1;
+        }
+        else if (str.at(i) == ')')
+        {
+            if (flag_parentesis == 1)
+                throw invalid_argument("Parentesis cerado y abierto seguido");
+        }
+        else 
+            flag_parentesis = 0;
 
-//     }
-// }
+    }
+}
 
 
 vector <string> GestionParentesis(string const &str)
