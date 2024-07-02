@@ -13,14 +13,6 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-# include _deps directory for gtest
-include_directories(_deps/googletest-src/googletest/include)
-include_directories(../)
-
-enable_testing()
-
-
-# ADD MinimalSocket LIBRARY
 
 include(FetchContent)
 set(BUILD_MinimalCppSocket_SAMPLES OFF CACHE BOOL "" FORCE) # you don't want the samples in this case
@@ -31,11 +23,16 @@ GIT_TAG        master
 )
 FetchContent_MakeAvailable(min_sock)
 
-# ADD PATH FOR FINDING HEADERS
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/src/header)
 
+# include _deps directory for gtest
+include_directories(_deps/googletest-src/googletest/include)
+include_directories(../)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/src/header)
 # ADD PATH FOR FINDING LIBRARIES
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/_deps/min_sock-src/build)
+
+enable_testing()
 
 # el main, el test, el archivo que quiero probar
 add_executable(
@@ -45,14 +42,21 @@ add_executable(
   Test_Poscion_test.cpp
   Test_area.cpp
   ../Posicion_abs.cpp
+  ../Funciones.cpp
+  ../area.cpp
+  ../utils.cpp
 )
 target_link_libraries(
   runTests
   GTest::gtest_main
+  MinimalSocket
 )
 
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 include(GoogleTest)
-gtest_discover_tests(runTests)
+gtest_discover_tests(runTests 
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

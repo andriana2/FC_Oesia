@@ -45,7 +45,7 @@ void get_error_letras(string const &str)
 
 vector <string> GestionParentesis(string const &str)
 {
-    get_error_parentesis(str);
+    //get_error_parentesis(str);
     //get_error_letras(str);
     vector <string> resultado;
     int num_abierto{0};
