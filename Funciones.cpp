@@ -173,14 +173,13 @@ void check_jugador_cercano(string const &mensaje, Datos_Juego &datos)
             {
                 vector<string> vector_jugador_cercano = split(v, ' ');
                 vector_jugador_cercano.at(2).pop_back();
-                cout <<vector_jugador_cercano.at(2)<< endl;
                 vector_jugadores_cerca.push_back({vector_jugador_cercano.at(2),vector_jugador_cercano.at(3),vector_jugador_cercano.at(4)});
                 // datos.jugador_cercano.jugador_numero = vector_jugador_cercano.at(2);
                 // datos.jugador_cercano.distancia = vector_jugador_cercano.at(3);
                 // datos.jugador_cercano.direccion = vector_jugador_cercano.at(4);
             }
         }
-        
+        datos.jugadores_vistos.jugadores = vector_jugadores_cerca;
     }
     catch (const std::invalid_argument &e)
     {
@@ -205,6 +204,32 @@ void check_jugador_cercano(string const &mensaje, Datos_Juego &datos)
     //      datos.jugador.equipo_tiene_balon = false;
 }
 
+// string pase_cercano (const Datos_Partido &datos){
+//     string distancia_cercano = "0"; // Distancia al jugador cercano de mayor dorsal
+//     string direccion_cercano = "0"; // Direccion al jugador cercano de mayor dorsal
+//     if (datos.jugadores_vistos.jugadores.size() == 0){ // Si no veo a nadie
+//         if (datos.estado.find("kick_in_") != -1 || datos.estado.find("corner_kick_") != -1){ // Si tengo que sacar de banda o de corner
+//             return ("(kick 100 180)"); // Hago un cambio de juego
+//         }
+//         // Si esta el balon en juego
+//         return ("(kick 100 180)"); // Despeje
+//     }
+//     int mayor_dorsal = 0;
+//     for (auto elem: datos.jugadores_vistos.jugadores){
+//         if (stoi(elem.at(2)) > mayor_dorsal){ // Si el dorsal del jugador es mayor que el que guarde
+//             mayor_dorsal = stoi(elem.at(2)); // Sobreescribo el dorsal mayor
+//             distancia_cercano = elem.at(0); // Guardo la distancia al jugador de dorsal mayor
+//             direccion_cercano = elem.at(1); // Guardo la direccion al jugador de dorsal mayor
+//         }
+//     }
+//     int potencia = static_cast<int>(stof(distancia_cercano)*2.54); // Calculamos la potencia del pase segun la distancia al jugador
+//     if (potencia > 100){ // Si la potencia nos sale mayor que 100, le daremos con 100 que es la potencia maxima
+//         potencia = 100;
+//     }
+//     return ("(kick "+to_string(potencia)+" " + direccion_cercano + ")"); // Creamos el mensaje con la potencia calculada y la direccion
+// }
+
+
 void send_message_funtion(string const &mensaje, Datos_Juego &datos)
 {
     if (mensaje.find("see") == -1)
@@ -212,11 +237,7 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
     check_see_ball(mensaje, datos);
     check_see_porteria_contraria(mensaje, datos);
     check_tengo_balon(datos);
-<<<<<<< HEAD
     check_jugador_cercano(mensaje, datos);
-=======
-    //check_jugador_cercano_cerca_balon(datos);
->>>>>>> main
 
     vector<string> vector_mensaje = GestionParentesis(mensaje);
     vector_mensaje = GestionParentesis(vector_mensaje.at(0));
@@ -272,6 +293,7 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
         if (v.find(encontrar_jugador_nuestro_equipo) != -1)
         {
             vector<string> vector_jugador_cercano = split(v, ' ');
+            vector_jugador_cercano.at(2).pop_back();
             datos.jugador_cercano.jugador_numero = vector_jugador_cercano.at(2);
             datos.jugador_cercano.distancia = vector_jugador_cercano.at(3);
             datos.jugador_cercano.direccion = vector_jugador_cercano.at(4);

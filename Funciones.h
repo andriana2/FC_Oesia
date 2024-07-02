@@ -60,6 +60,7 @@ struct Datos_Juego
     Ball ball;
     Porteria porteria;
     Jugador_cercano jugador_cercano;
+    Jugadores_Vistos jugadores_vistos;
 };
 
 
