@@ -55,9 +55,9 @@ string movimientos_jugador(Datos_Juego const &datos)
             if (stof(datos.ball.balon_distancia) >= 40)
                 return "10";
             else if (stof(datos.ball.balon_distancia) < 40)
-                return "0";
+                return "10";
             else if (stof(datos.ball.balon_distancia) < 20)
-                return "80";
+                return "100";
             else if (stof(datos.ball.balon_distancia) < 1)
                 return "-1";
             else
@@ -109,7 +109,10 @@ string movimientos_jugador(Datos_Juego const &datos)
     }
     else
     {
+        if(datos.jugador.jugador_numero == "1")
+            return("0");
         cout << "fuera de area" << endl;
         return "-2";
+
     }
 }
