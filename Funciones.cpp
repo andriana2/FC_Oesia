@@ -385,7 +385,7 @@ string pase(Datos_Juego const &datos)
 {
 
     // Si vemos a un jugador cerca con un numero mayor al nuestro
-    bool hayJugadorMasCerca = check_jugador_cerca;
+    bool hayJugadorMasCerca = !check_jugador_cerca;
 
     if(hayJugadorMasCerca)
     {

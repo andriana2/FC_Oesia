@@ -1,15 +1,24 @@
 #!/bin/bash
 
-cd build && make && cd ..
+echo "Starting script..."
+cd build
+echo "Entering build directory..."
 
-rm 20*
-sleep 3;
+if make; then
+    echo "Build succeeded."
+    cd ..
+else
+    echo "Build failed, exiting..."
+    exit 1
+fi
 
-gnome-terminal -- bash -c "/home/andri/Descargas/rcssserver-19.0.0/src/rcsoccersim"
-
-sleep 2;
+sleep 2
 
 for i in {0..10}
 do
-  gnome-terminal -- bash -c "/home/andri/Escritorio/FC_Oesia/build/player FC_Oesia 555$i" & sleep 1
+  echo "Launching player $i..."
+  gnome-terminal -- bash -c "'/home/mexarlg/Documents/Oesia /School project/FC_Oesia/build/player' 'FC_Oesia' '555$i'" &
+  sleep 1
 done
+
+echo "All players launched."
