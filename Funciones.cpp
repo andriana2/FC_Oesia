@@ -377,6 +377,8 @@ string ataque(Datos_Juego const &datos)
     {
         return "(dash 100 " + datos.ball.balon_direccion + ")";
     }
+    
+    return "(kick 30 180)";
 }
 
 string pase(Datos_Juego const &datos)
@@ -530,5 +532,5 @@ string sendMessage(Datos_Juego const &datos)
 
         return "(kick 30 120)";
     }
-
+return "";
 }
