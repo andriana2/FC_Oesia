@@ -348,3 +348,187 @@ string funcionEnviar(Datos_Juego const &datos)
     }
     return resultado;
 }
+
+string ataque(Datos_Juego const &datos)
+{
+    string resultado;
+    
+    // Si somos el jugador que va al balon, y su distancia es < 25
+    if(!datos.jugador_cercano.cerca_balon && stod(datos.ball.balon_distancia) <= 25)
+    {
+        return "(dash 100 " + datos.ball.balon_direccion + ")";
+    }
+
+    // Si somos el 11, hay corner y la distancia al balon > 1
+    bool corner = false;
+    if(datos.jugador.jugador_numero == "11" && stod(datos.ball.balon_distancia) > 1 && corner)
+    {
+        return "(dash 100 " + datos.ball.balon_direccion + ")";
+    }
+
+    // Somos cualquier jugador y la distancia al balon >25
+    if(datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) > 25)
+    {
+        return "(dash 50 " + datos.ball.balon_direccion + ")";
+    }
+
+    // Somos portero y nos atacan con el balon, salimos
+    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) > 1 && stod(datos.ball.balon_distancia) <= 5)
+    {
+        return "(dash 100 " + datos.ball.balon_direccion + ")";
+    }
+}
+
+string pase(Datos_Juego const &datos)
+{
+
+    // Si vemos a un jugador cerca con un numero mayor al nuestro
+    bool hayJugadorMasCerca = check_jugador_cerca;
+
+    if(hayJugadorMasCerca)
+    {
+        // Hay jugador cerca, calculamos potencia necesaria del pase
+        int potencia = static_cast<int>(stof(datos.jugador_cercano.distancia)*2.54);
+        
+        if(potencia > 100)
+        {
+            return "(kick 100 " + datos.jugador_cercano.direccion + ")";
+        }
+        else
+        {
+            return "(kick " + to_string(potencia) + " " + datos.jugador_cercano.direccion + ")";
+        }
+    
+    }
+    else{
+        // No hay nadie cerca
+        return "(kick 80 180)";
+    }
+}
+
+string sendMessage(Datos_Juego const &datos)
+{
+    string resultado;
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    // Si hay inicio de posiciones
+    bool checkStart = (datos.estado == "before_kick_off" || datos.estado == "descanso" || 
+    datos.estado == "tiempo_extra" || datos.estado == "gol_izqa" || datos.estado == "gol_dcha");
+
+    if(checkStart)  
+    {
+        resultado = posicion_inicial();
+        return resultado;
+    }
+    */
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Si no vemos balon giramos mucho
+    if(!datos.ball.veo_balon)
+    {
+        return "(turn 70)";
+    }
+
+    // si vemos mal el balon giramos poco
+    if (stod(datos.ball.balon_direccion) > 30) // BALON A LA DERECHA, GIRA DERECHA
+        {
+            cout << "giro 30 grados" << "\n";
+
+            return "(turn 20)";
+        }
+    else if (stod(datos.ball.balon_direccion) < -30) // BALON A LA IZQA, GIRA IZQA
+        {
+            return "(turn -20)";
+        }
+    
+    /*
+    // Si estamos aun sin jugar, vemos bien el balon hasta que la direccion == 0
+    if()
+    {
+        if(stod(datos.ball.balon_direccion) != 0)
+        {
+            return "(turn "+ datos.ball.balon_direccion + ")";
+        }
+    }
+
+    // Si somos el 11 y hay saque de balon nuestro (kisk_off_side_l y somos l)
+    if()
+    {
+        return "(kick 50 180)";
+    }
+
+    // Si somos el portero y hay saque de porteria (d<1)
+    bool saquePortero = (datos.estado == "free_kick_l" && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 1);
+    if()
+    {
+        result = pase(datos);
+        return result;
+    }
+
+    */
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    // Si estamos en area, aplicamos funcion de ataque al balon, sino volvemos hacia atras
+    if(check_area(datos))
+    {
+        resultado = ataque(datos);
+        return resultado;
+    }
+    else
+    {
+        return "(dash 100 180)";
+    }
+
+    // Si somos el portero y tenemos el balon, lo atrapamos
+    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 1)
+    {
+        return "(catch " + datos.ball.balon_direccion + ")";
+    }
+
+    // Si podemos tirar a puerta
+    if(stod(datos.ball.balon_distancia) <= 1 && stod(datos.porteria.centro_distancia) <= 25)
+    {
+        return "(kick 100 " + datos.ball.balon_direccion + ")";
+    }
+
+    // Si TENEMOS BALON, valoramos distintas opciones
+    if(stod(datos.ball.balon_distancia) <= 1)
+    {
+        // Si no somos delanteros y vemos a compañero
+        bool Delantero = (datos.jugador.jugador_numero == "11" || datos.jugador.jugador_numero == "10" ||
+        datos.jugador.jugador_numero == "9");
+        if(!Delantero && datos.jugador_cercano.cerca_balon)
+        {
+            resultado = pase(datos);
+            return resultado;
+        }
+        else
+        {
+            // Si hay corner o falta indirecta, pasamos
+            bool CornerOrFreeKickIn = false;
+            if(CornerOrFreeKickIn)
+            {
+                return "(kick 100 180)";
+            }
+            
+            // Si hay falta directa
+            bool freeKick = false;
+            if(freeKick)
+            {
+                return "(kick 100" + datos.porteria.centro_direccion + ")";
+            }
+        }
+
+        // Si somos cualquier jugador y vemos porteria corremos a ella
+        if(datos.porteria.veo_porteria_contraria)
+        {
+            return "(kick 20 " + datos.porteria.centro_direccion + ")";
+        }
+
+        return "(kick 30 120)";
+    }
+
+}

@@ -70,5 +70,8 @@ void check_jugador_cercano_cerca_balon(Datos_Juego &datos);
 
 void send_message_funtion(string const &received_message_content, Datos_Juego &datos);
 string funcionEnviar(Datos_Juego const &datos);
+string pase(Datos_Juego const &datos);
+string ataque(Datos_Juego const &datos);
+string sendMessage(Datos_Juego const &datos);
 
 #endif
