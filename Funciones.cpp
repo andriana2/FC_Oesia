@@ -175,10 +175,11 @@ Datos_Juego gestion_jugadores_vistos(string const &message, Datos_Juego &datos)
     {
         if (v.find(encontrar_jugador_nuestro_equipo) != -1)
         {
+            cout << "jugadores "<< v << endl;
             vector<string> vector_jugador_cercano = split(v, ' ');
             vector_jugador_cercano.at(2).pop_back();
             vector_jugadores_cerca.push_back({vector_jugador_cercano.at(2), vector_jugador_cercano.at(3), vector_jugador_cercano.at(4)});
-            //                                jugador_numero                distacia jugador mi equipo     direccion jugador mi equipo
+            //                                jugador_numero                distancia jugador mi equipo     direccion jugador mi equipo
             datos.jugadores_vistos.veo_equipo = true;
         }
     }
@@ -205,11 +206,11 @@ bool check_jugador_cerca(Datos_Juego &datos)
 {
     auto db = stod(datos.ball.balon_distancia);
     auto thetab = -(M_PI / 180) * stod(datos.ball.balon_direccion);
-    if (datos.jugadores_vistos.jugadores.empty())
+    if (!datos.jugadores_vistos.jugadores.empty())
     {
         for (auto const &v : datos.jugadores_vistos.jugadores)
         {
-            auto dp = stod(v.at(2));
+            auto dp = stod(v.at(1));
             auto thetap = -(M_PI / 180) * stod(v.at(2));
             auto d = sqrt(db * db + dp * dp - 2 * db * dp * cos(thetab - thetap));
             float rel;
@@ -271,8 +272,8 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
     {
         vector<string> vector_mensaje = GestionParentesis(mensaje); // ("see ((b) 12 12)")
         gestion_ball(vector_mensaje.at(0), datos);
-        //gestion_porteria(vector_mensaje.at(0), datos);
-        //gestion_jugadores_vistos(vector_mensaje.at(0), datos);
+        gestion_porteria(vector_mensaje.at(0), datos);
+        gestion_jugadores_vistos(vector_mensaje.at(0), datos);
     }
 }
 
@@ -345,7 +346,7 @@ string funcionEnviar(Datos_Juego &datos)
                 // true jugador mas cerca
                 if (check_area(datos))
                 {
-                    if (check_jugador_cerca(datos)) // soy de los jugadores mas cerca
+                    if (!check_jugador_cerca(datos)) // soy de los jugadores mas cerca
                         return ("(dash 100 " + datos.ball.balon_direccion + ")");
                     else if (datos.jugador.jugador_numero == "1" && stof(datos.ball.balon_distancia) < 5 && stof(datos.ball.balon_distancia) > 1)
                     {
