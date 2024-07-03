@@ -158,7 +158,7 @@ bool check_jugador_cerca(Datos_Juego &datos)
     }
 }
 
-void check_jugador_cercano(string const &mensaje, Datos_Juego &datos)
+void vector_jugador_cercano(string const &mensaje, Datos_Juego &datos)
 {
     try
     {
@@ -191,17 +191,6 @@ void check_jugador_cercano(string const &mensaje, Datos_Juego &datos)
         // std::cerr << "Error: balon_distancia está fuera del rango permitido." << std::endl;
         datos.jugador_cercano.cerca_balon = false;
     }
-    // if (datos.jugador_cercano.cerca_balon == true)
-    //     cout << "jugador mas cerca del balon que yo" << datos.jugador_cercano.jugador_numero <<endl;
-    //  if (datos.jugador.tengo_balon)
-    //  {
-    //      datos.jugador.equipo_tiene_balon = true;
-    //  }
-    //  else if ((datos.jugador_cercano.distancia == datos.ball.balon_distancia) &&
-    //           (datos.jugador_cercano.direccion == datos.ball.balon_direccion))
-    //      datos.jugador.equipo_tiene_balon = true;
-    //  else
-    //      datos.jugador.equipo_tiene_balon = false;
 }
 
 string jugador_pase_cerca(Datos_Juego &datos)
@@ -234,7 +223,8 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
     check_see_ball(mensaje, datos);
     check_see_porteria_contraria(mensaje, datos);
     check_tengo_balon(datos);
-    check_jugador_cercano(mensaje, datos);
+    vector_jugador_cercano(mensaje,datos);
+    //check_jugador_cercano(mensaje, datos);
 
     vector<string> vector_mensaje = GestionParentesis(mensaje);
     vector_mensaje = GestionParentesis(vector_mensaje.at(0));
