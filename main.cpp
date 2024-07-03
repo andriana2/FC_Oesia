@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         //cout << received_message_content << endl <<endl <<endl;
         string envio = funcionEnviar(datos);
         if (envio != ""){
-            cout << datos.jugador.jugador_numero << "<- numero jugador "<< envio <<endl;
+            //cout << datos.jugador.jugador_numero << "<- numero jugador "<< envio <<endl;
             udp_socket.sendTo(envio,server_udp);
         }
     }
