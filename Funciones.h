@@ -97,6 +97,7 @@ struct Datos_Juego
           evento("999.0"), evento_anterior("999.0"), flag_kick_off(false) {}
 };
 
+string posicion_inicial(Datos_Juego &datos);
 
 void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socket,
                      MinimalSocket::Address const &recep, Datos_Juego &datos);
