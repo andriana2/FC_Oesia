@@ -130,5 +130,6 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos);
 
 string funcionEnviar(Datos_Juego &datos);
 string ataque(Datos_Juego &datos);
+string disparo(Datos_Juego &datos);
 string sendMessage(Datos_Juego &datos);
 #endif
