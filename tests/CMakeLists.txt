@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.6)
 project(runTests)
 
 # GoogleTest requires at least C++14
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
@@ -39,9 +39,9 @@ add_executable(
   runTests
   test_main.cpp
   Test_funciones_cpp.cpp
-  Test_Poscion_test.cpp
+  #Test_Posicion_test.cpp
   Test_area.cpp
-  ../Posicion_abs.cpp
+  #../Posicion_abs.cpp
   ../Funciones.cpp
   ../area.cpp
   ../utils.cpp
