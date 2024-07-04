@@ -46,6 +46,7 @@ struct flagKnowns
 void inicializacion_flags(vector<shared_ptr<flagKnowns>> &flags);
 void crear_matriz_valores_absolutos(string const &mensaje, vector<shared_ptr<flagKnowns>> &flags);
 string vector_separar_string(string const &linea);
+void reset_flags(vector<shared_ptr<flagKnowns>> &flags);
 void imprimir_matriz(vector<shared_ptr<flagKnowns>> &flag);
 
 void relative2Abssolute(vector<shared_ptr<flagKnowns>> &flags, Datos_Juego &datos);

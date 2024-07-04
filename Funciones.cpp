@@ -1,7 +1,6 @@
 #include "Funciones.h"
 #include "Posicion_abs.h"
 
-
 void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socket,
                      MinimalSocket::Address const &recep, Datos_Juego &datos)
 {
@@ -128,7 +127,6 @@ string posicion_inicial(Datos_Juego &datos)
     auto resultado = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")"; // (move -51 0)
     return (resultado);
 }
-
 
 Datos_Juego gestion_ball(string const &message, Datos_Juego &datos)
 {
@@ -276,7 +274,7 @@ Datos_Juego gestion_jugadores_vistos(string const &message, Datos_Juego &datos)
 bool check_tengo_balon(Datos_Juego const &datos)
 {
 
-    if (stod(datos.ball.balon_distancia ) <= 1 && datos.ball.balon_distancia != "999.0")
+    if (stod(datos.ball.balon_distancia) <= 1 && datos.ball.balon_distancia != "999.0")
     {
         cout << "tengo el balon " << endl;
         return (true);
@@ -306,7 +304,7 @@ bool voy_balon(Datos_Juego &datos)
             auto thetap = -(M_PI / 180) * stod(jugador.at(2));
 
             auto d = sqrt(db * db + dp * dp - 2 * db * dp * cos(thetab - thetap));
-            
+
             // Si mi distancia al balon es mayor devolvemos false
             // Si mi distancia al balon es menor comparada con 3º jugador devolvemos true
             // Hacemos return si encontramos algun true
@@ -315,13 +313,11 @@ bool voy_balon(Datos_Juego &datos)
             {
                 return true;
             }
-
         }
     }
 
     return false; // No voy
 }
-
 
 void check_jugador_cerca_pase(Datos_Juego &datos)
 {
@@ -329,22 +325,21 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
     // Se guarda en estructura nueva Jugador Cercano
     vector<vector<string>> jugadoresCerca = datos.jugadores_vistos.jugadores;
     vector<vector<string>> jugadoresNumeroMayor;
-    
+
     // Evaluamos todos los jugadores
-    for(auto jugador : jugadoresCerca)
+    for (auto jugador : jugadoresCerca)
     {
-        if(stod(jugador.at(1)) > stod(datos.jugador.jugador_numero))
+        if (stod(jugador.at(1)) > stod(datos.jugador.jugador_numero))
         {
             jugadoresNumeroMayor.push_back(jugador);
         }
     }
 
-    if(jugadoresNumeroMayor.size() != 0)
+    if (jugadoresNumeroMayor.size() != 0)
     {
         // Ordenamos el vector juagdoresNumeroMayor por distancia
-        sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b) {
-            return stod(a.at(1)) < stod(b.at(1));
-        });
+        sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
+             { return stod(a.at(1)) < stod(b.at(1)); });
 
         // Si hay jugadores con numero mayor
         // Guardamos el jugador mas cercano
@@ -359,39 +354,36 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
     }
 }
 
-
-
-
 string pase(Datos_Juego const &datos)
 {
 
-// Si vemos a un jugador cerca con un numero mayor al nuestro
-bool hayJugadorMasCerca = datos.jugadorCerca.hayJugadoor;
+    // Si vemos a un jugador cerca con un numero mayor al nuestro
+    bool hayJugadorMasCerca = datos.jugadorCerca.hayJugadoor;
 
-if (hayJugadorMasCerca)
-{
-         // Hay jugador cerca, calculamos potencia necesaria del pase
-         int potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.53);
+    if (hayJugadorMasCerca)
+    {
+        // Hay jugador cerca, calculamos potencia necesaria del pase
+        int potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.53);
 
-         if (potencia > 100)
-         {
-             return "(kick 100 " + datos.jugadorCerca.direccion + ")";
-         }
-         else
-         {
-             return "(kick " + to_string(potencia) + " " + datos.jugadorCerca.direccion + ")";
-         }
-     }
-     else
-     {
-         // No hay nadie cerca
-         return "(kick 50 180)";
-}
+        if (potencia > 100)
+        {
+            return "(kick 100 " + datos.jugadorCerca.direccion + ")";
+        }
+        else
+        {
+            return "(kick " + to_string(potencia) + " " + datos.jugadorCerca.direccion + ")";
+        }
+    }
+    else
+    {
+        // No hay nadie cerca
+        return "(kick 50 180)";
+    }
 }
 
 void send_message_funtion(string const &mensaje, Datos_Juego &datos)
 {
-    if (mensaje.find("hear") != -1)
+    if (mensaje.find("hear ") != -1)
     {
         vector<string> vector_mensaje_1 = GestionParentesis(mensaje); // ("init r 1 before_kick_off")
         vector_mensaje_1 = split(vector_mensaje_1.at(0), ' ');
@@ -400,11 +392,14 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
             throw runtime_error("error en el mensaje hear");
             return;
         }
-        datos.evento_anterior = datos.evento;
-        datos.evento = vector_mensaje_1.at(3);
+        else
+        {
+            datos.evento_anterior = datos.evento;
+            datos.evento = vector_mensaje_1.at(3);
+        }
     }
 
-    if (mensaje.find("see") != -1)
+    if (mensaje.find("see ") != -1)
     {
         vector<string> vector_mensaje = GestionParentesis(mensaje); // ("see ((b) 12 12)")
         gestion_ball(vector_mensaje.at(0), datos);
@@ -624,7 +619,7 @@ string sendMessage(Datos_Juego &datos)
 
     */
 
-/////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
 
     // Si estamos en area, aplicamos funcion de ataque al balon, sino volvemos hacia atras
     if (check_area(datos))
