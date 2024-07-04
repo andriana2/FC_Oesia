@@ -2,36 +2,95 @@
 
 bool check_area(Datos_Juego const &datos)
 {
+    // PORTEROS
     bool portero = (datos.jugador.jugador_numero == "1");
-    bool defensa = (datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5");
-    bool mc = (datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8");
-    bool delantero = (datos.jugador.jugador_numero == "9" || datos.jugador.jugador_numero == "10" || datos.jugador.jugador_numero == "11");
+    // DEFENSAS
+    bool defensa2 = (datos.jugador.jugador_numero == "2");
+    bool defensa3 = (datos.jugador.jugador_numero == "3");
+    bool defensa4 = (datos.jugador.jugador_numero == "4");
+    bool defensa5 = (datos.jugador.jugador_numero == "5");
+    // MEDIOCAMPISTAS
+    bool mc1 = (datos.jugador.jugador_numero == "6");
+    bool mc2 = (datos.jugador.jugador_numero == "7");
+    bool mc3 = (datos.jugador.jugador_numero == "8");
+    // DELANTEROS
+    bool delantero1 = (datos.jugador.jugador_numero == "9");
+    bool delantero2 = (datos.jugador.jugador_numero == "10");
+    bool delantero3 = (datos.jugador.jugador_numero == "11");
 
     if (portero)
     {
-        //if ((datos.jugador.x_absoluta < 13 && datos.jugador.x_absoluta > 8) && (datos.jugador.y_absoluta < 47 && datos.jugador.y_absoluta > 33))
-        if ((datos.jugador.x_absoluta < 20 && datos.jugador.x_absoluta > 12) && (datos.jugador.y_absoluta < 47 && datos.jugador.y_absoluta > 33))
+        if ((datos.jugador.x_absoluta < 18 && datos.jugador.x_absoluta > 8) && (datos.jugador.y_absoluta < 47 && datos.jugador.y_absoluta > 33))
         {
             return true;
         }
     }
-    else if (defensa)
+    else if (defensa2)
     {
-        if ((datos.jugador.x_absoluta < 60 && datos.jugador.x_absoluta > 20) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        if ((datos.jugador.x_absoluta < 55 && datos.jugador.x_absoluta > 8) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 50))
         {
             return true;
         }
     }
-    else if (mc)
+    else if (defensa3)
     {
-        if ((datos.jugador.x_absoluta < 90 && datos.jugador.x_absoluta > 30) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        if ((datos.jugador.x_absoluta < 55 && datos.jugador.x_absoluta > 8) && (datos.jugador.y_absoluta < 60 && datos.jugador.y_absoluta > 40))
         {
             return true;
         }
     }
-    else if (delantero)
+    else if (defensa4)
     {
-        if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 40) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
+        if ((datos.jugador.x_absoluta < 55 && datos.jugador.x_absoluta > 8) && (datos.jugador.y_absoluta < 40 && datos.jugador.y_absoluta > 22))
+        {
+            return true;
+        }
+    }
+    else if (defensa5)
+    {
+        if ((datos.jugador.x_absoluta < 55 && datos.jugador.x_absoluta > 8) && (datos.jugador.y_absoluta < 22 && datos.jugador.y_absoluta > 8))
+        {
+            return true;
+        }
+    }
+    else if (mc1)
+    {
+        if ((datos.jugador.x_absoluta < 80 && datos.jugador.x_absoluta > 30) && (datos.jugador.y_absoluta < 60 && datos.jugador.y_absoluta > 40))
+        {
+            return true;
+        }
+    }
+    else if (mc2)
+    {
+        if ((datos.jugador.x_absoluta < 80 && datos.jugador.x_absoluta > 30) && (datos.jugador.y_absoluta < 40 && datos.jugador.y_absoluta > 20))
+        {
+            return true;
+        }
+    }
+    else if (mc3)
+    {
+        if ((datos.jugador.x_absoluta < 80 && datos.jugador.x_absoluta > 30) && (datos.jugador.y_absoluta < 60 && datos.jugador.y_absoluta > 20))
+        {
+            return true;
+        }
+    }
+    else if (delantero1)
+    {
+        if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 45) && (datos.jugador.y_absoluta < 40 && datos.jugador.y_absoluta > 8))
+        {
+            return true;
+        }
+    }
+    else if (delantero2)
+    {
+        if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 45) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 40))
+        {
+            return true;
+        }
+    }
+    else if (delantero3)
+    {
+        if ((datos.jugador.x_absoluta < 112 && datos.jugador.x_absoluta > 45) && (datos.jugador.y_absoluta < 74 && datos.jugador.y_absoluta > 6))
         {
             return true;
         }
@@ -41,78 +100,149 @@ bool check_area(Datos_Juego const &datos)
 
 string movimientos_jugador(Datos_Juego const &datos)
 {
-    bool defensa = (datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4");
-    bool defensa_lateral = (datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "5");
-    bool mc = (datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8");
-    bool delantero = (datos.jugador.jugador_numero == "9" || datos.jugador.jugador_numero == "10" || datos.jugador.jugador_numero == "11");
-    bool portero = (datos.jugador.jugador_numero == "1");
 
     if (check_area(datos))
     {
-        // cout <<"distancia balon "<< datos.ball.balon_distancia<<endl;
-        if (defensa)
+        // PORTEROS
+        bool portero = (datos.jugador.jugador_numero == "1");
+        // DEFENSAS
+        bool defensa2 = (datos.jugador.jugador_numero == "2");
+        bool defensa3 = (datos.jugador.jugador_numero == "3");
+        bool defensa4 = (datos.jugador.jugador_numero == "4");
+        bool defensa5 = (datos.jugador.jugador_numero == "5");
+        // MEDIOCAMPISTAS
+        bool mc1 = (datos.jugador.jugador_numero == "6");
+        bool mc2 = (datos.jugador.jugador_numero == "7");
+        bool mc3 = (datos.jugador.jugador_numero == "8");
+        // DELANTEROS
+        bool delantero1 = (datos.jugador.jugador_numero == "9");
+        bool delantero2 = (datos.jugador.jugador_numero == "10");
+        bool delantero3 = (datos.jugador.jugador_numero == "11");
+
+        if (check_area(datos))
         {
-            if (stof(datos.ball.balon_distancia) >= 40)
-                return "10";
-            else if (stof(datos.ball.balon_distancia) < 40)
-                return "10";
-            else if (stof(datos.ball.balon_distancia) < 20)
-                return "100";
-            else if (stof(datos.ball.balon_distancia) < 1)
-                return "-1";
-            else
-                return "0";
+
+            if (portero)
+            {
+                if (datos.ball.balon_distancia >= "40")
+                    return "10";
+                else if (datos.ball.balon_distancia < "40" && datos.ball.balon_distancia >= "20")
+                    return "0";
+                else if (datos.ball.balon_distancia < "20" && datos.ball.balon_distancia >= "1")
+                    return "80";
+                else // datos.ball.balon_distancia < 1
+                    return "-1";
+            }
+            else if (defensa2)
+            {
+                if (datos.ball.balon_distancia >= "40")
+                    return "10";
+                else if (datos.ball.balon_distancia < "40" && datos.ball.balon_distancia >= "20")
+                    return "0";
+                else if (datos.ball.balon_distancia < "20" && datos.ball.balon_distancia >= "1")
+                    return "80";
+                else // datos.ball.balon_distancia < 1
+                    return "-1";
+            }
+            else if (defensa3)
+            {
+                if (datos.ball.balon_distancia >= "40")
+                    return "10";
+                else if (datos.ball.balon_distancia < "40" && datos.ball.balon_distancia >= "20")
+                    return "0";
+                else if (datos.ball.balon_distancia < "20" && datos.ball.balon_distancia >= "1")
+                    return "80";
+                else // datos.ball.balon_distancia < 1
+                    return "-1";
+            }
+            else if (defensa4)
+            {
+                if (datos.ball.balon_distancia >= "40")
+                    return "10";
+                else if (datos.ball.balon_distancia < "40" && datos.ball.balon_distancia >= "20")
+                    return "0";
+                else if (datos.ball.balon_distancia < "20" && datos.ball.balon_distancia >= "1")
+                    return "80";
+                else // datos.ball.balon_distancia < 1
+                    return "-1";
+            }
+            else if (defensa5)
+            {
+                if (datos.ball.balon_distancia >= "40")
+                    return "10";
+                else if (datos.ball.balon_distancia < "40" && datos.ball.balon_distancia >= "20")
+                    return "0";
+                else if (datos.ball.balon_distancia < "20" && datos.ball.balon_distancia >= "1")
+                    return "80";
+                else // datos.ball.balon_distancia < 1
+                    return "-1";
+            }
+            else if (mc1)
+            {
+                if (datos.ball.balon_distancia >= "30")
+                    return "10";
+                else if (datos.ball.balon_distancia < "30" && datos.ball.balon_distancia >= "10")
+                    return "0";
+                else if (datos.ball.balon_distancia < "10" && datos.ball.balon_distancia >= "1")
+                    return "80";
+                else // datos.ball.balon_distancia < 1
+                    return "-1";
+            }
+            else if (mc2)
+            {
+                if (datos.ball.balon_distancia >= "30")
+                    return "10";
+                else if (datos.ball.balon_distancia < "30" && datos.ball.balon_distancia >= "10")
+                    return "0";
+                else if (datos.ball.balon_distancia < "10" && datos.ball.balon_distancia >= "1")
+                    return "80";
+                else // datos.ball.balon_distancia < 1
+                    return "-1";
+            }
         }
-        else if (defensa_lateral)
+        else if (delantero1)
         {
-            if (stof(datos.ball.balon_distancia) >= 40)
+            if (datos.ball.balon_distancia >= "25")
                 return "10";
-            else if (stof(datos.ball.balon_distancia) < 40)
-                return "5";
-            else if (stof(datos.ball.balon_distancia) < 20)
+            else if (datos.ball.balon_distancia < "25" && datos.ball.balon_distancia >= "15")
+                return "0";
+            else if (datos.ball.balon_distancia < "15" && datos.ball.balon_distancia >= "1")
                 return "80";
-            else if (stof(datos.ball.balon_distancia) < 1)
+            else // datos.ball.balon_distancia < 1
                 return "-1";
-            else
-                return "0";
         }
-
-        else if (mc)
+        else if (delantero2)
         {
-            if (stof(datos.ball.balon_distancia) >= 30)
-                return "25";
-            else if (stof(datos.ball.balon_distancia) < 30)
+            if (datos.ball.balon_distancia >= "25")
                 return "10";
-            else if (stof(datos.ball.balon_distancia) < 10)
-                return "90";
-            else if (stof(datos.ball.balon_distancia) < 1)
-                return "-1";
-            else
+            else if (datos.ball.balon_distancia < "25" && datos.ball.balon_distancia >= "15")
                 return "0";
+            else if (datos.ball.balon_distancia < "15" && datos.ball.balon_distancia >= "1")
+                return "80";
+            else // datos.ball.balon_distancia < 1
+                return "-1";
         }
-
-        else if (delantero)
+        else if (delantero3)
         {
-            if (stof(datos.ball.balon_distancia) >= 25)
-                return "30";
-            else if (stof(datos.ball.balon_distancia) < 25)
-                return "50";
-            else if (stof(datos.ball.balon_distancia) < 15)
-                return "100";
-            else if (stof(datos.ball.balon_distancia) < 1)
-                return "-1";
-            else
+            if (datos.ball.balon_distancia >= "25")
+                return "10";
+            else if (datos.ball.balon_distancia < "25" && datos.ball.balon_distancia >= "15")
                 return "0";
+            else if (datos.ball.balon_distancia < "15" && datos.ball.balon_distancia >= "1")
+                return "80";
+            else // balon_distancia < 1
+                return "-1";
         }
         else
+        {
             return "0";
+        }
     }
     else
     {
-        if(datos.jugador.jugador_numero == "1")
-            return("0");
-        cout << "fuera de area" << endl;
         return "-2";
-
     }
+ // Retorno por defecto para evitar warning de "control reaches end of non-void function"
+    return "-3"; // Puedes elegir un valor de retorno que tenga sentido en tu contexto
 }
+
