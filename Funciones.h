@@ -69,6 +69,16 @@ struct Porteria
           centro_distancia("999.0"), centro_direccion("999.0"), veo_porteria_contraria(false) {}
 };
 
+struct jugadorCercaPase
+{
+    bool hayJugadoor;
+    string direccion;
+    string distancia;
+    string numero_jugador;
+    jugadorCercaPase()
+    : hayJugadoor(false), direccion("999.0"), distancia("999.0"), numero_jugador("") {}
+};
+
 struct Datos_Juego
 {
     string nombre_equipo;
@@ -76,13 +86,14 @@ struct Datos_Juego
     Ball ball;
     Porteria porteria;
     Jugadores_Vistos jugadores_vistos;
+    jugadorCercaPase jugadorCerca;
     string evento;
     string evento_anterior;
     bool flag_kick_off;
 
     // Constructor por defecto
     Datos_Juego() 
-        : nombre_equipo(""), jugador(), ball(), porteria(), jugadores_vistos(), 
+        : nombre_equipo(""), jugador(), ball(), porteria(), jugadores_vistos(),jugadorCerca(), 
           evento("999.0"), evento_anterior("999.0"), flag_kick_off(false) {}
 };
 
@@ -106,13 +117,16 @@ Datos_Juego gestion_jugadores_vistos(string const &message, Datos_Juego &datos);
 bool check_tengo_balon(Datos_Juego const &datos);
 
 //es true cuando hay un jugador mas cerca que yo del balon
-bool check_jugador_cerca(Datos_Juego &datos);
+void check_jugador_cerca_pase(Datos_Juego &datos);
+
+bool voy_balon(Datos_Juego &datos);
 
 //lo que hace cuando esta lejos de la porteria
-string pase(Datos_Juego &datos);
+string pase(Datos_Juego const &datos);
 
 void send_message_funtion(string const &mensaje, Datos_Juego &datos);
 
 string funcionEnviar(Datos_Juego &datos);
-
+string ataque(Datos_Juego &datos);
+string sendMessage(Datos_Juego &datos);
 #endif
