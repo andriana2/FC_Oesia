@@ -313,12 +313,17 @@ bool voy_balon(Datos_Juego &datos)
 
             if (db < d)
             {
+                cout << "voy al balon" << endl;
                 return true;
             }
 
         }
     }
-
+    // Si no vemos a nadie cerca, tambien voy
+    if(jugadores.size() == 0)
+    {
+        return true;
+    }
     return false; // No voy
 }
 
@@ -338,7 +343,7 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
             jugadoresNumeroMayor.push_back(jugador);
         }
     }
-
+    cout << "N jugadores vistos: " << jugadoresCerca.size() << endl;
     if(jugadoresNumeroMayor.size() != 0)
     {
         // Ordenamos el vector juagdoresNumeroMayor por distancia
@@ -352,6 +357,7 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
         datos.jugadorCerca.distancia = jugadoresNumeroMayor.at(0).at(1);
         datos.jugadorCerca.direccion = jugadoresNumeroMayor.at(0).at(2);
         datos.jugadorCerca.numero_jugador = jugadoresNumeroMayor.at(0).at(0);
+        cout << "veo jugador con mayor numero cerca" << endl;
     }
     else
     {
@@ -372,7 +378,7 @@ if (hayJugadorMasCerca)
 {
          // Hay jugador cerca, calculamos potencia necesaria del pase
          int potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.53);
-
+        cout << "pasando balon" << endl;
          if (potencia > 100)
          {
              return "(kick 100 " + datos.jugadorCerca.direccion + ")";
@@ -508,7 +514,7 @@ string ataque(Datos_Juego &datos)
     string resultado;
 
     // Si somos el jugador que va al balon, y su distancia es < 25
-    if (voy_balon(datos) && stod(datos.ball.balon_distancia) <= 25)
+    if (voy_balon(datos) && stod(datos.ball.balon_distancia) <= 25 && stod(datos.ball.balon_distancia) > 1)
     {
         return "(dash 100 " + datos.ball.balon_direccion + ")";
     }
@@ -521,9 +527,9 @@ string ataque(Datos_Juego &datos)
     }
 
     // Somos cualquier jugador y la distancia al balon >25
-    if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) > 25)
+    if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) >= 25)
     {
-        return "(dash 50 " + datos.ball.balon_direccion + ")";
+        return "(dash 30 " + datos.ball.balon_direccion + ")";
     }
 
     // Somos portero y nos atacan con el balon, salimos
@@ -531,8 +537,7 @@ string ataque(Datos_Juego &datos)
     {
         return "(dash 100 " + datos.ball.balon_direccion + ")";
     }
-
-    return "(kick 30 180)";
+    return "0";
 }
 /*
 string pase(Datos_Juego const &datos)
@@ -587,15 +592,15 @@ string sendMessage(Datos_Juego &datos)
     }
 
     // si vemos mal el balon giramos poco
-    if (stod(datos.ball.balon_direccion) > 30) // BALON A LA DERECHA, GIRA DERECHA
+    if (stod(datos.ball.balon_direccion) > 10) // BALON A LA DERECHA, GIRA DERECHA
     {
-        cout << "giro 30 grados" << "\n";
+        cout << "giro + grados" << "\n";
 
-        return "(turn 20)";
+        return "(turn " + datos.ball.balon_direccion + ")";
     }
-    else if (stod(datos.ball.balon_direccion) < -30) // BALON A LA IZQA, GIRA IZQA
+    else if (stod(datos.ball.balon_direccion) < -10) // BALON A LA IZQA, GIRA IZQA
     {
-        return "(turn -20)";
+        return "(turn " + datos.ball.balon_direccion + ")";
     }
 
     /*
@@ -625,16 +630,26 @@ string sendMessage(Datos_Juego &datos)
     */
 
 /////////////////////////////////////////////////////////////////////////////////////
-
+    
     // Si estamos en area, aplicamos funcion de ataque al balon, sino volvemos hacia atras
     if (check_area(datos))
     {
         resultado = ataque(datos);
-        return resultado;
+        if(resultado != "0")
+        {
+            return resultado;
+        }
     }
     else
     {
-        return "(dash 100 180)";
+        if(datos.jugador.jugador_numero == "1")
+        {
+            return "";
+        }
+        else
+        {
+            return "(dash 100 180)";
+        }
     }
 
     // Si somos el portero y tenemos el balon, lo atrapamos
@@ -646,7 +661,7 @@ string sendMessage(Datos_Juego &datos)
     // Si podemos tirar a puerta
     if (stod(datos.ball.balon_distancia) <= 1 && stod(datos.porteria.centro_distancia) <= 25)
     {
-        return "(kick 100 " + datos.ball.balon_direccion + ")";
+        return "(kick 100 " + datos.porteria.centro_direccion + ")";
     }
 
     // Si TENEMOS BALON, valoramos distintas opciones
@@ -682,8 +697,6 @@ string sendMessage(Datos_Juego &datos)
         {
             return "(kick 20 " + datos.porteria.centro_direccion + ")";
         }
-
-        return "(kick 30 120)";
     }
-    return "";
+    return "(dash 10 " + datos.ball.balon_direccion + ")";
 }

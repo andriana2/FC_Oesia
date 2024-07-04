@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
         } while (received_message_content.find("(see") == -1);
         //cout << received_message_content << endl <<endl <<endl;
         string envio = sendMessage(datos);
+        cout << envio << endl;
         if (envio != ""){
             //cout << datos.jugador.jugador_numero << "<- numero jugador "<< envio <<endl;
             udp_socket.sendTo(envio,server_udp);

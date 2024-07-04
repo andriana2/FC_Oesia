@@ -18,7 +18,6 @@ for i in {0..10}
 do
   echo "Launching player $i..."
   gnome-terminal -- bash -c "'/home/mexarlg/Documents/Oesia /School project/FC_Oesia/build/player' 'FC_Oesia' '555$i'" &
-  sleep 1
 done
 
 echo "All players launched."

@@ -89,12 +89,13 @@ struct Datos_Juego
     jugadorCercaPase jugadorCerca;
     string evento;
     string evento_anterior;
+    string lado_campo;
     bool flag_kick_off;
 
     // Constructor por defecto
     Datos_Juego() 
         : nombre_equipo(""), jugador(), ball(), porteria(), jugadores_vistos(),jugadorCerca(), 
-          evento("999.0"), evento_anterior("999.0"), flag_kick_off(false) {}
+          evento("999.0"), evento_anterior("999.0"), lado_campo("l"), flag_kick_off(false) {}
 };
 
 string posicion_inicial(Datos_Juego &datos);
