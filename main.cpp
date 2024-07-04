@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     udp_socket.sendTo("(init " + datos.nombre_equipo + "(version 19))", other_recipient_udp);
     cout << "Init Message sent" << endl;
 
-    size_t message_max_size = 1000;
+    size_t message_max_size = 5000;
     cout << "Waiting for a message" << endl;
     auto received_message = udp_socket.receive(message_max_size);
 
