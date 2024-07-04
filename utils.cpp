@@ -17,8 +17,8 @@ void get_error_parentesis(string const &str)
             num_cerrado++;
         }
     }
-    if ((num_abierto - num_cerrado) != 0)
-        throw invalid_argument("No tiene suficientes parentesis");
+    // if ((num_abierto - num_cerrado) != 0)
+    //     throw invalid_argument("No tiene suficientes parentesis");
 
 }
 
@@ -45,7 +45,7 @@ void get_error_letras(string const &str)
 
 vector <string> GestionParentesis(string const &str)
 {
-    get_error_parentesis(str);
+    //get_error_parentesis(str);
     //get_error_letras(str);
     vector <string> resultado;
     int num_abierto{0};

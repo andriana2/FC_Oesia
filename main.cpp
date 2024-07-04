@@ -7,10 +7,9 @@ int main(int argc, char *argv[])
 {
     Datos_Juego datos;
 
-    //PUEDE QUE QUITAR
     vector<shared_ptr<flagKnowns>> flags;
     inicializacion_flags(flags);
-    //FIN PUEDE QUE QUITAR
+
 
     
     //revisar si el numero de argumentos es correcto
@@ -71,7 +70,7 @@ int main(int argc, char *argv[])
         //cout << received_message_content << endl <<endl <<endl;
         string envio = sendMessage(datos);
         if (envio != ""){
-            cout << datos.jugador.jugador_numero << "<- numero jugador "<< envio <<endl;
+            //cout << datos.jugador.jugador_numero << "<- numero jugador "<< envio <<endl;
             udp_socket.sendTo(envio,server_udp);
         }
     }
