@@ -24,11 +24,12 @@ struct Jugador
     float y_absoluta;
     bool tengo_balon;
     bool equipo_tiene_balon;
+    bool saque_puerta;
 
     // Constructor por defecto
     Jugador() 
         : jugador_numero(""), lado_campo(""), nombre_equipo(""), 
-          x_absoluta(999.0f), y_absoluta(999.0f), tengo_balon(false), equipo_tiene_balon(false) {}
+          x_absoluta(999.0f), y_absoluta(999.0f), tengo_balon(false), equipo_tiene_balon(false), saque_puerta(false) {}
 };
 
 struct Jugadores_Vistos

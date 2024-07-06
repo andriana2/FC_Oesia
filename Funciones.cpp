@@ -606,23 +606,22 @@ string sendMessage(Datos_Juego &datos)
             return "(kick 50 -90)";
     }
 
+    // Si somos el 11 y hay penaltie
+    if (datos.jugador.jugador_numero == "11" && ((datos.evento.find("penalty_kick_l") != -1) && datos.lado_campo == "l"||
+     (datos.evento.find("penalty_kick_r") != -1) && datos.lado_campo == "r"))
+    {
+        if(check_tengo_balon(datos))
+        {
+            resultado = disparo(datos);
+            return resultado;
+        }
+    }
+
     if (datos.flag_kick_off && datos.jugador.jugador_numero == "11")
     {
         datos.flag_kick_off = false;
         return "(kick 50 -90)";
     }
-
-    
-    // // Si estamos aun sin jugar, vemos bien el balon hasta que la direccion == 0
-    // if(datos.evento.find("before_kick_off") != -1)
-    // {
-    //     if(stod(datos.ball.balon_direccion) != 0)
-    //     {
-    //         return "(turn "+ datos.ball.balon_direccion + ")";
-    //     }
-    // }
-
-    // Si somos el 11 y hay saque de balon nuestro (kisk_off_side_l y somos l)
 
     // Si somos el portero y hay saque de porteria (d<1)
     bool saquePortero = (datos.evento.find("free_kick_") != -1 && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1);
@@ -631,7 +630,6 @@ string sendMessage(Datos_Juego &datos)
         resultado = pase(datos);
         return resultado;
     }
-
 
     /////////////////////////////////////////////////////////////////////////////////////
     // AÑADIR BOOLEANO PARA SABER SI EL EQUIPO TIENE EL BALON, Y ASI SABER SI PERSEGUIR AL BALON
@@ -657,9 +655,19 @@ string sendMessage(Datos_Juego &datos)
         }
     }
 
+
+    if(datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
+    {
+        datos.jugador.saque_puerta = false;
+        resultado = pase(datos);
+        return resultado;
+    }
+
+
     // Si somos el portero y tenemos el balon, lo atrapamos
     if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
     {
+        datos.jugador.saque_puerta = true;
         return "(catch " + datos.ball.balon_direccion + ")";
     }
 
