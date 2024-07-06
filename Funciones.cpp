@@ -311,7 +311,6 @@ bool voy_balon(Datos_Juego &datos)
 
             if (db < d)
             {
-                cout << "voy al balon" << endl;
                 return true;
             }
         }
@@ -363,7 +362,6 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
         datos.jugadorCerca.distancia = jugadoresNumeroMayor.at(0).at(1);
         datos.jugadorCerca.direccion = jugadoresNumeroMayor.at(0).at(2);
         datos.jugadorCerca.numero_jugador = jugadoresNumeroMayor.at(0).at(0);
-        cout << "veo jugador con mayor numero cerca" << endl;
     }
     else
     {
@@ -566,14 +564,12 @@ string sendMessage(Datos_Juego &datos)
         }
     }
 
-
     if(datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
     {
         datos.jugador.saque_puerta = false;
         resultado = pase(datos);
         return resultado;
     }
-
 
     // Si somos el portero y tenemos el balon, lo atrapamos
     if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
