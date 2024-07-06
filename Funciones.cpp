@@ -422,96 +422,6 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
     }
 }
 
-string funcionEnviar(Datos_Juego &datos)
-{
-    // Funcion que cogera los datos de la estructura Juego, y creará un mensaje
-    // devolviendo la accion del jugador (girar cabeza, correr etc, en funcion del balon)
-
-    string resultado{""};
-    // cout << "x->" << datos.jugador.x_absoluta << "    y->" << datos.jugador.y_absoluta << endl;
-    //  SI NO VEMOS EL BALON ---> CAMBIO DIRECCION PRIMERO
-    if (!datos.ball.veo_balon)
-    {
-        return "(turn 70)";
-    }
-    else // SI VEMOS EL BALON ---> NOS GIRAMOS CCW O CW PARA VERLO MUY BIEN
-    {
-        if (stod(datos.ball.balon_direccion) > 30) // BALON A LA DERECHA, GIRA DERECHA
-        {
-            cout << "giro 30 grados" << "\n";
-
-            return "(turn 20)";
-        }
-        else if (stod(datos.ball.balon_direccion) < -30) // BALON A LA IZQA, GIRA IZQA
-        {
-            return "(turn -20)";
-        }
-        else // BALON BIEN VISTO, PROCEDEMOS A MOVERNOS
-        {
-            if (check_tengo_balon(datos))
-            {
-                if (datos.jugador.jugador_numero == "1") // Soy portero
-                    return ("(catch " + datos.ball.balon_direccion + ")");
-                else if (datos.jugador.jugador_numero < "9") // No soy delantero
-                {
-                    string resultado = pase(datos);
-                    return resultado;
-                }
-                else // soy delantero
-                {
-                    // veo porteria contrari y estoy a menos de 20
-                    if (datos.porteria.veo_porteria_contraria == true && stof(datos.porteria.centro_distancia) < 20)
-                    {
-                        float angulo;
-                        if (rand() % 2 == 0)
-                            angulo = stof(datos.porteria.palo_arriba_direccion) - (rand() % 20); // tiro con angulo derecha
-                        else
-                            angulo = stof(datos.porteria.palo_arriba_direccion) + (rand() % 20); // tiro con angulo izquierda
-                        string msg = "(kick 100 " + to_string(angulo) + ")";
-                        return (msg);
-                    }
-                    // Veo porteria estoy a mas de 20 metros
-                    // OJO PUEDE HABER USA EXCEPCION SI EL KICK_OFF SE MANTIENE Y NO SE ESCUCHA NADA
-                    else if (datos.porteria.veo_porteria_contraria == true)
-                    {
-                        // if (datos.flag_kick_off == true)
-                        // {
-                        //     datos.flag_kick_off = false; // OJO CAMBIO DATO----------
-                        //     return (pase(datos));
-                        // }
-                        // else
-                        return ("(kick 20 " + datos.porteria.centro_direccion + ")");
-                    }
-                    // no veo la porteria hago un cambio de sentido
-                    else if (datos.porteria.veo_porteria_contraria == false)
-                    {
-                        return ("(kick 15 150)"); // revisar
-                    }
-                }
-            }
-            else // No tengo el balon
-            {
-                // true jugador mas cerca
-                if (datos.jugador.jugador_numero == "1" && stof(datos.ball.balon_distancia) < 5 && stof(datos.ball.balon_distancia) > 1)
-                {
-                    return ("(dash 100 " + datos.ball.balon_direccion + ")");
-                }
-                if (check_area(datos) && datos.jugador.jugador_numero != "1")
-                {
-                    if (voy_balon(datos)) // soy de los jugadores mas cerca
-                        return ("(dash 100 " + datos.ball.balon_direccion + ")");
-                }
-                // no estoy en el area me voy para atras
-                else if (datos.jugador.jugador_numero != "1")
-                    return ("(dash 100 180)");
-                else
-                    return ("");
-            }
-        }
-    }
-    return resultado;
-}
-
 string ataque(Datos_Juego &datos)
 {
     string resultado;
@@ -617,6 +527,7 @@ string sendMessage(Datos_Juego &datos)
         }
     }
 
+    // inicio de partido, pasamos atras si somos el 11
     if (datos.flag_kick_off && datos.jugador.jugador_numero == "11")
     {
         datos.flag_kick_off = false;
