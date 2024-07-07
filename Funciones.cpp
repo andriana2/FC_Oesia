@@ -120,8 +120,17 @@ string posicion_inicial(Datos_Juego &datos)
         pos.y = -27;
         break;
     case 10:
-        pos.x = -5;
-        pos.y = 10;
+        if((datos.evento.find("goal_l") != -1 && datos.lado_campo == "r") || 
+        (datos.evento.find("goal_r") != -1 && datos.lado_campo == "l"))
+        {
+            pos.x = -0.1;
+            pos.y = 0.5;
+        }
+        else
+        {
+            pos.x = -5;
+            pos.y = 10;
+        }
         break;
     }
     auto resultado = "(move " + to_string(pos.x) + " " + to_string(pos.y) + ")"; // (move -51 0)
@@ -481,7 +490,7 @@ string sendMessage(Datos_Juego &datos)
     if (checkStart)
     {
         resultado = posicion_inicial(datos);
-        if ((datos.evento.find("goal_l") != -1 && datos.lado_campo == "r") || (datos.evento.find("goal_l") != -1 && datos.lado_campo == "l"))
+        if ((datos.evento.find("goal_l") != -1 && datos.lado_campo == "r") || (datos.evento.find("goal_r") != -1 && datos.lado_campo == "l"))
         {
             datos.flag_kick_off = true;
         }
@@ -560,7 +569,7 @@ string sendMessage(Datos_Juego &datos)
         else
         {
             // Mejor tener juego agresivo a bugs por ir hacia atras
-            return "(dash 10 180)";
+            return "(dash 20 180)";
         }
     }
 

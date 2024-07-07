@@ -112,42 +112,42 @@ bool check_area(Datos_Juego const &datos)
                 return true;
             }
         }
-        else if (defensa2)
+        else if (defensa5)
         {
             if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 50))
             {
                 return true;
             }
         }
-        else if (defensa3)
+        else if (defensa4)
         {
             if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
             {
                 return true;
             }
         }
-        else if (defensa4)
+        else if (defensa3)
         {
             if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 22))
             {
                 return true;
             }
         }
-        else if (defensa5)
+        else if (defensa2)
         {
             if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 22 && datos.jugador.y_absoluta >= 8))
             {
                 return true;
             }
         }
-        else if (mc1)
+        else if (mc2)
         {
             if ((datos.jugador.x_absoluta >= 40 && datos.jugador.x_absoluta <= 90) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
             {
                 return true;
             }
         }
-        else if (mc2)
+        else if (mc1)
         {
             if ((datos.jugador.x_absoluta >= 40 && datos.jugador.x_absoluta <= 90) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 20))
             {
@@ -161,14 +161,14 @@ bool check_area(Datos_Juego const &datos)
                 return true;
             }
         }
-        else if (delantero1)
+        else if (delantero2)
         {
             if ((datos.jugador.x_absoluta >= 8 && datos.jugador.x_absoluta <= 75) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 8))
             {
                 return true;
             }
         }
-        else if (delantero2)
+        else if (delantero1)
         {
             if ((datos.jugador.x_absoluta >= 8 && datos.jugador.x_absoluta <= 75) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 40))
             {
