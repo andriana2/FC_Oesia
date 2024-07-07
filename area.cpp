@@ -18,83 +18,172 @@ bool check_area(Datos_Juego const &datos)
     bool delantero2 = (datos.jugador.jugador_numero == "10");
     bool delantero3 = (datos.jugador.jugador_numero == "11");
 
-    if (portero)
+    bool lado_izquierdo = (datos.jugador.lado_campo == "l");
+    bool lado_derecho = (datos.jugador.lado_campo == "r");
+
+    // Verificación para el lado derecho
+    if (lado_izquierdo)
     {
-        if ((datos.jugador.x_absoluta <= 18 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 47 && datos.jugador.y_absoluta >= 33))
+        if (portero)
         {
-            return true;
+            if ((datos.jugador.x_absoluta <= 18 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 47 && datos.jugador.y_absoluta >= 33))
+            {
+                return true;
+            }
+        }
+        else if (defensa2)
+        {
+            if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 50))
+            {
+                return true;
+            }
+        }
+        else if (defensa3)
+        {
+            if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
+            {
+                return true;
+            }
+        }
+        else if (defensa4)
+        {
+            if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 22))
+            {
+                return true;
+            }
+        }
+        else if (defensa5)
+        {
+            if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 22 && datos.jugador.y_absoluta >= 8))
+            {
+                return true;
+            }
+        }
+        else if (mc1)
+        {
+            if ((datos.jugador.x_absoluta <= 80 && datos.jugador.x_absoluta >= 30) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
+            {
+                return true;
+            }
+        }
+        else if (mc2)
+        {
+            if ((datos.jugador.x_absoluta <= 80 && datos.jugador.x_absoluta >= 30) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 20))
+            {
+                return true;
+            }
+        }
+        else if (mc3)
+        {
+            if ((datos.jugador.x_absoluta <= 80 && datos.jugador.x_absoluta >= 30) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 20))
+            {
+                return true;
+            }
+        }
+        else if (delantero1)
+        {
+            if ((datos.jugador.x_absoluta <= 112 && datos.jugador.x_absoluta >= 45) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 8))
+            {
+                return true;
+            }
+        }
+        else if (delantero2)
+        {
+            if ((datos.jugador.x_absoluta <= 112 && datos.jugador.x_absoluta >= 45) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 40))
+            {
+                return true;
+            }
+        }
+        else if (delantero3)
+        {
+            if ((datos.jugador.x_absoluta <= 112 && datos.jugador.x_absoluta >= 45) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 6))
+            {
+                return true;
+            }
         }
     }
-    else if (defensa2)
+    // Verificación para el lado derecho
+    if (lado_derecho)
     {
-        if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 50))
+        if (portero)
         {
-            return true;
+            if ((datos.jugador.x_absoluta >= 94 && datos.jugador.x_absoluta <= 104) && (datos.jugador.y_absoluta <= 47 && datos.jugador.y_absoluta >= 33))
+            {
+                return true;
+            }
+        }
+        else if (defensa2)
+        {
+            if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 50))
+            {
+                return true;
+            }
+        }
+        else if (defensa3)
+        {
+            if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
+            {
+                return true;
+            }
+        }
+        else if (defensa4)
+        {
+            if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 22))
+            {
+                return true;
+            }
+        }
+        else if (defensa5)
+        {
+            if ((datos.jugador.x_absoluta >= 65 && datos.jugador.x_absoluta <= 112) && (datos.jugador.y_absoluta <= 22 && datos.jugador.y_absoluta >= 8))
+            {
+                return true;
+            }
+        }
+        else if (mc1)
+        {
+            if ((datos.jugador.x_absoluta >= 40 && datos.jugador.x_absoluta <= 90) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
+            {
+                return true;
+            }
+        }
+        else if (mc2)
+        {
+            if ((datos.jugador.x_absoluta >= 40 && datos.jugador.x_absoluta <= 90) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 20))
+            {
+                return true;
+            }
+        }
+        else if (mc3)
+        {
+            if ((datos.jugador.x_absoluta >= 40 && datos.jugador.x_absoluta <= 90) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 20))
+            {
+                return true;
+            }
+        }
+        else if (delantero1)
+        {
+            if ((datos.jugador.x_absoluta >= 8 && datos.jugador.x_absoluta <= 75) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 8))
+            {
+                return true;
+            }
+        }
+        else if (delantero2)
+        {
+            if ((datos.jugador.x_absoluta >= 8 && datos.jugador.x_absoluta <= 75) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 40))
+            {
+                return true;
+            }
+        }
+        else if (delantero3)
+        {
+            if ((datos.jugador.x_absoluta >= 8 && datos.jugador.x_absoluta <= 75) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 6))
+            {
+                return true;
+            }
         }
     }
-    else if (defensa3)
-    {
-        if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
-        {
-            return true;
-        }
-    }
-    else if (defensa4)
-    {
-        if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 22))
-        {
-            return true;
-        }
-    }
-    else if (defensa5)
-    {
-        if ((datos.jugador.x_absoluta <= 55 && datos.jugador.x_absoluta >= 8) && (datos.jugador.y_absoluta <= 22 && datos.jugador.y_absoluta >= 8))
-        {
-            return true;
-        }
-    }
-    else if (mc1)
-    {
-        if ((datos.jugador.x_absoluta <= 80 && datos.jugador.x_absoluta >= 30) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 40))
-        {
-            return true;
-        }
-    }
-    else if (mc2)
-    {
-        if ((datos.jugador.x_absoluta <= 80 && datos.jugador.x_absoluta >= 30) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 20))
-        {
-            return true;
-        }
-    }
-    else if (mc3)
-    {
-        if ((datos.jugador.x_absoluta <= 80 && datos.jugador.x_absoluta >= 30) && (datos.jugador.y_absoluta <= 60 && datos.jugador.y_absoluta >= 20))
-        {
-            return true;
-        }
-    }
-    else if (delantero1)
-    {
-        if ((datos.jugador.x_absoluta <= 112 && datos.jugador.x_absoluta >= 45) && (datos.jugador.y_absoluta <= 40 && datos.jugador.y_absoluta >= 8))
-        {
-            return true;
-        }
-    }
-    else if (delantero2)
-    {
-        if ((datos.jugador.x_absoluta <= 112 && datos.jugador.x_absoluta >= 45) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 40))
-        {
-            return true;
-        }
-    }
-    else if (delantero3)
-    {
-        if ((datos.jugador.x_absoluta <= 112 && datos.jugador.x_absoluta >= 45) && (datos.jugador.y_absoluta <= 74 && datos.jugador.y_absoluta >= 6))
-        {
-            return true;
-        }
-    }
+
     return false;
 }
 
@@ -242,7 +331,6 @@ string movimientos_jugador(Datos_Juego const &datos)
     {
         return "-2";
     }
- // Retorno por defecto para evitar warning de "control reaches end of non-void function"
+    // Retorno por defecto para evitar warning de "control reaches end of non-void function"
     return "-3"; // Puedes elegir un valor de retorno que tenga sentido en tu contexto
 }
-
