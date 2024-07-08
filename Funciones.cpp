@@ -467,11 +467,11 @@ string disparo(Datos_Juego &datos)
     float angulo;
     if (rand() % 2 == 0)
     {
-        angulo = stof(datos.porteria.centro_direccion) + (rand() % 16); // tiro con angulo derecha de 5º
+        angulo = stof(datos.porteria.centro_direccion) + (rand() % 14); // tiro con angulo derecha de 5º
     }
     else
     {
-        angulo = stof(datos.porteria.centro_direccion) - (rand() % 16); // tiro con angulo izquierda de 5º
+        angulo = stof(datos.porteria.centro_direccion) - (rand() % 14); // tiro con angulo izquierda de 5º
     }
     string msg = "(kick 100 " + to_string(angulo) + ")";
     return (msg);
