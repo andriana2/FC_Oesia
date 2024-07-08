@@ -629,7 +629,7 @@ string sendMessage(Datos_Juego &datos)
     }
 
     // Si somos el portero y tenemos el balon, lo atrapamos
-    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
+    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 2)
     {
         datos.jugador.saque_puerta = true;
         return "(catch " + datos.ball.balon_direccion + ")";
