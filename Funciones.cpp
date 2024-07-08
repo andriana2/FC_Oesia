@@ -387,7 +387,7 @@ string pase(Datos_Juego &datos)
     if (hayJugadorMasCerca)
     {
         // Hay jugador cerca, calculamos potencia necesaria del pase
-        int potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.5);
+        int potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.45);
         cout << "pasando balon" << endl;
         if (potencia > 100)
         {
@@ -434,7 +434,7 @@ string ataque(Datos_Juego &datos)
     string resultado;
 
     // Si somos el jugador que va al balon, y su distancia es < 25
-    if (voy_balon(datos) && stod(datos.ball.balon_distancia) <= 25 && stod(datos.ball.balon_distancia) > 1)
+    if (voy_balon(datos) && stod(datos.ball.balon_distancia) <= 20 && stod(datos.ball.balon_distancia) > 1)
     {
         return "(dash 100 " + datos.ball.balon_direccion + ")";
     }
@@ -449,15 +449,15 @@ string ataque(Datos_Juego &datos)
     }
 
     // Somos cualquier jugador y la distancia al balon >25
-    if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) > 25)
+    if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) > 20)
     {
-        return "(dash 30 " + datos.ball.balon_direccion + ")";
+        return "(dash 15 " + datos.ball.balon_direccion + ")";
     }
 
     // Somos portero y nos atacan con el balon, salimos
     if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) > 1 && stod(datos.ball.balon_distancia) <= 5)
     {
-        return "(dash 50 " + datos.ball.balon_direccion + ")";
+        return "(dash 40 " + datos.ball.balon_direccion + ")";
     }
     return "0";
 }
