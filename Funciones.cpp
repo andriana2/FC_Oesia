@@ -318,9 +318,9 @@ bool voy_balon(Datos_Juego &datos)
             // Si mi distancia al balon es menor comparada con 3º jugador devolvemos true
             // Hacemos return si encontramos algun true
 
-            if (db < d)
+            if (db > d)
             {
-                return true;
+                return false;
             }
         }
     }
@@ -332,7 +332,7 @@ bool voy_balon(Datos_Juego &datos)
         bool random_boolean = rand() % 100 < 80;
         return random_boolean;
     }
-    return false; // No voy
+    return true; // No voy
 }
 
 void check_jugador_cerca_pase(Datos_Juego &datos)
@@ -645,6 +645,11 @@ string sendMessage(Datos_Juego &datos)
     if(datos.jugador.jugador_numero == "1")
     {
         return "";
+    }
+
+    if(check_tengo_balon(datos))
+    {
+        return "(kick 20" + datos.porteria.centro_direccion + ")";
     }
 
     return "(dash 1 " + datos.ball.balon_direccion + ")";
