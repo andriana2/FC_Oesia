@@ -123,8 +123,8 @@ string posicion_inicial(Datos_Juego &datos)
         if((datos.evento.find("goal_l") != -1 && datos.lado_campo == "r") || 
         (datos.evento.find("goal_r") != -1 && datos.lado_campo == "l"))
         {
-            pos.x = -0.1;
-            pos.y = 0.5;
+            pos.x = -1;
+            pos.y = 1;
         }
         else
         {
@@ -387,7 +387,7 @@ string pase(Datos_Juego &datos)
     if (hayJugadorMasCerca)
     {
         // Hay jugador cerca, calculamos potencia necesaria del pase
-        int potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.53);
+        int potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.5);
         cout << "pasando balon" << endl;
         if (potencia > 100)
         {
@@ -440,10 +440,12 @@ string ataque(Datos_Juego &datos)
     }
 
     // Si somos el 11, hay corner y la distancia al balon > 1
-    bool corner = false;
+    bool corner = (datos.evento == "kick_off_l" && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "l") ||
+        (datos.evento == "kick_off_r" && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r");
+
     if (datos.jugador.jugador_numero == "11" && stod(datos.ball.balon_distancia) > 1 && corner)
     {
-        return "(dash 80 " + datos.ball.balon_direccion + ")";
+        return "(dash 100 " + datos.ball.balon_direccion + ")";
     }
 
     // Somos cualquier jugador y la distancia al balon >25
@@ -455,7 +457,7 @@ string ataque(Datos_Juego &datos)
     // Somos portero y nos atacan con el balon, salimos
     if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) > 1 && stod(datos.ball.balon_distancia) <= 5)
     {
-        return "(dash 100 " + datos.ball.balon_direccion + ")";
+        return "(dash 50 " + datos.ball.balon_direccion + ")";
     }
     return "0";
 }
@@ -520,7 +522,7 @@ string sendMessage(Datos_Juego &datos)
         (datos.evento == "kick_off_r" && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r"))
     {
         if (check_tengo_balon(datos))
-            return "(kick 50 -90)";
+            return "(kick 60 -90)";
     }
 
     // Si somos el 11 y hay penaltie
@@ -552,6 +554,7 @@ string sendMessage(Datos_Juego &datos)
     /////////////////////////////////////////////////////////////////////////////////////
     // AÑADIR BOOLEANO PARA SABER SI EL EQUIPO TIENE EL BALON, Y ASI SABER SI PERSEGUIR AL BALON
     // Si estamos en area, aplicamos funcion de ataque al balon, sino volvemos hacia atras
+
     if (check_area(datos) || voy_balon(datos))
     {
         resultado = ataque(datos);
@@ -632,6 +635,18 @@ string sendMessage(Datos_Juego &datos)
         {
             return "(kick 20 " + datos.porteria.centro_direccion + ")";
         }
+
+        if(datos.jugador.jugador_numero != "1")
+        {
+            return "(kick 20 120)";
+        }
     }
-    return "(dash 5 " + datos.ball.balon_direccion + ")";
+    
+    if(datos.jugador.jugador_numero == "1")
+    {
+        return "";
+    }
+
+    return "(dash 1 " + datos.ball.balon_direccion + ")";
+
 }
