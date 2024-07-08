@@ -460,9 +460,15 @@ string ataque(Datos_Juego &datos)
     }
 
     // Somos cualquier jugador y la distancia al balon >25
-    if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) > 20)
+    if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) > 20 && stod(datos.ball.balon_distancia) < 40)
     {
         return "(dash 15 " + datos.ball.balon_direccion + ")";
+    }
+
+        // Somos cualquier jugador y la distancia al balon >25
+    if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) >= 40)
+    {
+        return "(dash 55 " + datos.ball.balon_direccion + ")";
     }
 
     // Somos portero y nos atacan con el balon, salimos
@@ -490,6 +496,8 @@ string disparo(Datos_Juego &datos)
 
 string sendMessage(Datos_Juego &datos)
 {
+    check_jugador_cerca_pase(datos);
+
     string resultado;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -533,8 +541,24 @@ string sendMessage(Datos_Juego &datos)
         (datos.evento == "kick_off_r" && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r"))
     {
         if (check_tengo_balon(datos))
-            return "(kick 60 -90)";
+            return "(kick 100 70)";
     }
+
+        // Si somos el 11 y hay falta indirecta o corner
+    if ((datos.evento.find("indirect_free_kick_l") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "l") ||
+        (datos.evento.find("indirect_free_kick_r") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r")||
+        (datos.evento.find("corner_l") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "l")||
+        (datos.evento.find("corner_r") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r"))
+    {
+        if(!check_tengo_balon(datos))
+            return "(dash 100 " + datos.ball.balon_direccion + ")";
+        else if (check_tengo_balon(datos))
+            resultado = pase(datos);
+        else if(resultado == "(kick 10 130)" && check_tengo_balon(datos))
+            return "(turn 130)";
+        return resultado;
+    }
+
 
     // Si somos el 11 y hay penaltie
     if (datos.jugador.jugador_numero == "11" && ((datos.evento.find("penalty_kick_l") != -1) && datos.lado_campo == "l" ||
@@ -559,6 +583,11 @@ string sendMessage(Datos_Juego &datos)
     if (saquePortero)
     {
         resultado = pase(datos);
+        if(resultado == "(kick 10 130)")
+        {
+            resultado = "(kick 100 10)";
+            return resultado;
+        }
         return resultado;
     }
 
@@ -591,6 +620,11 @@ string sendMessage(Datos_Juego &datos)
     {
         datos.jugador.saque_puerta = false;
         resultado = pase(datos);
+        if(resultado == "(kick 10 130)")
+        {
+            resultado = "(kick 100 10)";
+            return resultado;
+        }
         return resultado;
     }
 
