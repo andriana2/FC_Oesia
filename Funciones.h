@@ -62,12 +62,14 @@ struct Porteria
     string centro_distancia;
     string centro_direccion;
     bool veo_porteria_contraria;
+    bool veo_porteria_propia;
 
     // Constructor por defecto
     Porteria() 
         : palo_abajo_distancia("999.0"), palo_abajo_direccion("999.0"), 
           palo_arriba_distancia("999.0"), palo_arriba_direccion("999.0"), 
-          centro_distancia("999.0"), centro_direccion("999.0"), veo_porteria_contraria(false) {}
+          centro_distancia("999.0"), centro_direccion("999.0"), veo_porteria_contraria(false),
+          veo_porteria_propia(false) {}
 };
 
 struct jugadorCercaPase
