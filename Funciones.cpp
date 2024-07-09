@@ -516,12 +516,12 @@ string pase(Datos_Juego &datos)
         int potencia;
         // Hay jugador cerca, calculamos potencia necesaria del pase
         if (stof(datos.jugadorCerca.distancia) >= 20)
-            potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.55);
+            potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.7);
         else if (stof(datos.jugadorCerca.distancia) < 20 && stof(datos.jugadorCerca.distancia) > 10)
             potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.4);
         else
         {
-            potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.1);
+            potencia = static_cast<int>(stof(datos.jugadorCerca.distancia) * 2.3);
         }
 
         if (potencia > 100)
@@ -536,7 +536,7 @@ string pase(Datos_Juego &datos)
     else
     {
         // No hay nadie cerca, pase corto hacia atras para girar la cabeza
-        return "(kick 10 130)";
+        return "(kick 12 130)";
     }
 }
 
@@ -631,11 +631,8 @@ string sendMessage(Datos_Juego &datos)
 
     string resultado;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // Si hay inicio de posiciones
-    // cout << datos.evento << "\n";
-    // cout << endl;
+    ///////////////////////////POSICIONAMIENTO//////////////////////////////////////////////
+    // Inicio de posiciones
     bool checkStart = (datos.evento.find("goal_l") != -1 || datos.evento.find("goal_r") != -1 ||
                        datos.evento.find("half_time") != -1 || datos.evento.find("extra_half_time") != -1) ||
                       datos.evento.find("before_kick_off") != -1;
@@ -654,8 +651,8 @@ string sendMessage(Datos_Juego &datos)
         return resultado;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /////////////////////////////GIROS PARA VER BALON////////////////////////////////////////////////////////
     // Si no vemos balon giramos mucho
     if (!datos.ball.veo_balon)
     {
@@ -668,19 +665,20 @@ string sendMessage(Datos_Juego &datos)
         return "(turn " + datos.ball.balon_direccion + ")";
     }
 
-    // Si somos el 11 y hay saque de balon nuestro (kisk_off_side_l y somos l)
-    if ((datos.evento == "kick_off_l" && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "l") ||
-        (datos.evento == "kick_off_r" && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r"))
+    //////////////SAQUES FALTAS/////////////////////
+    // Hay saque de balon nuestro (kisk_off_side_l y somos l)
+    if ((datos.evento == "kick_off_l" && datos.jugador.lado_campo == "l") ||
+        (datos.evento == "kick_off_r" && datos.jugador.lado_campo == "r"))
     {
         if (check_tengo_balon(datos))
             return "(kick 100 70)";
     }
 
     // Si somos el 11 y hay falta indirecta o corner
-    if ((datos.evento.find("indirect_free_kick_l") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "l") ||
-        (datos.evento.find("indirect_free_kick_r") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r") ||
-        (datos.evento.find("corner_kick_l") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "l") ||
-        (datos.evento.find("corner_kick_r") != -1 && datos.jugador.jugador_numero == "11" && datos.jugador.lado_campo == "r"))
+    if ((datos.evento.find("indirect_free_kick_l") != -1 && datos.jugador.lado_campo == "l") ||
+        (datos.evento.find("indirect_free_kick_r") != -1 && datos.jugador.lado_campo == "r") ||
+        (datos.evento.find("corner_kick_l") != -1 && datos.jugador.lado_campo == "l") ||
+        (datos.evento.find("corner_kick_r") != -1 && datos.jugador.lado_campo == "r"))
     {
         if (!check_tengo_balon(datos))
             return "(dash 100 " + datos.ball.balon_direccion + ")";
@@ -715,9 +713,7 @@ string sendMessage(Datos_Juego &datos)
         return resultado;
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////
-    // AÑADIR BOOLEANO PARA SABER SI EL EQUIPO TIENE EL BALON, Y ASI SABER SI PERSEGUIR AL BALON
-    // Si estamos en area, aplicamos funcion de ataque al balon, sino volvemos hacia atras
+    ////////////////////CHECK AREA////////////////////////////////////////////
 
     if (check_area(datos) || voy_balon(datos))
     {
@@ -739,6 +735,10 @@ string sendMessage(Datos_Juego &datos)
             return "(dash 20 180)";
         }
     }
+
+
+
+////////////////////////////TACTICA DE PORTERO//////////////////
 
     //if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
     if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
@@ -772,6 +772,8 @@ string sendMessage(Datos_Juego &datos)
     //     return "(catch " + datos.ball.balon_direccion + ")";
     // }
 
+
+/////////////////DISPAROS TENEMOS BALON/////////////////////////////////////////////////
     // Si podemos TIRAR A PORTERIA
     if (stod(datos.ball.balon_distancia) < 1 && stod(datos.porteria.centro_distancia) <= 38)
     {
@@ -779,6 +781,7 @@ string sendMessage(Datos_Juego &datos)
         return resultado;
     }
 
+/////////////////PASES CON POSESION DE BALON/////////////////////////////////////////////////
     // Si TENEMOS BALON, valoramos distintas opciones
     if (stod(datos.ball.balon_distancia) < 1)
     {
@@ -788,7 +791,7 @@ string sendMessage(Datos_Juego &datos)
 
         // Comportamiento defensas
         bool defensa = (datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5");
-        if (defensa && !datos.porteria.veo_porteria_propia && stof(datos.jugadorCerca.distancia) < 20)
+        if (defensa && !datos.porteria.veo_porteria_propia && datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) < 20)
         {
             if (datos.porteria.veo_porteria_contraria)
             {
@@ -810,36 +813,35 @@ string sendMessage(Datos_Juego &datos)
             resultado = pase(datos);
             return resultado;
         }
-        else
-        {
-            // Si hay corner o falta indirecta, pasamos
-            bool CornerOrFreeKickIn = ((datos.evento.find("corner_kick_l") != -1 && datos.lado_campo == "l") ||
-                                       (datos.evento.find("corner_kick_r") != -1 && datos.lado_campo == "r"));
-            if (CornerOrFreeKickIn)
-            {
-                resultado = pase(datos);
-                return resultado;
-            }
+        // else
+        // {
+        //     // Si hay corner o falta indirecta, pasamos
+        //     bool CornerOrFreeKickIn = ((datos.evento.find("corner_kick_l") != -1 && datos.lado_campo == "l") ||
+        //                                (datos.evento.find("corner_kick_r") != -1 && datos.lado_campo == "r"));
+        //     if (CornerOrFreeKickIn)
+        //     {
+        //         resultado = pase(datos);
+        //         return resultado;
+        //     }
 
-            // Si hay falta directa
-            bool freeKick = (datos.evento.find("free_kick_") != -1 && datos.lado_campo == "l") ||
-                            (datos.evento.find("free_kick_") != -1 && datos.lado_campo == "r");
-            if (freeKick && datos.porteria.veo_porteria_contraria)
-            {
-                resultado = disparo(datos);
-                return resultado;
-            }
-            else if (freeKick)
-            {
-                resultado = pase(datos);
-                return resultado;
-            }
-        }
-
+        //     // Si hay falta directa
+        //     bool freeKick = (datos.evento.find("free_kick_") != -1 && datos.lado_campo == "l") ||
+        //                     (datos.evento.find("free_kick_") != -1 && datos.lado_campo == "r");
+        //     if (freeKick && datos.porteria.veo_porteria_contraria)
+        //     {
+        //         resultado = disparo(datos);
+        //         return resultado;
+        //     }
+        //     else if (freeKick)
+        //     {
+        //         resultado = pase(datos);
+        //         return resultado;
+        //     }
+        // }
         // Si somos cualquier jugador y vemos porteria corremos a ella
         if (datos.porteria.veo_porteria_contraria && datos.jugador.jugador_numero != "1")
         {
-            return "(kick 20 " + datos.porteria.centro_direccion + ")";
+            return "(kick 25 " + datos.porteria.centro_direccion + ")";
         }
 
         if (datos.jugador.jugador_numero != "1")
