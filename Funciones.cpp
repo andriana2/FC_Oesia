@@ -541,7 +541,8 @@ string sendMessage(Datos_Juego &datos)
     cout << datos.evento << "\n";
     cout << endl;
     bool checkStart = (datos.evento.find("goal_l") != -1 || datos.evento.find("goal_r") != -1 ||
-                       datos.evento.find("half_time") != -1 || datos.evento.find("extra_half_time") != -1);
+                       datos.evento.find("half_time") != -1 || datos.evento.find("extra_half_time") != -1)
+                       ||datos.evento.find("before_kick_off") != -1;
 
     if (checkStart)
     {
