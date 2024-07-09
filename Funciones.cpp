@@ -325,6 +325,11 @@ bool voy_balon(Datos_Juego &datos)
             }
         }
     }
+    if((datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4") && stof(datos.ball.balon_distancia) < 10)
+    {
+        return true;
+    }
+
     if (contador > (int)(jugadores.size() / 2))
         return false;
     // Si no vemos a nadie cerca, tambien voy
@@ -367,7 +372,12 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
         // Ordenamos el vector juagdoresNumeroMayor por menor distancia
         sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
              { return stod(a.at(1)) < stod(b.at(1)); });
-
+        if(datos.jugador.jugador_numero == "1" || datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" ||
+         datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5")
+        {
+        sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
+             { return stod(a.at(1)) > stod(b.at(1)); });
+        }
         // Si hay jugadores con numero mayor
         // Guardamos el jugador con mayor numero
         datos.jugadorCerca.hayJugadoor = true;
@@ -637,7 +647,7 @@ string sendMessage(Datos_Juego &datos)
     }
 
     // Si podemos TIRAR A PORTERIA
-    if (stod(datos.ball.balon_distancia) < 1 && stod(datos.porteria.centro_distancia) <= 30)
+    if (stod(datos.ball.balon_distancia) < 1 && stod(datos.porteria.centro_distancia) <= 44)
     {
         resultado = disparo(datos);
         return resultado;
@@ -689,6 +699,10 @@ string sendMessage(Datos_Juego &datos)
 
         if (datos.jugador.jugador_numero != "1")
         {
+            if (datos.evento.find("kick_in_") != -1 || datos.evento.find("corner_kick_") != -1)
+            {
+                return ("(kick 60 180)");
+            }
             return "(kick 20 120)";
         }
     }
