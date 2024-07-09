@@ -501,11 +501,11 @@ string disparo(Datos_Juego &datos)
     float angulo;
     if (rand() % 2 == 0)
     {
-        angulo = stof(datos.porteria.centro_direccion) + (rand() % 14); // tiro con angulo derecha de 5º
+        angulo = stof(datos.porteria.centro_direccion) + (rand() % 12); // tiro con angulo derecha de 5º
     }
     else
     {
-        angulo = stof(datos.porteria.centro_direccion) - (rand() % 14); // tiro con angulo izquierda de 5º
+        angulo = stof(datos.porteria.centro_direccion) - (rand() % 12); // tiro con angulo izquierda de 5º
     }
     string msg = "(kick 100 " + to_string(angulo) + ")";
     return (msg);
@@ -647,7 +647,7 @@ string sendMessage(Datos_Juego &datos)
     }
 
     // Si podemos TIRAR A PORTERIA
-    if (stod(datos.ball.balon_distancia) < 1 && stod(datos.porteria.centro_distancia) <= 44)
+    if (stod(datos.ball.balon_distancia) < 1 && stod(datos.porteria.centro_distancia) <= 38)
     {
         resultado = disparo(datos);
         return resultado;
@@ -659,7 +659,11 @@ string sendMessage(Datos_Juego &datos)
         check_jugador_cerca_pase(datos);
         // Si no somos delanteros y vemos a compañero
         bool Delantero = (datos.jugador.jugador_numero == "11" || datos.jugador.jugador_numero == "10");
-
+        bool defensa = (datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5");
+        if(defensa)
+        {
+            return "(kick 100 " +datos.ball.balon_direccion + ")";
+        }
         if (!Delantero && datos.jugadorCerca.hayJugadoor)
         {
             resultado = pase(datos);
@@ -703,7 +707,12 @@ string sendMessage(Datos_Juego &datos)
             {
                 return ("(kick 60 180)");
             }
-            return "(kick 20 120)";
+            if(datos.lado_campo == "l")
+                return "(kick 15 -120)";
+            else
+            {
+            return "(kick 15 120)";
+            }
         }
     }
 
