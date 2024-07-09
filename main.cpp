@@ -59,8 +59,11 @@ int main(int argc, char *argv[])
             try
             {
                 send_message_funtion(received_message_content, datos);
-                crear_matriz_valores_absolutos(received_message_content, flags);//ABSOLUTOS
-                relative2Abssolute(flags, datos);//ABSOLUTOS
+                if (datos.jugador.jugador_numero != "1" || stof(datos.ball.balon_distancia) < 5)
+                {
+                    crear_matriz_valores_absolutos(received_message_content, flags); // ABSOLUTOS
+                    relative2Abssolute(flags, datos);                                // ABSOLUTOS
+                }
             }
             catch (const std::exception &e)
             {
