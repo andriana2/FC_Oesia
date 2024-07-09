@@ -660,8 +660,15 @@ string sendMessage(Datos_Juego &datos)
         }
         if (resultado == "(kick 10 130)")
         {
-            resultado = "(kick 100 10)";
-            return resultado;
+            if (datos.porteria.veo_porteria_propia)
+            {
+                return "(kick 10 120)";
+            }
+            else
+            {
+                resultado = "(kick 100 40)";
+                return resultado;
+            }
         }
         return resultado;
     }
@@ -756,7 +763,7 @@ string sendMessage(Datos_Juego &datos)
                 {
                     return ("(kick 60 180)");
                 }
-            }   // REGATE
+            } // REGATE
             if (datos.lado_campo == "l")
                 return "(kick 20 -110)";
             else
