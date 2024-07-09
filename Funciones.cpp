@@ -198,7 +198,8 @@ Datos_Juego gestion_porteria(string const &message, Datos_Juego &datos)
                 datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
                 datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
             }
-        }else if ((v.find("(f g r b)") != -1) && datos.jugador.lado_campo == "r")
+        }
+        else if ((v.find("(f g r b)") != -1) && datos.jugador.lado_campo == "r")
         {
             datos.porteria.veo_porteria_propia = true;
         }
@@ -211,7 +212,8 @@ Datos_Juego gestion_porteria(string const &message, Datos_Juego &datos)
                 datos.porteria.centro_distancia = vector_porteria.at(2);
                 datos.porteria.centro_direccion = vector_porteria.at(3);
             }
-        }else if ((v.find("(g r)") != -1) && datos.jugador.lado_campo == "r")
+        }
+        else if ((v.find("(g r)") != -1) && datos.jugador.lado_campo == "r")
         {
             datos.porteria.veo_porteria_propia = true;
         }
@@ -223,7 +225,8 @@ Datos_Juego gestion_porteria(string const &message, Datos_Juego &datos)
                 datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
                 datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
             }
-        } else if ((v.find("(f g r t)") != -1) && datos.jugador.lado_campo == "r")
+        }
+        else if ((v.find("(f g r t)") != -1) && datos.jugador.lado_campo == "r")
         {
             datos.porteria.veo_porteria_propia = true;
         }
@@ -237,7 +240,8 @@ Datos_Juego gestion_porteria(string const &message, Datos_Juego &datos)
                 datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
                 datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
             }
-        }else if((v.find("(f g l b)") != -1) && datos.jugador.lado_campo == "l")
+        }
+        else if ((v.find("(f g l b)") != -1) && datos.jugador.lado_campo == "l")
         {
             datos.porteria.veo_porteria_propia = true;
         }
@@ -250,7 +254,8 @@ Datos_Juego gestion_porteria(string const &message, Datos_Juego &datos)
                 datos.porteria.centro_distancia = vector_porteria.at(2);
                 datos.porteria.centro_direccion = vector_porteria.at(3);
             }
-        }else if ((v.find("(g l)") != -1) && datos.jugador.lado_campo == "l")
+        }
+        else if ((v.find("(g l)") != -1) && datos.jugador.lado_campo == "l")
         {
             datos.porteria.veo_porteria_propia = true;
         }
@@ -262,7 +267,8 @@ Datos_Juego gestion_porteria(string const &message, Datos_Juego &datos)
                 datos.porteria.palo_abajo_distancia = vector_palo_bajo.at(4);
                 datos.porteria.palo_abajo_direccion = vector_palo_bajo.at(5);
             }
-        }else if((v.find("(f g l t)") != -1) && datos.jugador.lado_campo == "l")
+        }
+        else if ((v.find("(f g l t)") != -1) && datos.jugador.lado_campo == "l")
         {
             datos.porteria.veo_porteria_propia = true;
         }
@@ -541,8 +547,8 @@ string sendMessage(Datos_Juego &datos)
     cout << datos.evento << "\n";
     cout << endl;
     bool checkStart = (datos.evento.find("goal_l") != -1 || datos.evento.find("goal_r") != -1 ||
-                       datos.evento.find("half_time") != -1 || datos.evento.find("extra_half_time") != -1)
-                       ||datos.evento.find("before_kick_off") != -1;
+                       datos.evento.find("half_time") != -1 || datos.evento.find("extra_half_time") != -1) ||
+                      datos.evento.find("before_kick_off") != -1;
 
     if (checkStart)
     {
@@ -647,7 +653,7 @@ string sendMessage(Datos_Juego &datos)
     if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
     {
         datos.jugador.saque_puerta = false;
-        if(datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 10)
+        if (datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 10)
         {
             resultado = pase(datos);
             return resultado;
@@ -680,18 +686,21 @@ string sendMessage(Datos_Juego &datos)
         check_jugador_cerca_pase(datos);
         // Si no somos delanteros y vemos a compañero
         bool Delantero = (datos.jugador.jugador_numero == "11" || datos.jugador.jugador_numero == "10");
-        
+
         // Comportamiento defensas
         bool defensa = (datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5");
         if (defensa && !datos.porteria.veo_porteria_propia && stof(datos.jugadorCerca.distancia) < 20)
         {
-            if(datos.porteria.veo_porteria_contraria)
+            if (datos.porteria.veo_porteria_contraria)
             {
                 return "(kick 100 " + datos.porteria.centro_direccion + ")";
-            }else{
+            }
+            else
+            {
                 return "(kick 100 " + datos.ball.balon_direccion + ")";
             }
-        }else if(datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 15)
+        }
+        else if (datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 15)
         {
             resultado = pase(datos);
             return resultado;
@@ -714,8 +723,8 @@ string sendMessage(Datos_Juego &datos)
             }
 
             // Si hay falta directa
-            bool freeKick = (datos.evento.find("free_kick_l") != -1 && datos.lado_campo == "l") ||
-                            (datos.evento.find("free_kick_r") != -1 && datos.lado_campo == "r");
+            bool freeKick = (datos.evento.find("free_kick_") != -1 && datos.lado_campo == "l") ||
+                            (datos.evento.find("free_kick_") != -1 && datos.lado_campo == "r");
             if (freeKick && datos.porteria.veo_porteria_contraria)
             {
                 resultado = disparo(datos);
@@ -738,10 +747,18 @@ string sendMessage(Datos_Juego &datos)
         {
             if (datos.evento.find("kick_in_") != -1 || datos.evento.find("corner_kick_") != -1)
             {
-                return ("(kick 60 180)");
-            }
+                if (datos.jugadorCerca.hayJugadoor)
+                {
+                    resultado = pase(datos);
+                    return resultado;
+                }
+                else
+                {
+                    return ("(kick 60 180)");
+                }
+            }   // REGATE
             if (datos.lado_campo == "l")
-                return "(kick 15 -120)";
+                return "(kick 20 -110)";
             else
             {
                 return "(kick 20 110)";
