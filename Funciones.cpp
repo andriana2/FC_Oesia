@@ -23,7 +23,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         pos.y = 0;
         break;
     case 1:
-        pos.x = -30;
+        pos.x = -32;
         pos.y = -7;
         break;
     case 2:
@@ -35,19 +35,19 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         pos.y = 2;
         break;
     case 4:
-        pos.x = -30;
+        pos.x = -32;
         pos.y = 7;
         break;
     case 5:
-        pos.x = -20;
-        pos.y = -10;
+        pos.x = -15;
+        pos.y = -7;
         break;
     case 6:
-        pos.x = -20;
-        pos.y = 10;
+        pos.x = -15;
+        pos.y = 7;
         break;
     case 7:
-        pos.x = -15;
+        pos.x = -12;
         pos.y = 0;
         break;
     case 8:
@@ -93,7 +93,7 @@ string posicion_inicial(Datos_Juego &datos)
         pos.y = 0;
         break;
     case 1:
-        pos.x = -30;
+        pos.x = -32;
         pos.y = -7;
         break;
     case 2:
@@ -105,19 +105,19 @@ string posicion_inicial(Datos_Juego &datos)
         pos.y = 2;
         break;
     case 4:
-        pos.x = -30;
+        pos.x = -32;
         pos.y = 7;
         break;
     case 5:
-        pos.x = -20;
-        pos.y = -10;
+        pos.x = -15;
+        pos.y = -7;
         break;
     case 6:
-        pos.x = -20;
-        pos.y = 10;
+        pos.x = -15;
+        pos.y = 7;
         break;
     case 7:
-        pos.x = -15;
+        pos.x = -12;
         pos.y = 0;
         break;
     case 8:
