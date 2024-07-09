@@ -446,7 +446,7 @@ string ataque(Datos_Juego &datos)
 
     // Si somos el jugador que va al balon, y su distancia es < 25
     if ((datos.jugador.jugador_numero == "10" ||datos.jugador.jugador_numero == "11" ||datos.jugador.jugador_numero == "9") && 
-    stod(datos.ball.balon_distancia) <= 20 && stod(datos.ball.balon_distancia) > 1)
+    stod(datos.ball.balon_distancia) <= 30 && stod(datos.ball.balon_distancia) > 1)
     {
         return "(dash 100 " + datos.ball.balon_direccion + ")";
     }
