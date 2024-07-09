@@ -445,6 +445,13 @@ string ataque(Datos_Juego &datos)
     string resultado;
 
     // Si somos el jugador que va al balon, y su distancia es < 25
+    if ((datos.jugador.jugador_numero == "10" ||datos.jugador.jugador_numero == "11" ||datos.jugador.jugador_numero == "9") && 
+    stod(datos.ball.balon_distancia) <= 20 && stod(datos.ball.balon_distancia) > 1)
+    {
+        return "(dash 100 " + datos.ball.balon_direccion + ")";
+    }
+
+        // Si somos el jugador que va al balon, y su distancia es < 25
     if (voy_balon(datos) && stod(datos.ball.balon_distancia) <= 20 && stod(datos.ball.balon_distancia) > 1)
     {
         return "(dash 100 " + datos.ball.balon_direccion + ")";
@@ -462,7 +469,7 @@ string ataque(Datos_Juego &datos)
     // Somos cualquier jugador y la distancia al balon >25
     if (datos.jugador.jugador_numero != "1" && stod(datos.ball.balon_distancia) > 20 && stod(datos.ball.balon_distancia) < 40)
     {
-        return "(dash 15 " + datos.ball.balon_direccion + ")";
+        return "(dash 35 " + datos.ball.balon_direccion + ")";
     }
 
         // Somos cualquier jugador y la distancia al balon >25
