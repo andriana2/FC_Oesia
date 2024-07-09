@@ -62,8 +62,8 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         if ((datos.evento.find("kick_off_l") != -1 && datos.lado_campo == "l") ||
             (datos.evento.find("kick_off_r") != -1 && datos.lado_campo == "r"))
         {
-            pos.x = -1;
-            pos.y = 1;
+            pos.x = -5;
+            pos.y = 10;
         }
         else
         {
@@ -132,8 +132,8 @@ string posicion_inicial(Datos_Juego &datos)
         if ((datos.evento.find("goal_l") != -1 && datos.lado_campo == "r") ||
             (datos.evento.find("goal_r") != -1 && datos.lado_campo == "l"))
         {
-            pos.x = -1;
-            pos.y = 1;
+            pos.x = -5;
+            pos.y = 10;
         }
         else
         {
@@ -204,7 +204,6 @@ Datos_Juego gestion_porteria(string const &message, Datos_Juego &datos)
         }
         if ((v.find("(g r)") != -1) && datos.jugador.lado_campo == "l")
         {
-
             datos.porteria.veo_porteria_contraria = true;
             vector<string> vector_porteria = split(v, ' ');
             if (vector_porteria.size() >= 4) // Verificar que hay al menos 4 elementos
@@ -520,11 +519,11 @@ string disparo(Datos_Juego &datos)
     float angulo;
     if (rand() % 2 == 0)
     {
-        angulo = stof(datos.porteria.centro_direccion) + (rand() % 12); // tiro con angulo derecha de 5º
+        angulo = stof(datos.porteria.centro_direccion) + (rand() % 11); // tiro con angulo derecha de 5º
     }
     else
     {
-        angulo = stof(datos.porteria.centro_direccion) - (rand() % 12); // tiro con angulo izquierda de 5º
+        angulo = stof(datos.porteria.centro_direccion) - (rand() % 11); // tiro con angulo izquierda de 5º
     }
     string msg = "(kick 100 " + to_string(angulo) + ")";
     return (msg);
@@ -647,7 +646,11 @@ string sendMessage(Datos_Juego &datos)
     if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
     {
         datos.jugador.saque_puerta = false;
-        resultado = pase(datos);
+        if(datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 10)
+        {
+            resultado = pase(datos);
+            return resultado;
+        }
         if (resultado == "(kick 10 130)")
         {
             resultado = "(kick 100 10)";
@@ -687,14 +690,10 @@ string sendMessage(Datos_Juego &datos)
             }else{
                 return "(kick 100 " + datos.ball.balon_direccion + ")";
             }
-        }else if(datos.jugadorCerca.hayJugadoor)
+        }else if(datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 15)
         {
             resultado = pase(datos);
             return resultado;
-        }
-        else
-        {
-            return "(kick 15 120)";
         }
 
         if (!Delantero && datos.jugadorCerca.hayJugadoor)
@@ -744,7 +743,7 @@ string sendMessage(Datos_Juego &datos)
                 return "(kick 15 -120)";
             else
             {
-                return "(kick 15 120)";
+                return "(kick 20 110)";
             }
         }
     }
