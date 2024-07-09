@@ -36,10 +36,12 @@ struct Jugadores_Vistos
 {
     vector<vector<string>> jugadores;
     bool veo_equipo;
+    vector<vector<string>> jugadores_contrario;
+    bool veo_equipo_contrario;
 
     // Constructor por defecto
     Jugadores_Vistos() 
-        : jugadores(), veo_equipo(false) {}
+        : jugadores(), veo_equipo(false), jugadores_contrario(), veo_equipo_contrario(false) {}
 };
 
 struct Ball
