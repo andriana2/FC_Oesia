@@ -436,7 +436,7 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
         {
             // Ordenamos el vector juagdoresNumeroMayor por menor distancia
             sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
-                 { return stod(a.at(1)) < stod(b.at(1)); });
+                 { return stod(a.at(1)) > stod(b.at(1)); });//cambio <
             if (datos.jugador.jugador_numero == "1" || datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" ||
                 datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5")
             {
