@@ -7,21 +7,31 @@ Nosotros somos:
 - Francisco J. Carrasco
 
 ## Documentación y instalación
-
+Es necesaria la instalación del monitor y el servido para la ejecución del código
 - [Official RoboCup Soccer Simulator](https://rcsoccersim.github.io/)
 - [Resources](https://github.com/rcsoccersim/)
 
 ## How to use it in Ubuntu
-```bash
-mkdir build
-cd build
-cmake ..
-make
-cd ..
-./launch.sh
-````
+1. Iniciar el servidor
+   ````C
+   ./rcssserver
+   ````
+   
+2. Iniciar el monitor
+    ````C
+   ./rcssmonitor
+   ````
+3. Iniciar el código jugador
+  ```bash
+  mkdir build
+  cd build
+  cmake ..
+  make
+  cd ..
+  ./launch.sh
+  ````
 ## Fallos 
-En Ubuntu 24.04 da un fallo por el gnome pero se soluciona añadiendo antes de la ejecucion esta linea de codigo
+En Ubuntu 24.04 da un fallo por el gnome pero se soluciona añadiendo antes de la ejecucion esta línea de código
 ````c
 unset GTK_PATH
 ````
