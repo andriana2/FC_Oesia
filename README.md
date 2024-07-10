@@ -22,14 +22,14 @@ Es necesaria la instalación del monitor y el servido para la ejecución del có
    ./rcssmonitor
    ````
 3. Iniciar el código jugador
-  ```bash
-  mkdir build
-  cd build
-  cmake ..
-  make
-  cd ..
-  ./launch.sh
-  ````
+    ````C
+     mkdir build
+     cd build
+     cmake ..
+     make
+     cd ..
+     ./launch.sh
+   ````
 ## Fallos 
 En Ubuntu 24.04 da un fallo por el gnome pero se soluciona añadiendo antes de la ejecucion esta línea de código
 ````c
