@@ -816,7 +816,13 @@ string sendMessage(Datos_Juego &datos)
         {
             if (datos.porteria.veo_porteria_contraria)
             {
-                return "(kick 100 " + datos.porteria.centro_direccion + ")";
+                int direccion;
+                if((direccion = rand() % 3) == 0)
+                    return "(kick 100 " + datos.porteria.centro_direccion + ")";
+                else if( direccion == 1)
+                    return "(kick 100 " + datos.porteria.palo_abajo_direccion + ")";
+                else
+                    return "(kick 100 " + datos.porteria.palo_arriba_direccion + ")";
             }
             else
             {
