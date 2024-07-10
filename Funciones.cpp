@@ -52,11 +52,11 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         break;
     case 8:
         pos.x = -1;
-        pos.y = 13;
+        pos.y = 17;
         break;
     case 9:
         pos.x = -1;
-        pos.y = -13;
+        pos.y = -17;
         break;
     case 10:
         if ((datos.evento.find("kick_off_l") != -1 && datos.lado_campo == "l") ||
@@ -122,11 +122,11 @@ string posicion_inicial(Datos_Juego &datos)
         break;
     case 8:
         pos.x = -1;
-        pos.y = 13;
+        pos.y = 17;
         break;
     case 9:
         pos.x = -1;
-        pos.y = -13;
+        pos.y = -17;
         break;
     case 10:
         if ((datos.evento.find("goal_l") != -1 && datos.lado_campo == "r") ||
@@ -472,7 +472,7 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
             {
                 jugadoresNumeroMayor.push_back(jugador);
             }
-            else if (stod(jugador.at(0)) > stod(datos.jugador.jugador_numero))
+            else if (stod(jugador.at(0)) > stod(datos.jugador.jugador_numero) && stod(jugador.at(1)) > 8)
             {
                 jugadoresNumeroMayor.push_back(jugador);
             }
