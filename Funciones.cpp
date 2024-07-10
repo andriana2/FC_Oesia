@@ -52,11 +52,11 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         break;
     case 8:
         pos.x = -1;
-        pos.y = 28;
+        pos.y = 15;
         break;
     case 9:
         pos.x = -1;
-        pos.y = -28;
+        pos.y = -15;
         break;
     case 10:
         if ((datos.evento.find("kick_off_l") != -1 && datos.lado_campo == "l") ||
@@ -122,11 +122,11 @@ string posicion_inicial(Datos_Juego &datos)
         break;
     case 8:
         pos.x = -1;
-        pos.y = 28;
+        pos.y = 15;
         break;
     case 9:
         pos.x = -1;
-        pos.y = -28;
+        pos.y = -15;
         break;
     case 10:
         if ((datos.evento.find("goal_l") != -1 && datos.lado_campo == "r") ||
