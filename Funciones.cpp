@@ -443,6 +443,11 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
                 sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
                      { return stod(a.at(1)) > stod(b.at(1)); });
             }
+            if(datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8")
+            {
+                sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
+                     { return stod(a.at(0)) > stod(b.at(0)); });
+            }
             // Si hay jugadores con numero mayor
 
             datos.jugadorCerca.hayJugadoor = true;
@@ -487,6 +492,11 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
             {
                 sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
                      { return stod(a.at(1)) > stod(b.at(1)); });
+            }
+            if(datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8")
+            {
+                sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
+                     { return stod(a.at(0)) > stod(b.at(0)); });
             }
             // Si hay jugadores con numero mayor
             // Guardamos el jugador con mayor numero
