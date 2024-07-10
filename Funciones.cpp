@@ -569,7 +569,7 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
     {
         vector<string> vector_mensaje = GestionParentesis(mensaje); // ("see ((b) 12 12)")
         gestion_ball(vector_mensaje.at(0), datos);
-        if (datos.jugador.jugador_numero != "1" && stof(datos.ball.balon_distancia) < 10)
+        if (datos.jugador.jugador_numero == "1" && stof(datos.ball.balon_distancia) < 10)
             bool i;
         else
         {
