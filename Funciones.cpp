@@ -48,7 +48,7 @@ void initial_message(const string &str, MinimalSocket::udp::Udp<true> &udp_socke
         break;
     case 7:
         pos.x = -12;
-        pos.y = 0;
+        pos.y = 2;
         break;
     case 8:
         pos.x = -1;
@@ -118,7 +118,7 @@ string posicion_inicial(Datos_Juego &datos)
         break;
     case 7:
         pos.x = -12;
-        pos.y = 0;
+        pos.y = 2;
         break;
     case 8:
         pos.x = -1;
