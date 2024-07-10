@@ -56,7 +56,4 @@ _deps
 # Build
 player/player
 
-#Necesario pero para que no haya mucho lio
-launch.sh
-
 output
