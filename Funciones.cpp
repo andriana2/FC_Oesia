@@ -436,14 +436,14 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
         {
             // Ordenamos el vector juagdoresNumeroMayor por menor distancia
             sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
-                 { return stod(a.at(1)) > stod(b.at(1)); });//cambio <
+                 { return stod(a.at(1)) > stod(b.at(1)); }); // cambio <
             if (datos.jugador.jugador_numero == "1" || datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "3" ||
                 datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "5")
             {
                 sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
                      { return stod(a.at(1)) > stod(b.at(1)); });
             }
-            if(datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8")
+            if (datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8")
             {
                 sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
                      { return stod(a.at(0)) > stod(b.at(0)); });
@@ -493,7 +493,7 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
                 sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
                      { return stod(a.at(1)) > stod(b.at(1)); });
             }
-            if(datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8")
+            if (datos.jugador.jugador_numero == "6" || datos.jugador.jugador_numero == "7" || datos.jugador.jugador_numero == "8")
             {
                 sort(jugadoresNumeroMayor.begin(), jugadoresNumeroMayor.end(), [](const vector<string> &a, const vector<string> &b)
                      { return stod(a.at(0)) > stod(b.at(0)); });
@@ -569,8 +569,13 @@ void send_message_funtion(string const &mensaje, Datos_Juego &datos)
     {
         vector<string> vector_mensaje = GestionParentesis(mensaje); // ("see ((b) 12 12)")
         gestion_ball(vector_mensaje.at(0), datos);
-        gestion_porteria(vector_mensaje.at(0), datos);
-        gestion_jugadores_vistos(vector_mensaje.at(0), datos);
+        if (datos.jugador.jugador_numero != "1" && stof(datos.ball.balon_distancia) < 10)
+            bool i;
+        else
+        {
+            gestion_porteria(vector_mensaje.at(0), datos);
+            gestion_jugadores_vistos(vector_mensaje.at(0), datos);
+        }
     }
 }
 
@@ -637,11 +642,48 @@ string disparo(Datos_Juego &datos)
 
 string sendMessage(Datos_Juego &datos)
 {
-    check_jugador_cerca_pase(datos);
 
     string resultado;
+    ////////////////////////////TACTICA DE PORTERO//////////////////
+
+    // if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
+    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 2 && stod(datos.ball.balon_distancia) >= 0.5)
+    {
+        return "(catch " + datos.ball.balon_direccion + ")";
+    }
+
+    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 0.5)
+    {
+        // datos.jugador.saque_puerta = false;
+        if (datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 10 && !datos.jugadores_vistos.veo_equipo_contrario)
+        {
+            resultado = pase(datos);
+            if (resultado == "(kick 10 130)")
+            {
+                if (datos.porteria.veo_porteria_propia)
+                {
+                    return "(kick 100 120)";
+                }
+                else
+                {
+                    return "(kick 100 20)";
+                }
+            }
+            return resultado;
+        }
+        if (datos.porteria.veo_porteria_propia)
+        {
+            return "(kick 100 120)";
+        }
+        else
+        {
+            return "(kick 100 40)";
+        }
+    }
 
     ///////////////////////////POSICIONAMIENTO//////////////////////////////////////////////
+    check_jugador_cerca_pase(datos);
+    
     // Inicio de posiciones
     bool checkStart = (datos.evento.find("goal_l") != -1 || datos.evento.find("goal_r") != -1 ||
                        datos.evento.find("half_time") != -1 || datos.evento.find("extra_half_time") != -1) ||
@@ -693,12 +735,12 @@ string sendMessage(Datos_Juego &datos)
         if (!check_tengo_balon(datos))
             return "(dash 100 " + datos.ball.balon_direccion + ")";
         else if (check_tengo_balon(datos))
-            if(datos.porteria.veo_porteria_contraria)
+            if (datos.porteria.veo_porteria_contraria)
             {
                 resultado = disparo(datos);
                 return resultado;
             }
-            else 
+            else
             {
                 resultado = pase(datos);
             }
@@ -756,43 +798,6 @@ string sendMessage(Datos_Juego &datos)
         }
     }
 
-    ////////////////////////////TACTICA DE PORTERO//////////////////
-
-    // if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
-    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 2 && stod(datos.ball.balon_distancia) >= 0.5)
-    {
-        return "(catch " + datos.ball.balon_direccion + ")";
-    }
-    
-    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 0.5)
-    {
-        // datos.jugador.saque_puerta = false;
-        if (datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 10 && !datos.jugadores_vistos.veo_equipo_contrario)
-        {
-            resultado = pase(datos);
-            if (resultado == "(kick 10 130)")
-            {
-                if (datos.porteria.veo_porteria_propia)
-                {
-                    return "(kick 100 120)";
-                }
-                else
-                {
-                    return "(kick 100 20)";
-                }
-            }
-            return resultado;
-        }
-        if (datos.porteria.veo_porteria_propia)
-        {
-            return "(kick 100 120)";
-        }
-        else
-        {
-            return "(kick 100 40)";
-        }
-    }
-
 
     /////////////////DISPAROS TENEMOS BALON/////////////////////////////////////////////////
     // Si podemos TIRAR A PORTERIA
@@ -817,9 +822,9 @@ string sendMessage(Datos_Juego &datos)
             if (datos.porteria.veo_porteria_contraria)
             {
                 int direccion;
-                if((direccion = rand() % 3) == 0)
+                if ((direccion = rand() % 3) == 0)
                     return "(kick 100 " + datos.porteria.centro_direccion + ")";
-                else if( direccion == 1)
+                else if (direccion == 1)
                     return "(kick 100 " + datos.porteria.palo_abajo_direccion + ")";
                 else
                     return "(kick 100 " + datos.porteria.palo_arriba_direccion + ")";
