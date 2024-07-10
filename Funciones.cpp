@@ -759,7 +759,7 @@ string sendMessage(Datos_Juego &datos)
     ////////////////////////////TACTICA DE PORTERO//////////////////
 
     // if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
-    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 2 && stod(datos.ball.balon_distancia) > 1)
+    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 2 && stod(datos.ball.balon_distancia) >= 1)
     {
         return "(catch " + datos.ball.balon_direccion + ")";
     }
