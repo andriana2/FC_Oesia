@@ -749,7 +749,12 @@ string sendMessage(Datos_Juego &datos)
     ////////////////////////////TACTICA DE PORTERO//////////////////
 
     // if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
-    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
+    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 2 && stod(datos.ball.balon_distancia) > 1)
+    {
+        return "(catch " + datos.ball.balon_direccion + ")";
+    }
+    
+    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 1)
     {
         // datos.jugador.saque_puerta = false;
         if (datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 10 && !datos.jugadores_vistos.veo_equipo_contrario)
@@ -778,12 +783,6 @@ string sendMessage(Datos_Juego &datos)
         }
     }
 
-    // Si somos el portero y tenemos el balon, lo atrapamos
-    // if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 2)
-    // {
-    //     datos.jugador.saque_puerta = true;
-    //     return "(catch " + datos.ball.balon_direccion + ")";
-    // }
 
     /////////////////DISPAROS TENEMOS BALON/////////////////////////////////////////////////
     // Si podemos TIRAR A PORTERIA
@@ -871,10 +870,10 @@ string sendMessage(Datos_Juego &datos)
                 }
             } // REGATE
             if (datos.lado_campo == "l")
-                return "(kick 20 -110)";
+                return "(kick 10 -70)";
             else
             {
-                return "(kick 20 110)";
+                return "(kick 10 70)";
             }
         }
     }
