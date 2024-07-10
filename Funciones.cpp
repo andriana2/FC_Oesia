@@ -371,7 +371,7 @@ bool voy_balon(Datos_Juego &datos)
             }
         }
     }
-    if ((datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "5") && stof(datos.ball.balon_distancia) < 10)
+    if ((datos.jugador.jugador_numero == "4" || datos.jugador.jugador_numero == "2" || datos.jugador.jugador_numero == "5") && stof(datos.ball.balon_distancia) < 10)
     {
         return true;
     }

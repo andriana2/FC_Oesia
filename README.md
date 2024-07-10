@@ -2,7 +2,7 @@
 
 Nosotros somos:
 - Andriana Dovhanych
-- Andrés Medina Jiminez
+- Andrés Medina 
 - Aldo Lupio
 - Francisco J. Carrasco
 
