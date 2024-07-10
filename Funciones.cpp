@@ -759,12 +759,12 @@ string sendMessage(Datos_Juego &datos)
     ////////////////////////////TACTICA DE PORTERO//////////////////
 
     // if (datos.jugador.saque_puerta && datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 1)
-    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 2 && stod(datos.ball.balon_distancia) >= 1)
+    if(datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 2 && stod(datos.ball.balon_distancia) >= 0.5)
     {
         return "(catch " + datos.ball.balon_direccion + ")";
     }
     
-    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) <= 1)
+    if (datos.jugador.jugador_numero == "1" && stod(datos.ball.balon_distancia) < 0.5)
     {
         // datos.jugador.saque_puerta = false;
         if (datos.jugadorCerca.hayJugadoor && stof(datos.jugadorCerca.distancia) > 10 && !datos.jugadores_vistos.veo_equipo_contrario)
