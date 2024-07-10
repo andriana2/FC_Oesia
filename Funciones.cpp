@@ -371,7 +371,8 @@ bool voy_balon(Datos_Juego &datos)
             }
         }
     }
-    if ((datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4") && stof(datos.ball.balon_distancia) < 10)
+    if ((datos.jugador.jugador_numero == "3" || datos.jugador.jugador_numero == "4" ||datos.jugador.jugador_numero == "2" ||datos.jugador.jugador_numero == "5")
+     && stof(datos.ball.balon_distancia) < 10)
     {
         return true;
     }
@@ -386,7 +387,7 @@ bool voy_balon(Datos_Juego &datos)
         bool random_boolean = rand() % 100 < 80;
         return random_boolean;
     }
-    return true; // No voy
+    return true; 
 }
 
 bool cerca_enemigo(Datos_Juego &datos)
@@ -426,7 +427,7 @@ void check_jugador_cerca_pase(Datos_Juego &datos)
             {
                 jugadoresNumeroMayor.push_back(jugador);
             }
-            else if (stod(jugador.at(0)) > stod(datos.jugador.jugador_numero))
+            else if (stod(jugador.at(0)) > stod(datos.jugador.jugador_numero) && stod(jugador.at(1)) > 8)
             {
                 jugadoresNumeroMayor.push_back(jugador);
             }
