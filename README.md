@@ -1,5 +1,4 @@
-# FC_Oesia
-
+# ROBOCUB FC_Oesía
 Nosotros somos:
 - Andriana Dovhanych
 - Andrés Medina 
@@ -28,6 +27,7 @@ Es necesaria la instalación del monitor y el servido para la ejecución del có
      cmake ..
      make
      cd ..
+     chmod +x launch.sh
      ./launch.sh
    ````
 ## Fallos 
